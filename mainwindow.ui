@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="person_info">
+    <property name="title">
+     <string>个人信息管理</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="log">
+    <property name="title">
+     <string>日志管理</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="batch_info">
+    <property name="title">
+     <string>批次信息管理</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="authority">
+    <property name="title">
+     <string>权限管理</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="proLine_info">
+    <property name="title">
+     <string>生产线信息管理</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="data">
+    <property name="title">
+     <string>数据管理</string>
+    </property>
+   </widget>
+   <addaction name="person_info"/>
+   <addaction name="log"/>
+   <addaction name="batch_info"/>
+   <addaction name="authority"/>
+   <addaction name="proLine_info"/>
+   <addaction name="data"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
