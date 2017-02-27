@@ -35,7 +35,6 @@ SOURCES += main.cpp \
     detaillog.cpp \
     correctlog.cpp \
     viewbatch.cpp \
-    modifybatch.cpp \
     submitbatch.cpp \
     viewdata.cpp \
     maintaindata.cpp \
@@ -59,7 +58,6 @@ HEADERS  += \
     detaillog.h \
     correctlog.h \
     viewbatch.h \
-    modifybatch.h \
     submitbatch.h \
     viewdata.h \
     maintaindata.h \
@@ -83,7 +81,6 @@ FORMS    += \
     detaillog.ui \
     correctlog.ui \
     viewbatch.ui \
-    modifybatch.ui \
     submitbatch.ui \
     viewdata.ui \
     maintaindata.ui \
