@@ -39,15 +39,12 @@ ViewBatch::ViewBatch(QWidget *parent) :
         QList<QString> item = str.split(',');
         for(int j = 0; j<3 ;j++)//列
         {
-//            bool ok;
-//            int data = item[j].toInt(&ok,10);
-//            qDebug()<<"data:"<<data;
             QTableWidgetItem *detailInfo = new QTableWidgetItem(item[j]);
             batchInfo->setItem(i,j,detailInfo);
         }
     }
     //升序
-    batchInfo->sortItems(1,Qt::AscendingOrder);
+    batchInfo->sortItems(0,Qt::AscendingOrder);
 }
 
 ViewBatch::~ViewBatch()
