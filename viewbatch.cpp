@@ -6,14 +6,15 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
-
+#include<QTreeWidget>
+#include<QMessageBox>
 //所有批次的信息的查看
 ViewBatch::ViewBatch(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ViewBatch)
 {
     ui->setupUi(this);
-    QTableWidget* batchInfo = ui->batchInfo;
+    batchInfo = ui->batchInfo;
     //读取文件，确定表格行数
     QString txtName = "../batch_acquisition_system/batch.txt";
     QFile fileIn(txtName);
@@ -32,6 +33,17 @@ ViewBatch::ViewBatch(QWidget *parent) :
     int l = list.length();
     batchInfo->setRowCount(l);
     batchInfo->setColumnCount(3);
+    //去除左边的表头
+    batchInfo->verticalHeader()->setVisible(false);;
+    //将行和列的大小设为与内容相匹配
+    batchInfo->resizeColumnsToContents();
+    batchInfo->resizeRowsToContents();
+    //select only rows
+    batchInfo->setSelectionBehavior(QAbstractItemView::SelectRows);
+  //不能对表格内容进行修改
+   batchInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
+   //自适应列宽度
+   batchInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //设置表格条目
     for(int i = 0; i<l ;i++)//行
     {
@@ -50,4 +62,31 @@ ViewBatch::ViewBatch(QWidget *parent) :
 ViewBatch::~ViewBatch()
 {
     delete ui;
+}
+
+void ViewBatch::on_batchInfo_doubleClicked(const QModelIndex &index)
+{
+    ui->treeWidget->clear();
+   int  batchrow=index.row();
+
+   qDebug()<<batchrow;
+   QTreeWidget * treewidget =ui->treeWidget;
+    QTreeWidgetItem* A = new QTreeWidgetItem(QStringList()<<"A");
+    QTreeWidgetItem* B = new QTreeWidgetItem(QStringList()<<"B");
+    QTreeWidgetItem* C = new QTreeWidgetItem(QStringList()<<"C");
+    ui->treeWidget->addTopLevelItem(A);
+     ui->treeWidget->addTopLevelItem(B);
+      ui->treeWidget->addTopLevelItem(C);
+      QStringList columItemList;
+      columItemList<<"key"<<"value";
+      for(int i=0; i<3; ++i)
+         {
+             QStringList columItemList;
+             QTreeWidgetItem *child;
+             QString key;
+             key += "a" + QString::number(batchrow);
+             columItemList<<key;
+             child = new QTreeWidgetItem(columItemList);
+             A->addChild(child);
+         }
 }

@@ -145,25 +145,26 @@ void MainWindow::createMenus()
     //批次信息管理
     batch_info = ui->batch_info;
     QList<QAction*> bi;
-    bi << viewBatch << modifyBatch << submitBatch ;
+    bi << viewBatch << submitBatch ;
     batch_info->addActions(bi);
 
     //权限管理
     authority = ui->authority;
     QList<QAction*> auth;
-    auth << viewData << maintainData << uploadData << refreshData ;
+    auth <<  setPermissions ;
     authority->addActions(auth);
 
     //生产线信息管理
     proLine_info = ui->proLine_info;
     QList<QAction*> pli;
-    pli << setPermissions ;
+     pli << viewProLine << setProLine << modifyProLine ;
     proLine_info->addActions(pli);
 
     //数据管理
     data = ui->data;
     QList<QAction*> dt;
-    dt << viewProLine << setProLine << modifyProLine ;
+
+    dt<<viewData << maintainData << uploadData ;
     data->addActions(dt);
 }
 

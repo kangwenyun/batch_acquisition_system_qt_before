@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::ViewData *ui;
+
 };
 
 #endif // VIEWDATA_H

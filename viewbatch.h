@@ -2,7 +2,7 @@
 #define VIEWBATCH_H
 
 #include <QWidget>
-
+#include<QTableWidget>
 namespace Ui {
 class ViewBatch;
 }
@@ -15,8 +15,12 @@ public:
     explicit ViewBatch(QWidget *parent = 0);
     ~ViewBatch();
 
+private slots:
+    void on_batchInfo_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::ViewBatch *ui;
+    QTableWidget* batchInfo;
 };
 
 #endif // VIEWBATCH_H

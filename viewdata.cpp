@@ -7,6 +7,8 @@ ViewData::ViewData(QWidget *parent) :
     ui(new Ui::ViewData)
 {
     ui->setupUi(this);
+    // 自适应列宽度
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 ViewData::~ViewData()
