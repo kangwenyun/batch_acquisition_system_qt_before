@@ -40,10 +40,10 @@ ViewBatch::ViewBatch(QWidget *parent) :
     batchInfo->resizeRowsToContents();
     //select only rows
     batchInfo->setSelectionBehavior(QAbstractItemView::SelectRows);
-  //不能对表格内容进行修改
-   batchInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
-   //自适应列宽度
-   batchInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //不能对表格内容进行修改
+    batchInfo->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //自适应列宽度
+    batchInfo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //设置表格条目
     for(int i = 0; i<l ;i++)//行
     {
@@ -66,27 +66,24 @@ ViewBatch::~ViewBatch()
 
 void ViewBatch::on_batchInfo_doubleClicked(const QModelIndex &index)
 {
-    ui->treeWidget->clear();
+   ui->treeWidget->clear();
    int  batchrow=index.row();
-
-   qDebug()<<batchrow;
-   QTreeWidget * treewidget =ui->treeWidget;
-    QTreeWidgetItem* A = new QTreeWidgetItem(QStringList()<<"A");
-    QTreeWidgetItem* B = new QTreeWidgetItem(QStringList()<<"B");
-    QTreeWidgetItem* C = new QTreeWidgetItem(QStringList()<<"C");
-    ui->treeWidget->addTopLevelItem(A);
-     ui->treeWidget->addTopLevelItem(B);
-      ui->treeWidget->addTopLevelItem(C);
-      QStringList columItemList;
-      columItemList<<"key"<<"value";
-      for(int i=0; i<3; ++i)
-         {
-             QStringList columItemList;
-             QTreeWidgetItem *child;
-             QString key;
-             key += "a" + QString::number(batchrow);
-             columItemList<<key;
-             child = new QTreeWidgetItem(columItemList);
-             A->addChild(child);
-         }
+   QTreeWidgetItem* A = new QTreeWidgetItem(QStringList()<<"A");
+   QTreeWidgetItem* B = new QTreeWidgetItem(QStringList()<<"B");
+   QTreeWidgetItem* C = new QTreeWidgetItem(QStringList()<<"C");
+   ui->treeWidget->addTopLevelItem(A);
+   ui->treeWidget->addTopLevelItem(B);
+   ui->treeWidget->addTopLevelItem(C);
+   QStringList columItemList;
+   columItemList<<"key"<<"value";
+   for(int i=0; i<3; ++i)
+   {
+       QStringList columItemList;
+       QTreeWidgetItem *child;
+       QString key;
+       key += "a" + QString::number(batchrow);
+       columItemList<<key;
+       child = new QTreeWidgetItem(columItemList);
+       A->addChild(child);
+    }
 }

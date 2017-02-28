@@ -2,6 +2,7 @@
 #define CHANGEPASSWD_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class ChangePasswd;
@@ -15,8 +16,13 @@ public:
     explicit ChangePasswd(QWidget *parent = 0);
     ~ChangePasswd();
 
+private slots:
+
+    void on_ok_button_clicked();
+
 private:
     Ui::ChangePasswd *ui;
+    QString userId;
 };
 
 #endif // CHANGEPASSWD_H

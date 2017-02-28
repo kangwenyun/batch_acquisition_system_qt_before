@@ -44,7 +44,8 @@ SOURCES += main.cpp \
     viewproline.cpp \
     setproline.cpp \
     modifyproline.cpp \
-    currentperson.cpp
+    currentperson.cpp \
+    utils.cpp
 
 HEADERS  += \
     login.h \
@@ -67,7 +68,8 @@ HEADERS  += \
     viewproline.h \
     setproline.h \
     modifyproline.h \
-    session.h
+    session.h \
+    utils.h
 
 FORMS    += \
     login.ui \

@@ -8,7 +8,6 @@
 #include "detaillog.h"
 #include "correctlog.h"
 #include "viewbatch.h"
-#include "modifybatch.h"
 #include "submitbatch.h"
 #include "viewdata.h"
 #include "maintaindata.h"
@@ -76,11 +75,6 @@ void MainWindow::createActions()
     viewBatch = new QAction(tr("批次信息查看"),this);
     viewBatch->setStatusTip(tr("批次信息查看"));
     connect(viewBatch,SIGNAL(triggered()),this,SLOT(viewBatch_clicked()));
-
-    //批次错误信息的修改
-    modifyBatch = new QAction(tr("错误信息修改"),this);
-    modifyBatch->setStatusTip(tr("错误信息修改"));
-    connect(modifyBatch,SIGNAL(triggered()),this,SLOT(modifyBatch_clicked()));
 
     //来自WMS的批次请求的提交
     submitBatch = new QAction(tr("请求提交"),this);
@@ -215,13 +209,6 @@ void MainWindow::viewBatch_clicked()
 {
     ViewBatch *vb = new ViewBatch;
     setCentralWidget(vb);
-}
-
-//批次错误信息的修改
-void MainWindow::modifyBatch_clicked()
-{
-    ModifyBatch *mb = new ModifyBatch;
-    setCentralWidget(mb);
 }
 
 //来自WMS的批次请求的提交

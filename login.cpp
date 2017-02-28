@@ -4,6 +4,7 @@
 #include "getpasswd.h"
 #include "mainwindow.h"
 #include "session.h"
+#include "utils.h"
 #include <QCryptographicHash>
 #include <QFile>
 #include <QList>
@@ -17,6 +18,8 @@ Login::Login(QWidget *parent) :
     //设置密码框的显示模式
     ui->passwd->setEchoMode(QLineEdit::Password);
     ui->err_label->hide();
+    ui->userId->setFixedHeight(26);
+    ui->passwd->setFixedHeight(26);
 }
 
 Login::~Login()
@@ -46,7 +49,7 @@ void Login::on_login_clicked()
                                           QCryptographicHash::Sha3_256);
     //请求服务端验证
 
-    //读取本地文件
+    //读取本地文件验证密码
     //获取地址
     QString txtName = "../batch_acquisition_system/reg.txt";
     //定义文件对象
@@ -56,20 +59,7 @@ void Login::on_login_clicked()
         QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileIn.errorString());
         return;
     }
-    //读数据，读到匹配的就跳出
-    bool success = false;
-    while(!fileIn.atEnd())
-    {
-        QString accLine = fileIn.readLine();
-        accLine=accLine.trimmed();//去除两边空格
-        QList<QString> list = accLine.split(',');
-        if(list[0] == userId
-                && list[2] == ui->passwd->text())
-        {
-            success =true;
-            break;
-        }
-    }
+    bool success = Utils::verifyPasswd(fileIn,userId,ui->passwd->text());
     //验证成功即可登录
     if(success){
         Session* curper = Session::getInstance();
