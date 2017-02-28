@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui widgets
+QT +=  sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -45,7 +46,11 @@ SOURCES += main.cpp \
     viewproline.cpp \
     setproline.cpp \
     modifyproline.cpp \
-    currentperson.cpp
+    currentperson.cpp \
+    serverservice.cpp \
+    dbhelper.cpp \
+    qres.cpp \
+    quser.cpp
 
 HEADERS  += \
     login.h \
@@ -69,7 +74,11 @@ HEADERS  += \
     viewproline.h \
     setproline.h \
     modifyproline.h \
-    session.h
+    session.h \
+    serverservice.h \
+    dbhelper.h \
+    qres.h \
+    quser.h
 
 FORMS    += \
     login.ui \
@@ -93,3 +102,5 @@ FORMS    += \
     viewproline.ui \
     setproline.ui \
     modifyproline.ui
+
+
