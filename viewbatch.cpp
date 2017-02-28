@@ -57,6 +57,8 @@ ViewBatch::ViewBatch(QWidget *parent) :
     }
     //升序
     batchInfo->sortItems(0,Qt::AscendingOrder);
+    //默认点击第一个
+
 }
 
 ViewBatch::~ViewBatch()
@@ -68,6 +70,7 @@ void ViewBatch::on_batchInfo_doubleClicked(const QModelIndex &index)
 {
    ui->treeWidget->clear();
    int  batchrow=index.row();
+<<<<<<< HEAD
    QTreeWidgetItem* A = new QTreeWidgetItem(QStringList()<<"A");
    QTreeWidgetItem* B = new QTreeWidgetItem(QStringList()<<"B");
    QTreeWidgetItem* C = new QTreeWidgetItem(QStringList()<<"C");
@@ -86,4 +89,30 @@ void ViewBatch::on_batchInfo_doubleClicked(const QModelIndex &index)
        child = new QTreeWidgetItem(columItemList);
        A->addChild(child);
     }
+=======
+
+
+   QTreeWidget * treewidget =ui->treeWidget;
+   for(int i=0;i<3;i++)
+   {
+       QList<QString>    list;
+       list.append("A30"+QString::number(i));
+       list.append("A25"+QString::number(i));
+       list.append("C50"+QString::number(i));
+    QTreeWidgetItem* A = new QTreeWidgetItem(QStringList()<<list.at(i));
+     ui->treeWidget->addTopLevelItem(A);
+    }
+
+      QStringList columItemList;
+      for(int i=0; i<3; ++i)
+        {
+
+             QTreeWidgetItem *child;
+             QString key;
+             key += "a" + QString::number(batchrow);
+             columItemList<<key;
+             child = new QTreeWidgetItem(columItemList);
+            ui->treeWidget->topLevelItem(i)->addChild(child);
+         }
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
 }

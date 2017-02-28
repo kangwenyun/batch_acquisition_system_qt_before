@@ -15,6 +15,11 @@ public:
     explicit ViewData(QWidget *parent = 0);
     ~ViewData();
 
+private slots:
+    void on_data_change_clicked();
+
+    void on_data_save_clicked();
+
 private:
     Ui::ViewData *ui;
 

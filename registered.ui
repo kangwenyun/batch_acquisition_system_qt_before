@@ -24,7 +24,11 @@
      <x>9</x>
      <y>9</y>
      <width>34</width>
+<<<<<<< HEAD
      <height>17</height>
+=======
+     <height>23</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <property name="text">
@@ -35,9 +39,15 @@
    <property name="geometry">
     <rect>
      <x>30</x>
+<<<<<<< HEAD
      <y>319</y>
      <width>90</width>
      <height>16</height>
+=======
+     <y>317</y>
+     <width>90</width>
+     <height>17</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <property name="font">
@@ -55,10 +65,17 @@
   <widget class="QLabel" name="userid_star">
    <property name="geometry">
     <rect>
+<<<<<<< HEAD
      <x>20</x>
      <y>49</y>
      <width>16</width>
      <height>16</height>
+=======
+     <x>10</x>
+     <y>49</y>
+     <width>16</width>
+     <height>17</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <property name="styleSheet">
@@ -68,6 +85,7 @@
     <string>*</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QLabel" name="passwd_star">
    <property name="geometry">
     <rect>
@@ -75,6 +93,45 @@
      <y>126</y>
      <width>16</width>
      <height>16</height>
+=======
+  <widget class="QLineEdit" name="userid">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>40</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="username">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>80</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="job">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>280</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwd_star">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>126</y>
+     <width>16</width>
+     <height>17</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <property name="styleSheet">
@@ -84,6 +141,7 @@
     <string>*</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QLabel" name="passwd_again_star">
    <property name="geometry">
     <rect>
@@ -91,6 +149,25 @@
      <y>165</y>
      <width>16</width>
      <height>16</height>
+=======
+  <widget class="QLineEdit" name="passwd">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>120</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwd_again_star">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>164</y>
+     <width>16</width>
+     <height>17</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <property name="styleSheet">
@@ -100,6 +177,7 @@
     <string>*</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
@@ -138,14 +216,99 @@
      </widget>
     </item>
    </layout>
+=======
+  <widget class="QLineEdit" name="passwd_again">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>160</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="sex_man">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>200</y>
+     <width>42</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>男</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="sex_women">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>200</y>
+     <width>47</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>女</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="age">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>230</y>
+     <width>163</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>195</x>
+     <y>357</y>
+     <width>85</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ok_button">
+   <property name="geometry">
+    <rect>
+     <x>104</x>
+     <y>357</y>
+     <width>85</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
+<<<<<<< HEAD
      <x>31</x>
      <y>40</y>
      <width>87</width>
      <height>281</height>
+=======
+     <x>30</x>
+     <y>40</y>
+     <width>87</width>
+     <height>271</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -235,6 +398,7 @@
     </item>
    </layout>
   </widget>
+<<<<<<< HEAD
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
@@ -326,6 +490,8 @@
     </rect>
    </property>
   </widget>
+=======
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
  </widget>
  <resources/>
  <connections/>

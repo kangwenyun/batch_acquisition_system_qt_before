@@ -19,6 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+<<<<<<< HEAD
   <widget class="QPushButton" name="edit_ok_button">
    <property name="geometry">
     <rect>
@@ -39,6 +40,15 @@
      <y>11</y>
      <width>243</width>
      <height>261</height>
+=======
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>224</width>
+     <height>271</height>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -172,6 +182,22 @@
     </item>
    </layout>
   </widget>
+<<<<<<< HEAD
+=======
+  <widget class="QPushButton" name="edit_ok_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>288</y>
+     <width>85</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>编辑</string>
+   </property>
+  </widget>
+>>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
  </widget>
  <resources/>
  <connections/>
