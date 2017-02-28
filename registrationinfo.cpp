@@ -49,6 +49,11 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     fileIn.close();
     //将edit都设为只读,不可写
     setWriteability(false);
+    ui->userid_edit->setFixedHeight(26);
+    ui->username_edit->setFixedHeight(26);
+    ui->sex_edit->setFixedHeight(26);
+    ui->age_edit->setFixedHeight(26);
+    ui->job_edit->setFixedHeight(26);
 }
 
 RegistrationInfo::~RegistrationInfo()

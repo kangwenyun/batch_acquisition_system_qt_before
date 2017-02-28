@@ -25,6 +25,9 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui->newKeyAgain_edit->setEchoMode(QLineEdit::Password);
     //错误提示信息隐藏
     ui->err_label->hide();
+    ui->oldKey_edit->setFixedHeight(26);
+    ui->newKey_edit->setFixedHeight(26);
+    ui->newKeyAgain_edit->setFixedHeight(26);
 }
 
 ChangePasswd::~ChangePasswd()
@@ -105,5 +108,7 @@ void ChangePasswd::on_ok_button_clicked()
         //没有错误，修改密码成功
         QMessageBox::information(this,tr("修改密码"),tr("修改密码成功！"));
         return;
+    }else{
+        QMessageBox::information(this,tr("错误提示"),tr("所有项均为必填项！"));
     }
 }

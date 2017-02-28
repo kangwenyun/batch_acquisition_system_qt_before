@@ -17,7 +17,7 @@ RefreshData::RefreshData(QWidget *parent) :
  u.level=0;
  u.sex=1;
  u.passwd="B";
- db.Qlogin(u);
+
  QMessageBox::information(this,"",db.Qlogin(u.userid,u.passwd).msg);
     //serverservice service;
   // service.trytoconnect();

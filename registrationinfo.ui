@@ -19,36 +19,13 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-<<<<<<< HEAD
-  <widget class="QPushButton" name="edit_ok_button">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>290</y>
-     <width>241</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>编辑</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>79</x>
-     <y>11</y>
-     <width>243</width>
-     <height>261</height>
-=======
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>9</y>
+     <y>29</y>
      <width>224</width>
-     <height>271</height>
->>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
+     <height>201</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -182,22 +159,24 @@
     </item>
    </layout>
   </widget>
-<<<<<<< HEAD
-=======
   <widget class="QPushButton" name="edit_ok_button">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>288</y>
-     <width>85</width>
-     <height>30</height>
+     <x>80</x>
+     <y>260</y>
+     <width>221</width>
+     <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>编辑</string>
    </property>
   </widget>
->>>>>>> 6623a40dada597d2f8bd877c8203bf8f8bbabef4
  </widget>
  <resources/>
  <connections/>
