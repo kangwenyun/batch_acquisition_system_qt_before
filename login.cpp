@@ -5,6 +5,8 @@
 #include "mainwindow.h"
 #include "session.h"
 #include "utils.h"
+#include "dbhelper.h"
+#include "qres.h"
 #include <QCryptographicHash>
 #include <QFile>
 #include <QList>
@@ -48,20 +50,22 @@ void Login::on_login_clicked()
     passwdHash = QCryptographicHash::hash(ui->passwd->text().toUtf8(),
                                           QCryptographicHash::Sha3_256);
     //请求服务端验证
+    dbhelper helper;
+    Qres res = helper.Qlogin(userId,ui->passwd->text());
 
-    //读取本地文件验证密码
-    //获取地址
-    QString txtName = "../batch_acquisition_system/reg.txt";
-    //定义文件对象
-    QFile fileIn(txtName);
-    if(!fileIn.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileIn.errorString());
-        return;
-    }
-    bool success = Utils::verifyPasswd(fileIn,userId,ui->passwd->text());
+//    //读取本地文件验证密码
+//    //获取地址
+//    QString txtName = "../batch_acquisition_system/reg.txt";
+//    //定义文件对象
+//    QFile fileIn(txtName);
+//    if(!fileIn.open(QIODevice::ReadOnly))
+//    {
+//        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileIn.errorString());
+//        return;
+//    }
+//    bool success = Utils::verifyPasswd(fileIn,userId,ui->passwd->text());
     //验证成功即可登录
-    if(success){
+    if(res.success){
         Session* curper = Session::getInstance();
         curper->setUserId(userId);
         mainWindow = new MainWindow();
@@ -69,7 +73,7 @@ void Login::on_login_clicked()
         this->close();
     }else{
         //提示错误
-        ui->err_label->setText(tr("用户名或密码错误！"));
+        ui->err_label->setText(res.msg);
         ui->err_label->show();
     }
 }

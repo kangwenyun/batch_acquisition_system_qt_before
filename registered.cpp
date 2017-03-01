@@ -49,8 +49,6 @@ void Registered::on_ok_button_clicked(){
             user.sex = QString("%1").arg(genderGroup->checkedId());
             user.job = ui->job->text();
             user.level = ui->job->text();
-            dbhelper helper;
-            Qres res = helper.Qregist(user);//返回qres干嘛？
         }else{
             //密码不一致
             ui->err_label->setText(tr("请确定密码！"));
@@ -64,6 +62,8 @@ void Registered::on_ok_button_clicked(){
         return;
     }
     //信息提交
+    dbhelper helper;
+    Qres res = helper.Qregist(user);//返回qres干嘛？
 
 //    //先存放到本地文件
 //    //存放地址
@@ -79,11 +79,17 @@ void Registered::on_ok_button_clicked(){
 //    //构造字节数组写入
 //    QByteArray regInfo = str.toLocal8Bit() + '\n';
 //    fileOut.write(regInfo);
-    //注册界面隐藏，登录界面显示
-    this->close();
-    lg = new Login;
-    lg->setUserId(ui->userid->text());
-    lg->show();
+
+    if(res.success)
+    {
+        //注册界面隐藏，登录界面显示
+        this->close();
+        lg = new Login;
+        lg->setUserId(ui->userid->text());
+        lg->show();
+    }else{
+        ui->err_label->setText(res.msg);
+    }
 }
 
 Registered::~Registered()
