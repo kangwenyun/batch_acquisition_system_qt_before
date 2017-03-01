@@ -6,6 +6,7 @@ Authentication::Authentication(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Authentication)
 {
+    qDebug()<<"123";
     ui->setupUi(this);
 }
 

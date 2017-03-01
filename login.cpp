@@ -9,7 +9,7 @@
 #include <QFile>
 #include <QList>
 #include <QMessageBox>
-
+#include<dbhelper.h>
 Login::Login(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Login)
@@ -82,10 +82,13 @@ void Login::on_get_passwd_clicked(){
 
 void Login::on_registered_clicked()
 {
+    dbhelper db;
+
     //实例化注册界面
     registered = new Registered;
     //跳转到注册页
     registered->show();
+
     //关闭登录界面
     this->close();
 }

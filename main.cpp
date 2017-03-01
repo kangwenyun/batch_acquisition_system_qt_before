@@ -4,10 +4,11 @@
 #include<viewbatch.h>
 #include<viewdata.h>
 #include<refreshdata.h>
+#include<test.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Login l;
+   Test l;
     l.show();
     return a.exec();
 }

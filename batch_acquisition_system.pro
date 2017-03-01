@@ -51,7 +51,8 @@ SOURCES += main.cpp \
     qres.cpp \
     quser.cpp \
     utils.cpp \
-    product.cpp
+    product.cpp \
+    test.cpp
 
 HEADERS  += \
     login.h \
@@ -80,7 +81,8 @@ HEADERS  += \
     qres.h \
     quser.h \
     utils.h \
-    product.h
+    product.h \
+    test.h
 
 FORMS    += \
     login.ui \
@@ -102,5 +104,6 @@ FORMS    += \
     setpermissions.ui \
     viewproline.ui \
     setproline.ui \
-    modifyproline.ui
+    modifyproline.ui \
+    test.ui
 

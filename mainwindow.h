@@ -25,7 +25,6 @@ public slots:
     void detailLog_clicked();
     void correctLog_clicked();
     void viewBatch_clicked();
-    void modifyBatch_clicked();
     void submitBatch_clicked();
     void viewData_clicked();
     void maintainData_clicked();
@@ -55,7 +54,6 @@ private:
     QAction *correctLog;
 
     QAction *viewBatch;
-    QAction *modifyBatch;
     QAction *submitBatch;
 
     QAction *viewData;
