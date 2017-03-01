@@ -1,9 +1,9 @@
 #ifndef DBHELPER_H
 #define DBHELPER_H
-#include<quser.h>
+#include <quser.h>
 #include <QtSql>
-#include<qres.h>
-#include<product.h>
+#include <qres.h>
+#include <product.h>
 class dbhelper
 {
 public:

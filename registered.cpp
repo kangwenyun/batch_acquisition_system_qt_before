@@ -1,5 +1,8 @@
 #include "registered.h"
 #include "ui_registered.h"
+#include "quser.h"
+#include "dbhelper.h"
+#include "qres.h"
 #include <QDebug>
 #include <QString>
 #include <QFile>
@@ -25,17 +28,29 @@ Registered::Registered(QWidget *parent) :
 
 void Registered::on_ok_button_clicked(){
     //获取界面信息
-    QString str;
+//    QString str;
     //必须项不能为空
-    if(!ui->userid->text().isEmpty() && !ui->passwd->text().isEmpty() && !ui->passwd_again->text().isEmpty()){
+    if(!ui->userid->text().isEmpty() && !ui->passwd->text().isEmpty()
+            && !ui->passwd_again->text().isEmpty() && !ui->level->text().isEmpty()){
         //“密码”和“确认密码”需保持一致
         if(ui->passwd->text() == ui->passwd_again->text()){
-            str = str + ui->userid->text() + ',';
-            str = str + ui->username->text() + ',';
-            str = str + ui->passwd->text() + ',';
-            str = str + QString("%1").arg(genderGroup->checkedId()) + ',';
-            str = str + ui->age->text() + ',';
-            str = str + ui->job->text();
+//            str = str + ui->userid->text() + ',';
+//            str = str + ui->username->text() + ',';
+//            str = str + ui->passwd->text() + ',';
+//            str = str + QString("%1").arg(genderGroup->checkedId()) + ',';
+//            str = str + ui->age->text() + ',';
+//            str = str + ui->job->text() + ',';
+//            str = str + ui->level->text();
+            Quser user;
+            user.userid = ui->userid->text();
+            user.username = ui->username->text();
+            user.passwd = ui->passwd->text();
+            user.age = ui->age->text();
+            user.sex = QString("%1").arg(genderGroup->checkedId());
+            user.job = ui->job->text();
+            user.level = ui->job->text();
+            dbhelper helper;
+            Qres res = helper.Qregist(user);//返回qres干嘛？
         }else{
             //密码不一致
             ui->err_label->setText(tr("请确定密码！"));
@@ -49,20 +64,21 @@ void Registered::on_ok_button_clicked(){
         return;
     }
     //信息提交
-    //先存放到本地文件
-    //存放地址
-    QString saveName = "../batch_acquisition_system/reg.txt";
-    //定义文件对象
-    QFile fileOut(saveName);
-    if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-    {
-        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileOut.errorString());
-        return;
-    }
-    //写数据
-    //构造字节数组写入
-    QByteArray regInfo = str.toLocal8Bit() + '\n';
-    fileOut.write(regInfo);
+
+//    //先存放到本地文件
+//    //存放地址
+//    QString saveName = "../batch_acquisition_system/reg.txt";
+//    //定义文件对象
+//    QFile fileOut(saveName);
+//    if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+//    {
+//        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileOut.errorString());
+//        return;
+//    }
+//    //写数据
+//    //构造字节数组写入
+//    QByteArray regInfo = str.toLocal8Bit() + '\n';
+//    fileOut.write(regInfo);
     //注册界面隐藏，登录界面显示
     this->close();
     lg = new Login;
