@@ -14,11 +14,12 @@ public:
     Qres Qlogin(QString userid,QString passwd);
     Qres Qchangepwd(QString userid,QString oldpwd,QString newpwd);
     //about product
-    Qres changeuserinformation( Quser olduserinformation,  Quser newUserinfomation);
-    QList<Product>  getDate();
-    Qres changeDate( QString userid,Product oldproduct, Product newproduct);
-    Qres deleteData( QString userid,  Product deleteproduct);
-    Qres addDate( QString userid, Product addproduct);
+    Qres Qchangeuserinformation( Quser olduserinformation,  Quser newUserinfomation);
+    QList<Product>  QgetDate();
+    Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
+    Qres QdeleteData( QString userid,  Product deleteproduct);
+    Qres QaddDate( QString userid, Product addproduct);
+    Qres QdeleteAllDate(QString userid);
 private:
     int flag;
     QSqlDatabase db ;
