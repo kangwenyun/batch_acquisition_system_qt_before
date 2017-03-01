@@ -10,7 +10,7 @@ Session::Session(const Session&){}
 Session& Session::operator =(const Session&){}
 
 Session* Session::getInstance(){
-    static Session* cperson = new Session();
+    static Session* cperson = new Session(); //static就第一次执行第二次不执行了
     return cperson;
 }
 
