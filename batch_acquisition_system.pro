@@ -50,7 +50,8 @@ SOURCES += main.cpp \
     dbhelper.cpp \
     qres.cpp \
     quser.cpp \
-    utils.cpp
+    utils.cpp \
+    product.cpp
 
 HEADERS  += \
     login.h \
@@ -78,7 +79,8 @@ HEADERS  += \
     dbhelper.h \
     qres.h \
     quser.h \
-    utils.h
+    utils.h \
+    product.h
 
 FORMS    += \
     login.ui \

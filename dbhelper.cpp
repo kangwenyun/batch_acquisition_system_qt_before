@@ -153,7 +153,226 @@ Qres dbhelper::Qregist(Quser u)
 
     }
 }
-Qres dbhelper::Qchangepwd(Quser u)
+Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
+{
+    Qres _return;
+    QSqlQuery query;
+    query.prepare("select * from User where userid=? and passwd = ?");
+    query.addBindValue(userid);
+    query.addBindValue(oldpwd);
+    if(!query.exec())
+    {
+        qDebug()<<"database error";
+        _return.error=1;
+        _return.success=false;
+        _return.msg="database error";
+    }
+    else
+    {
+        if(query.next())
+        {
+            QSqlQuery updatequery;
+            updatequery.prepare("update User set passwd = ? where userid = ?");
+            updatequery.addBindValue(newpwd);
+            updatequery.addBindValue(userid);
+            if(updatequery.exec())
+            {
+                _return.error=0;
+                _return.msg="change password successfully";
+                _return.success=true;
+                return _return;
+            }
+            else
+            {
+                _return.error=1;
+                _return.msg="datebase error";
+                _return.success=false;
+                return _return;
+            }
+        }
+        else
+        {
+            _return.error=0;
+            _return.success=false;
+            _return.msg="passwd error";
+            return _return;
+        }
+    }
+}
+
+
+
+Qres dbhelper::changeuserinformation( Quser olduserinformation,  Quser newUserinfomation)
 {
 
+}
+
+QList<Product>  dbhelper::getDate()
+{
+    QList<Product> list;
+    QSqlQuery sql_query;
+    QString select_sql = "select * from product";
+    if(!sql_query.exec(select_sql))
+    {
+        qDebug()<<"error";
+        qDebug()<<sql_query.lastError();
+    }
+    else
+    {
+        while(sql_query.next())
+        {
+            Product temp;
+            temp.id = sql_query.value("id").toInt();
+            temp.number=sql_query.value("number").toString();
+            qDebug()<<temp.number;
+            temp.type=sql_query.value("type").toString();
+            temp.batchid=sql_query.value("batchid").toString();
+            temp.tray=sql_query.value("tray").toString();
+            temp.time=sql_query.value("time").toString();
+            temp.flag=sql_query.value("flag").toInt();
+            list.append(temp);
+            // number=? , type=?  , batchid=? , tray=? , time=? , flag=?
+            // QString name = sql_query.value("name").toString();
+
+        }
+        return list;
+    }
+}
+
+Qres dbhelper::changeDate( QString userid,Product oldproduct, Product newproduct)
+{
+    Qres _return;
+    QSqlQuery uquery;
+    QSqlQuery query;
+    uquery.prepare("select * from user where userid= ?");
+    uquery.addBindValue(userid);
+    uquery.exec();
+    if(uquery.next())
+    {
+        if(uquery.value("level").toInt()==0)
+        {
+            query.prepare("update product set number=? , type=?  , batchid=? , tray=? , time=? , flag=?  where id = ?");
+            query.addBindValue(newproduct.number);
+            query.addBindValue(newproduct.type);
+            query.addBindValue(newproduct.batchid);
+            query.addBindValue(newproduct.tray);
+            query.addBindValue(newproduct.time);
+            query.addBindValue(newproduct.flag);
+            query.addBindValue(oldproduct.id);
+            if(query.exec())
+            {
+                qDebug()<<"update";
+                _return.error=0;
+                _return.msg="updatesuccess";
+                _return.success=1;
+                return _return;
+            }
+            else
+            {
+
+                _return.error=1;
+                _return.msg="database error";
+                _return.success=0;
+                return _return;
+            }
+        }
+        else
+        {
+            _return.error=0;
+            _return.msg="user level is not enough";
+            _return.success=0;
+            return _return;
+        }
+    }
+    else
+    {
+        _return.error=0;
+        _return.msg="userid is error";
+        _return.success=0;
+        return _return;
+    }
+}
+
+Qres dbhelper::deleteData( QString userid,  Product deleteproduct)
+{
+    Qres _return;
+    QSqlQuery uquery;
+    QSqlQuery query;
+    uquery.prepare("select * from user where userid= ?");
+    uquery.addBindValue(userid);
+    uquery.exec();
+    if(uquery.next())
+    {
+        if(uquery.value("level").toInt()==0)
+        {
+            // query.prepare("delete  from product where id = ?");
+            //query.addBindValue((int)deleteproduct.id);
+
+            //
+            //
+            //
+            //这里需要修改
+            query.prepare("delete   from product where number=?");
+            query.addBindValue(deleteproduct.number);
+            if(query.exec())
+            {
+                qDebug()<<"deleted!";
+                _return.error=0;
+                _return.msg="deletesuccess";
+                _return.success=1;
+                return _return;
+            }
+            else
+            {
+
+                _return.error=1;
+                _return.msg="database error";
+                _return.success=0;
+                return _return;
+            }
+        }
+        else
+        {
+            _return.error=0;
+            _return.msg="user level is not enough";
+            _return.success=0;
+            return _return;
+        }
+    }
+    else
+    {
+        _return.error=0;
+        _return.msg="userid is error";
+        _return.success=0;
+        return _return;
+    }
+}
+
+Qres dbhelper::addDate( QString userid, Product addproduct)
+{
+    Qres _return;
+    QSqlQuery query;
+    query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( ?, ?,?,?,?,?)");
+    query.addBindValue(addproduct.number);
+    query.addBindValue(addproduct.type);
+    query.addBindValue(addproduct.batchid);
+    query.addBindValue(addproduct.tray);
+    query.addBindValue(addproduct.time);
+    query.addBindValue(addproduct.flag);
+    if(query.exec())
+    {
+        qDebug()<<"success insert";
+        _return.error=0;
+        _return.msg="success insert the product ";
+        _return.success=1;
+        return _return;
+    }
+    else
+    {
+        qDebug()<<"failed insert";
+        _return.error=1;
+        _return.msg="database error";
+        _return.success=0;
+        return _return;
+    }
 }
