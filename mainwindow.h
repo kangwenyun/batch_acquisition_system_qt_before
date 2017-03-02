@@ -54,10 +54,6 @@ private:
     QAction *correctLog;
 
     QAction *viewBatch;
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d5c39fb7e33477d9b670eefe5e3e85335349951
     QAction *submitBatch;
 
     QAction *viewData;
