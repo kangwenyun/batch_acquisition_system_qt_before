@@ -53,7 +53,8 @@ SOURCES += main.cpp \
     quser.cpp \
     utils.cpp \
     product.cpp \
-    test.cpp
+    test.cpp \
+    qbatch.cpp
 
 HEADERS  += \
     login.h \
@@ -83,7 +84,8 @@ HEADERS  += \
     quser.h \
     utils.h \
     product.h \
-    test.h
+    test.h \
+    qbatch.h
 
 FORMS    += \
     login.ui \

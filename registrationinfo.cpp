@@ -59,6 +59,7 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     ui->sex_edit->setFixedHeight(26);
     ui->age_edit->setFixedHeight(26);
     ui->job_edit->setFixedHeight(26);
+    ui->level_edit->setFixedHeight(26);
 }
 
 RegistrationInfo::~RegistrationInfo()
@@ -74,6 +75,7 @@ void RegistrationInfo::setWriteability(bool bl)
     ui->sex_edit->setReadOnly(rdOnly);
     ui->age_edit->setReadOnly(rdOnly);
     ui->job_edit->setReadOnly(rdOnly);
+    ui->level_edit->setReadOnly(rdOnly);
     if(rdOnly)
     {
         //不可写时不显示边框
@@ -83,6 +85,7 @@ void RegistrationInfo::setWriteability(bool bl)
         ui->sex_edit->setStyleSheet("QLineEdit{border-width:0;border-style:outset}");
         ui->age_edit->setStyleSheet("QLineEdit{border-width:0;border-style:outset}");
         ui->job_edit->setStyleSheet("QLineEdit{border-width:0;border-style:outset}");
+        ui->level_edit->setStyleSheet("QLineEdit{border-width:0;border-style:outset}");
     }else{
         //可写时显示边框
         ui->username_edit->setStyleSheet("QLineEdit{border-width:1}");
@@ -91,6 +94,7 @@ void RegistrationInfo::setWriteability(bool bl)
         ui->sex_edit->setStyleSheet("QLineEdit{border-width:1}");
         ui->age_edit->setStyleSheet("QLineEdit{border-width:1}");
         ui->job_edit->setStyleSheet("QLineEdit{border-width:1}");
+        ui->level_edit->setStyleSheet("QLineEdit{border-width:1}");
     }
 }
 

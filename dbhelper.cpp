@@ -10,8 +10,24 @@ dbhelper::dbhelper()
     db.setDatabaseName("Test");
     QcreateProductTable();
     QcreateUserTable();
+    QcreateBatchTable();
+
 }
 
+void dbhelper::QcreateBatchTable()
+{
+    if (!db.open()) {
+        qDebug() << "Database Error!";
+    }
+    else  {
+        QSqlQuery query;
+        query.exec("CREATE TABLE Batch("
+                   "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                   "batchid VARCHAR ,"
+                   "batchsum VARCHAR,"
+                   "batchamout VARCHAR)");
+    }
+}
 
 void dbhelper::QcreateProductTable()
 {
@@ -204,7 +220,30 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
 
 Qres dbhelper::Qchangeuserinformation( QString userid,  Quser newUserinfomation)
 {
+    QSqlQuery query;
+    Qres  _return;
+    query.prepare("update User set age=:age , job=:job  , level=:level , sex=:sex ,username=:username  where userid= :userid");
+    query.bindValue(":age",newUserinfomation.age);
+    query.bindValue(":job",newUserinfomation.job);
+    query.bindValue(":level",newUserinfomation.level);
+    query.bindValue(":sex",newUserinfomation.sex);
+    query.bindValue(":username",newUserinfomation.username);
+    query.bindValue(":userid",userid);
 
+    if(query.exec())
+    {
+        _return.error=0;
+        _return.msg="change userinformation successfully";
+        _return.success=1;
+        return _return;
+    }
+    else
+    {
+        _return.error=1;
+        _return.msg="database happened error";
+        _return.success=0;
+        return _return;
+    }
 }
 
 QList<Product>  dbhelper::QgetDate()
@@ -431,17 +470,16 @@ Qres dbhelper::QdeleteAllDate(QString userid)
 }
 
 
-Qres dbhelper::QgetUserInformation(Quser&  temp,QString userid)
+Qres dbhelper::QgetUserrmation(Quser&  temp,QString userid)
 {
     Qres _return;
     QSqlQuery query;
-    query.prepare("select * from user wherer userid=?");
+    query.prepare("select * from user where userid=?");
     query.addBindValue(userid);
     if(query.exec())
     {
         if(query.next())
         {
-
             temp.userid=query.value("userid").toString();
             temp.age=query.value("age").toString();
             temp.job=query.value("job").toString();
@@ -471,4 +509,194 @@ Qres dbhelper::QgetUserInformation(Quser&  temp,QString userid)
         _return.success=0;
     }
     return _return;
+}
+
+
+Qres dbhelper::QaddBatch(QString batchid,QString batchsum)
+{
+    Qres _return;
+    QSqlQuery squery;
+    squery.prepare("select * from Batch where batchid=?");
+    squery.addBindValue(batchid);
+    if(squery.exec())
+    {
+        if(squery.next())
+        {
+            _return.error=0;
+            _return.msg="batchid has existed!";
+            _return.success=0;
+        }
+        else
+        {
+            QSqlQuery query;
+            query.prepare("insert into Batch  (batchid,batchsum,batchamout)  values ( :batchid,:batchsum,:batchamout)");
+            query.bindValue(":batchid",batchid);
+            query.bindValue(":batchsum",batchsum);
+            query.bindValue(":batchamout","0");
+            if(query.exec())
+            {
+                _return.error=0;
+                _return.msg="success add batch!";
+                _return.success=1;
+            }
+            else
+            {
+                _return.error=1;
+                _return.msg="datebase error2";
+                _return.success=0;
+            }
+        }
+    }
+    else
+    {
+        _return.error=1;
+        _return.msg="datebase error1";
+        _return.success=0;
+    }
+    return _return;
+
+
+}
+
+Qres dbhelper::QaddDataWhileRefreshBatch(Product product)
+{
+    Qres _return;
+    Qres refresh;
+    Qres add;
+    QString batchid=product.batchid;
+    QSqlQuery query;
+    query.prepare("select * from Batch where batchid = ?");
+    query.addBindValue(batchid);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            //exist batch then insert into Product and update Batch
+            add=addDate(product);
+            if(add.success==1)
+            {
+                refresh=RefreshBatch(batchid);
+                if(refresh.success==1)
+                {
+                 _return.error=0;
+                 _return.msg="QaddDataWhileRefreshBatch success";
+                 _return.success=1;
+                }
+                else
+                {
+                    _return.error=refresh.error;
+                    _return.msg=refresh.msg;
+                    _return.success=refresh.success;
+                }
+            }
+            else
+            {
+                _return.error=add.error;
+                _return.msg=add.msg;
+                _return.success=add.success;
+            }
+        }
+        else
+        {
+            product.flag=1;
+            addDate(product);
+            _return.error=0;
+            _return.msg="not exist batchid  flag=1";
+            _return.success=1;
+        }
+    }
+    else
+    {
+        //database error
+        _return.error=1;
+        _return.msg="database error 610";
+        _return.success=0;
+    }
+    return _return;
+}
+
+Qres dbhelper::addDate(Product product)
+{
+    Qres _return;
+    QSqlQuery query;
+     query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( :number,:type,:batchid,:tray,:time,:flag)");
+    query.bindValue(":number",product.number);
+    query.bindValue(":type",product.type);
+    query.bindValue(":batchid",product.batchid);
+    query.bindValue(":tray",product.tray);
+    query.bindValue(":time",product.time);
+    query.bindValue(":flag",product.flag);
+    if(query.exec())
+    {
+        qDebug()<<"success insert";
+        _return.error=0;
+        _return.msg="success insert the product ";
+        _return.success=1;
+        return _return;
+    }
+    else
+    {
+        qDebug()<<"failed insert";
+        _return.error=1;
+        _return.msg="database error 611";
+        _return.success=0;
+        return _return;
+    }
+}
+Qres dbhelper::RefreshBatch(QString batchid)
+{
+    Qres _return;
+    QSqlQuery query;
+    query.prepare("select batchamout from Batch where batchid=?");
+    query.addBindValue(batchid);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            int amout= query.value(0).toInt()+1;
+            QString batchamout= QString::number(amout);
+            QSqlQuery updatequery;
+            updatequery.prepare("update Batch set batchamout = ? where batchid=?");
+            updatequery.addBindValue(batchamout);
+            updatequery.addBindValue(batchid);
+            if(updatequery.exec())
+            {
+                //update success
+                qDebug()<<"1";
+                _return.error=0;
+                _return.msg="update batch success";
+                _return.success=1;
+            }
+            else
+            {
+                qDebug()<<"2";
+                //data base error
+                _return.error=1;
+                _return.msg="database error 642";
+                _return.success=0;
+            }
+        }
+        else
+        {
+            //not exist batchid
+            qDebug()<<"3";
+            _return.error=0;
+            _return.msg="not exist batchid";
+            _return.success=0;
+        }
+    }
+    else
+    {
+        //database error
+        qDebug()<<"4";
+        _return.error=1;
+        _return.msg="database error 658";
+        _return.success=0;
+    }
+    return _return;
+}
+
+Qres dbhelper::QdeleteBatchTable()
+{
+
 }
