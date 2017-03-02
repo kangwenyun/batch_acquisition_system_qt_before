@@ -1,10 +1,14 @@
 #include "test.h"
 #include "ui_test.h"
+<<<<<<< HEAD
 #include<dbhelper.h>
 #include<session.h>
 #include<QDebug>
 #include<submitbatch.h>
 #include <QApplication>
+=======
+#include"dbhelper.h"
+>>>>>>> 0d5c39fb7e33477d9b670eefe5e3e85335349951
 Test::Test(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Test)
@@ -17,6 +21,7 @@ Test::~Test()
     delete ui;
 }
 
+<<<<<<< HEAD
 void Test::on_adddata_clicked()
 {
 
@@ -32,4 +37,9 @@ void Test::on_adddata_clicked()
     addproduct.type="A2";
     db.addDate(session->getUserId(),addproduct);
     //db.addDate();
+=======
+void Test::on_pushButton_clicked()
+{
+dbhelper db;
+>>>>>>> 0d5c39fb7e33477d9b670eefe5e3e85335349951
 }
