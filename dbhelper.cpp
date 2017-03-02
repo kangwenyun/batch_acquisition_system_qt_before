@@ -399,27 +399,27 @@ Qres dbhelper::QdeleteAllDate(QString userid)
     {
         if(query.next())
         {
-        if(query.value(0).toInt()==0)
-        {
-          QSqlQuery dquery;
-          dquery.exec("delete from product");
-          _return.error=0;
-          _return.msg="clear success";
-          _return.success=true;
+            if(query.value(0).toInt()==0)
+            {
+                QSqlQuery dquery;
+                dquery.exec("delete from product");
+                _return.error=0;
+                _return.msg="clear success";
+                _return.success=true;
+            }
+            else
+            {
+                _return.error=0;
+                _return.msg="权限不够";
+                _return.success=false;
+            }
+
         }
         else
         {
             _return.error=0;
-            _return.msg="权限不够";
+            _return.msg="账号不存在";
             _return.success=false;
-        }
-
-        }
-        else
-          {
-       _return.error=0;
-       _return.msg="账号不存在";
-       _return.success=false;
         }
         return _return;
     }

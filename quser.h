@@ -8,10 +8,10 @@ public:
     QString userid;
     QString username;
     QString  passwd;
-    int age;
-    bool sex;
+QString age;
+    QString sex;
     QString job;
-    int level;
+    QString level;
 
 
 };

@@ -16,7 +16,11 @@ public:
     ~Test();
 
 private slots:
+<<<<<<< HEAD
     void on_adddata_clicked();
+=======
+    void on_pushButton_clicked();
+>>>>>>> 0d5c39fb7e33477d9b670eefe5e3e85335349951
 
 private:
     Ui::Test *ui;
