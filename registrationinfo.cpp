@@ -51,6 +51,7 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
 //        }
 //    }
 //    fileIn.close();
+    ui->info_label->hide();
     //将edit都设为只读,不可写
     setWriteability(false);
     ui->userid_edit->setFixedHeight(26);
@@ -110,15 +111,15 @@ void RegistrationInfo::on_edit_ok_button_clicked()
         //根据userid去文件查询相关数据删除并写入新信息
         dbhelper helper;
         Quser newUser;
-//        newUser;
-//        QString userid;
-//        QString username;
-//        QString  passwd;
-//        int age;
-//        bool sex;
-//        QString job;
-//        int level;
-//        Qres res = helper.Qchangeuserinformation( userId,  Quser newUserinfomation);
+        newUser.userid = userId;
+        newUser.username = ui->username_edit->text();
+        newUser.age = ui->age_edit->text();
+        newUser.sex = ui->sex_edit->text();
+        newUser.job = ui->job_edit->text();
+        newUser.level = ui->level_edit->text();
+        Qres res = helper.Qchangeuserinformation( userId, newUser);
+        ui->info_label->setText(res.msg);
+        ui->info_label->show();
 
 //        QString txtName = "../batch_acquisition_system/reg.txt";
 //        QFile fileIn(txtName);

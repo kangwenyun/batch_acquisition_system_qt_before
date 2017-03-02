@@ -22,10 +22,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>79</x>
-     <y>29</y>
-     <width>224</width>
-     <height>201</height>
+     <x>70</x>
+     <y>20</y>
+     <width>258</width>
+     <height>241</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -157,15 +157,34 @@
       </item>
      </layout>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QLabel" name="level_label">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>权限：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="level_edit"/>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="edit_ok_button">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>260</y>
-     <width>221</width>
-     <height>23</height>
+     <x>70</x>
+     <y>290</y>
+     <width>256</width>
+     <height>27</height>
     </rect>
    </property>
    <property name="font">
@@ -175,6 +194,27 @@
    </property>
    <property name="text">
     <string>编辑</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="info_label">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>260</y>
+     <width>191</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
    </property>
   </widget>
  </widget>
