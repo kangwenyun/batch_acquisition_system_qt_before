@@ -42,10 +42,10 @@ void  dbhelper::QcreateUserTable()
                    "userid VARCHAR,"
                    "username VARCHAR,"
                    "passwd VARCHAR,"
-                   "age INT,"
-                   "sex BOOL,"
+                   "age VARCHAR,"
+                   "sex VARCHAR,"
                    "job VARCHAR,"
-                   "level INT)");
+                   "level VARCHAR)");
     }
 }
 Qres  dbhelper::Qlogin(QString userid,QString passwd)
@@ -202,7 +202,7 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
 
 
 
-Qres dbhelper::Qchangeuserinformation( Quser olduserinformation,  Quser newUserinfomation)
+Qres dbhelper::Qchangeuserinformation( QString userid,  Quser newUserinfomation)
 {
 
 }
@@ -250,7 +250,7 @@ Qres dbhelper::QchangeDate( QString userid,Product oldproduct, Product newproduc
     uquery.exec();
     if(uquery.next())
     {
-        if(uquery.value("level").toInt()==0)
+        if(uquery.value("level").toString()=="0")
         {
             query.prepare("update product set number=? , type=?  , batchid=? , tray=? , time=? , flag=?  where number = ? and tray=? and  time =?");
             query.addBindValue(newproduct.number);
@@ -307,7 +307,7 @@ Qres dbhelper::QdeleteData( QString userid,  Product deleteproduct)
     uquery.exec();
     if(uquery.next())
     {
-        if(uquery.value("level").toInt()==0)
+        if(uquery.value("level").toString()=="0")
         {
             // query.prepare("delete  from product where id = ?");
             //query.addBindValue((int)deleteproduct.id);
@@ -399,7 +399,7 @@ Qres dbhelper::QdeleteAllDate(QString userid)
     {
         if(query.next())
         {
-            if(query.value(0).toInt()==0)
+            if(query.value(0).toString()=="0")
             {
                 QSqlQuery dquery;
                 dquery.exec("delete from product");
@@ -428,4 +428,47 @@ Qres dbhelper::QdeleteAllDate(QString userid)
         qDebug()<<"false";
         return  _return;
     }
+}
+
+
+Qres dbhelper::QgetUserInformation(Quser&  temp,QString userid)
+{
+    Qres _return;
+    QSqlQuery query;
+    query.prepare("select * from user wherer userid=?");
+    query.addBindValue(userid);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+
+            temp.userid=query.value("userid").toString();
+            temp.age=query.value("age").toString();
+            temp.job=query.value("job").toString();
+            temp.level=query.value("level").toString();
+            temp.passwd="";
+            temp.sex=query.value("sex").toString();
+            temp.username=query.value("username").toString();
+
+            _return.error=0;
+            _return.msg="getuserinformation success";
+            _return.success=1;
+
+        }
+        else
+        {
+
+            _return.error=0;
+            _return.msg="getinfomation failed";
+            _return.success=0;
+        }
+    }
+    else
+    {
+
+        _return.error=1;
+        _return.msg="datebase happened error";
+        _return.success=0;
+    }
+    return _return;
 }
