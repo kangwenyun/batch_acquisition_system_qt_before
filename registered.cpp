@@ -30,6 +30,7 @@ void Registered::on_ok_button_clicked(){
     //获取界面信息
 //    QString str;
     //必须项不能为空
+    Qres res;
     if(!ui->userid->text().isEmpty() && !ui->passwd->text().isEmpty()
             && !ui->passwd_again->text().isEmpty() && !ui->level->text().isEmpty()){
         //“密码”和“确认密码”需保持一致
@@ -48,7 +49,10 @@ void Registered::on_ok_button_clicked(){
             user.age = ui->age->text();
             user.sex = QString("%1").arg(genderGroup->checkedId());
             user.job = ui->job->text();
-            user.level = ui->job->text();
+            user.level = ui->level->text();
+            //信息提交
+            dbhelper helper;
+            res = helper.Qregist(user);
         }else{
             //密码不一致
             ui->err_label->setText(tr("请确定密码！"));
@@ -61,9 +65,6 @@ void Registered::on_ok_button_clicked(){
         ui->err_label->show();
         return;
     }
-    //信息提交
-    dbhelper helper;
-    Qres res = helper.Qregist(user);//返回qres干嘛？
 
 //    //先存放到本地文件
 //    //存放地址

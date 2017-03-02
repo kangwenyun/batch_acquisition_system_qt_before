@@ -6,6 +6,7 @@
 
 QT       += core gui widgets
 QT +=  sql
+UI_DIR=./UI
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

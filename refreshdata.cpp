@@ -8,15 +8,15 @@ RefreshData::RefreshData(QWidget *parent) :
     ui(new Ui::RefreshData)
 {
     ui->setupUi(this);
- dbhelper db;
- Quser u;
- u.username="A";
- u.userid="B";
- u.age=55;
- u.job="postman";
- u.level=0;
- u.sex=1;
- u.passwd="B";
+    dbhelper db;
+    Quser u;
+    u.username="A";
+    u.userid="B";
+    u.age="55";
+    u.job="postman";
+    u.level="0";
+    u.sex="1";
+    u.passwd="B";
 
  QMessageBox::information(this,"",db.Qlogin(u.userid,u.passwd).msg);
     //serverservice service;

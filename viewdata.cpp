@@ -22,12 +22,23 @@ ViewData::ViewData(QWidget *parent) :
        int l = proList.length();
        for(int i = 0; i<l ;i++)//行
        {
-           QString str = proList[i];
-           QList<QString> item = str.split(',');
+           Product pro = proList[i];
            for(int j = 0; j<7 ;j++)//列
            {
-               QTableWidgetItem *detailInfo = new QTableWidgetItem(item[j]);
-               ui->tableWidget->setItem(i,j,detailInfo);
+               QTableWidgetItem *id = new QTableWidgetItem(pro.id);
+               ui->tableWidget->setItem(i,j,id);
+               QTableWidgetItem *number = new QTableWidgetItem(pro.number);
+               ui->tableWidget->setItem(i,j,number);
+               QTableWidgetItem *type = new QTableWidgetItem(pro.type);
+               ui->tableWidget->setItem(i,j,type);
+               QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
+               ui->tableWidget->setItem(i,j,batchid);
+               QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
+               ui->tableWidget->setItem(i,j,tray);
+               QTableWidgetItem *time = new QTableWidgetItem(pro.time);
+               ui->tableWidget->setItem(i,j,time);
+               QTableWidgetItem *flag = new QTableWidgetItem(pro.flag);
+               ui->tableWidget->setItem(i,j,flag);
            }
        }
 

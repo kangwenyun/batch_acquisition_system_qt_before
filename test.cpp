@@ -1,24 +1,24 @@
-//#include "test.h"
-//#include "ui_test.h"
-//#include<dbhelper.h>
-//#include<session.h>
-//#include<QDebug>
-//#include<submitbatch.h>
-//#include <QApplication>
-//#include"dbhelper.h"
-//Test::Test(QWidget *parent) :
-//    QDialog(parent),
-//    ui(new Ui::Test)
-//{
-//    ui->setupUi(this);
-//}
+#include "test.h"
+#include "ui_test.h"
+#include<dbhelper.h>
+#include<session.h>
+#include<QDebug>
+#include<submitbatch.h>
+#include <QApplication>
+#include"dbhelper.h"
+Test::Test(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Test)
+{
+    ui->setupUi(this);
+}
 
-//Test::~Test()
-//{
-//    delete ui;
-//}
-//void Test::on_adddata_clicked()
-//{
+Test::~Test()
+{
+    delete ui;
+}
+void Test::on_adddata_clicked()
+{
 
 //    dbhelper db;
 //     Session* session=Session::getInstance();
@@ -32,7 +32,8 @@
 //    addproduct.type="A2";
 //    db.addDate(session->getUserId(),addproduct);
 //    //db.addDate();
-//void Test::on_pushButton_clicked()
-//{
+}
+void Test::on_pushButton_clicked()
+{
 //dbhelper db;
-//}
+}
