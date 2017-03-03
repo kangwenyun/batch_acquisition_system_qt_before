@@ -85,12 +85,17 @@ void ViewData::on_data_refresh_clicked()
 
 void ViewData::setWriteability(QList<QTableWidgetItem *> items , bool bl)
 {
-    bool rdOnly = !bl;
 //    item->setFlags((item->flags()) & (~Qt::ItemIsEditable))；
-//    for(int i=0; i<items.length(); i++)
-//    {
-//        items[i]->setFlags((item->flags()) & (~Qt::ItemIsEditable));
-//    }
+    if(true)
+    {
+        //只有修改的时候可写
+        for(int i=0; i<items.length(); i++)
+        {
+            items[i]->setFlags((item->flags()) & (~Qt::ItemIsEditable));
+        }
+    }else{
+        ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
+    }
 }
 
 void ViewData::on_data_change_clicked()

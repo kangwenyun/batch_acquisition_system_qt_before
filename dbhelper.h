@@ -26,10 +26,10 @@ public:
     Qres Qlogin(QString userid,QString passwd);//登录
     Qres Qchangepwd(QString userid,QString oldpwd,QString newpwd);
     Qres QgetUserrmation(Quser&  temp,QString userid);
-    //about product
     Qres Qchangeuserinformation( QString userid,  Quser newUserinfomation);//不能修改密码和账号
+    //about product
     QList<Product>  QgetDate();
-    Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
+    Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);//savedata
     Qres QdeleteData( QString userid,  Product deleteproduct);
     Qres QaddDate( QString userid, Product addproduct);
     Qres QdeleteAllDate(QString userid);
@@ -37,7 +37,7 @@ public:
     Qres QgetBatchInformation(QString userid,QString Batchid);
 
     //about Batch
-    Qres QaddDataWhileRefreshBatch(Product product);
+    Qres QaddDataWhileRefreshBatch(Product product);//添加数据的时候刷新batch界面
     Qres QaddBatch(QString batchid,QString batchsum);
 
     Qres QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid);
