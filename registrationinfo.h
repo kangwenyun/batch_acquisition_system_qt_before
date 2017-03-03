@@ -1,6 +1,8 @@
 #ifndef REGISTRATIONINFO_H
 #define REGISTRATIONINFO_H
 
+#include "dbhelper.h"
+#include "quser.h"
 #include <QWidget>
 
 namespace Ui {
@@ -21,6 +23,8 @@ private slots:
 private:
     Ui::RegistrationInfo *ui;
     QString userId;
+    dbhelper helper;
+    Quser newUser;
     void setWriteability(bool bl);
 };
 

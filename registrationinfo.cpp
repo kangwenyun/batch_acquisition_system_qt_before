@@ -21,7 +21,25 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     //获取并设置当前用户信息
     Session* curper = Session::getInstance();
     userId = curper->getUserId();
-    //根据userid去文件查询相关数据并显示到界面上
+    //根据userid去查询相关数据并显示到界面上
+    Qres qum = helper.QgetUserrmation(newUser,userId);
+    if(!qum.success)
+    {
+        ui->info_label->setText(qum.msg);
+        ui->info_label->show();
+    }else{
+        ui->userid_edit->setText(newUser.userid);
+        ui->username_edit->setText(newUser.username);
+        if(newUser.sex == "0")
+        {
+             ui->sex_edit->setText("男");
+         }else{
+             ui->sex_edit->setText("女");
+         }
+         ui->age_edit->setText(newUser.age);
+         ui->job_edit->setText(newUser.job);
+         ui->level_edit->setText(newUser.level);
+    }
 
 //    QString txtName = "../batch_acquisition_system/reg.txt";
 //    QFile fileIn(txtName);
@@ -113,8 +131,6 @@ void RegistrationInfo::on_edit_ok_button_clicked()
         //将edit都设为只读
         setWriteability(false);
         //根据userid去文件查询相关数据删除并写入新信息
-        dbhelper helper;
-        Quser newUser;
         newUser.userid = userId;
         newUser.username = ui->username_edit->text();
         newUser.age = ui->age_edit->text();

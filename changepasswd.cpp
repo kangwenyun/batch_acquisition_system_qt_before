@@ -5,7 +5,6 @@
 #include "qres.h"
 #include "dbhelper.h"
 #include <QString>
-#include <QMessageBox>
 #include <QFile>
 
 //密码的设置修改
@@ -109,8 +108,8 @@ void ChangePasswd::on_ok_button_clicked()
 //        fileOut.write(fileContent);
         dbhelper helper;
         Qres res =  helper.Qchangepwd(userId,ui->oldKey_edit->text(),ui->newKey_edit->text());
-        QMessageBox::information(this,tr("修改密码"),res.msg);
+        ui->err_label->setText(res.msg);
     }else{
-        QMessageBox::information(this,tr("错误提示"),tr("所有项均为必填项！"));
+        ui->err_label->setText(tr("所有项均为必填项！"));
     }
 }
