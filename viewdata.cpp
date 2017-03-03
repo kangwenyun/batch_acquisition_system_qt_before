@@ -6,6 +6,8 @@
 #include <QString>
 #include <QFile>
 #include <QMessageBox>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 //数据的查看
 ViewData::ViewData(QWidget *parent) :
     QWidget(parent),
@@ -15,33 +17,9 @@ ViewData::ViewData(QWidget *parent) :
     // 自适应列宽度
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //select only rows
-       ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-       ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-       dbhelper helper;
-       QList<Product> proList = helper.QgetDate();
-       int l = proList.length();
-       for(int i = 0; i<l ;i++)//行
-       {
-           Product pro = proList[i];
-           for(int j = 0; j<7 ;j++)//列
-           {
-               QTableWidgetItem *id = new QTableWidgetItem(pro.id);
-               ui->tableWidget->setItem(i,j,id);
-               QTableWidgetItem *number = new QTableWidgetItem(pro.number);
-               ui->tableWidget->setItem(i,j,number);
-               QTableWidgetItem *type = new QTableWidgetItem(pro.type);
-               ui->tableWidget->setItem(i,j,type);
-               QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
-               ui->tableWidget->setItem(i,j,batchid);
-               QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
-               ui->tableWidget->setItem(i,j,tray);
-               QTableWidgetItem *time = new QTableWidgetItem(pro.time);
-               ui->tableWidget->setItem(i,j,time);
-               QTableWidgetItem *flag = new QTableWidgetItem(pro.flag);
-               ui->tableWidget->setItem(i,j,flag);
-           }
-       }
-
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
+    on_data_refresh_clicked();
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 //       //读取文件，确定表格行数
@@ -78,12 +56,63 @@ ViewData::~ViewData()
     delete ui;
 }
 
+void ViewData::on_data_refresh_clicked()
+{
+    QList<Product> proList = helper.QgetDate();
+    int l = proList.length();
+    for(int i = 0; i<l ;i++)//行
+    {
+        Product pro = proList[i];
+        for(int j = 0; j<7 ;j++)//列
+        {
+            QTableWidgetItem *id = new QTableWidgetItem(pro.id);
+            ui->tableWidget->setItem(i,j,id);
+            QTableWidgetItem *number = new QTableWidgetItem(pro.number);
+            ui->tableWidget->setItem(i,j,number);
+            QTableWidgetItem *type = new QTableWidgetItem(pro.type);
+            ui->tableWidget->setItem(i,j,type);
+            QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
+            ui->tableWidget->setItem(i,j,batchid);
+            QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
+            ui->tableWidget->setItem(i,j,tray);
+            QTableWidgetItem *time = new QTableWidgetItem(pro.time);
+            ui->tableWidget->setItem(i,j,time);
+            QTableWidgetItem *flag = new QTableWidgetItem(pro.flag);
+            ui->tableWidget->setItem(i,j,flag);
+        }
+    }
+}
+
+void ViewData::setWriteability(QList<QTableWidgetItem *> items , bool bl)
+{
+    bool rdOnly = !bl;
+//    item->setFlags((item->flags()) & (~Qt::ItemIsEditable))；
+//    for(int i=0; i<items.length(); i++)
+//    {
+//        items[i]->setFlags((item->flags()) & (~Qt::ItemIsEditable));
+//    }
+}
+
 void ViewData::on_data_change_clicked()
 {
      ui->tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
+     //当前行可写
+     QList<QTableWidgetItem *> items = QTableWidget::​selectedItems();//当前选中
+     setWriteability(items,true);
+     Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
 }
 
 void ViewData::on_data_save_clicked()
 {
      ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+void ViewData::on_data_add_clicked()
+{
+
+}
+
+void ViewData::on_data_delete_clicked()
+{
+    Qres QdeleteData( QString userid,  Product deleteproduct);
 }

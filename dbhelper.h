@@ -1,13 +1,24 @@
 #ifndef DBHELPER_H
 #define DBHELPER_H
-#include<quser.h>
+
 #include <QtSql>
 #include<qres.h>
+#include<qtray.h>
+#include<quser.h>
 #include<product.h>
+#include<QList>
+
 class dbhelper
 {
 public:
     dbhelper();
+    //initdb
+    void deleteall();
+    void initdb();
+    void QdeleteBatchTable();
+    void QdeleteProductTable();
+    void QdeleteUserTable();
+    //
     void QcreateProductTable();
     void QcreateUserTable();
     void QcreateBatchTable();
@@ -28,11 +39,12 @@ public:
     //about Batch
     Qres QaddDataWhileRefreshBatch(Product product);
     Qres QaddBatch(QString batchid,QString batchsum);
-    Qres QdeleteBatchTable();
 
+    Qres QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid);
 private:
     int flag;
     QSqlDatabase db ;
+    //help function QaddDataWhileRefreshBatch
     Qres addDate(Product product); //use in QaddDataWhileRefreshBatch
     Qres RefreshBatch(QString batchid);//use in QaddDataWhileRefreshBatch
 };

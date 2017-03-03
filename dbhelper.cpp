@@ -128,7 +128,6 @@ Qres dbhelper::Qregist(Quser u)
     QString exist="select * from User where userid= ?  ";
     query.prepare(exist);
     query.addBindValue( u.userid);
-
     query.exec();
     if(!query.exec())
     {
@@ -215,8 +214,6 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
         }
     }
 }
-
-
 
 Qres dbhelper::Qchangeuserinformation( QString userid,  Quser newUserinfomation)
 {
@@ -428,6 +425,7 @@ Qres dbhelper::QaddDate( QString userid, Product addproduct)
     }
 
 }
+
 Qres dbhelper::QdeleteAllDate(QString userid)
 {
     Qres _return;
@@ -469,7 +467,6 @@ Qres dbhelper::QdeleteAllDate(QString userid)
     }
 }
 
-
 Qres dbhelper::QgetUserrmation(Quser&  temp,QString userid)
 {
     Qres _return;
@@ -510,7 +507,6 @@ Qres dbhelper::QgetUserrmation(Quser&  temp,QString userid)
     }
     return _return;
 }
-
 
 Qres dbhelper::QaddBatch(QString batchid,QString batchsum)
 {
@@ -578,9 +574,9 @@ Qres dbhelper::QaddDataWhileRefreshBatch(Product product)
                 refresh=RefreshBatch(batchid);
                 if(refresh.success==1)
                 {
-                 _return.error=0;
-                 _return.msg="QaddDataWhileRefreshBatch success";
-                 _return.success=1;
+                    _return.error=0;
+                    _return.msg="QaddDataWhileRefreshBatch success";
+                    _return.success=1;
                 }
                 else
                 {
@@ -619,7 +615,7 @@ Qres dbhelper::addDate(Product product)
 {
     Qres _return;
     QSqlQuery query;
-     query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( :number,:type,:batchid,:tray,:time,:flag)");
+    query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( :number,:type,:batchid,:tray,:time,:flag)");
     query.bindValue(":number",product.number);
     query.bindValue(":type",product.type);
     query.bindValue(":batchid",product.batchid);
@@ -643,6 +639,7 @@ Qres dbhelper::addDate(Product product)
         return _return;
     }
 }
+
 Qres dbhelper::RefreshBatch(QString batchid)
 {
     Qres _return;
@@ -662,14 +659,12 @@ Qres dbhelper::RefreshBatch(QString batchid)
             if(updatequery.exec())
             {
                 //update success
-                qDebug()<<"1";
                 _return.error=0;
                 _return.msg="update batch success";
                 _return.success=1;
             }
             else
             {
-                qDebug()<<"2";
                 //data base error
                 _return.error=1;
                 _return.msg="database error 642";
@@ -696,7 +691,177 @@ Qres dbhelper::RefreshBatch(QString batchid)
     return _return;
 }
 
-Qres dbhelper::QdeleteBatchTable()
+void dbhelper::QdeleteBatchTable()
 {
+    QSqlQuery query;
+    query.prepare("delete from Batch ");
+    if(query.exec())
+    {
+     qDebug()<<"success";
+    }
+    else
+    {
+qDebug()<<"fail";
+    }
+}
+void dbhelper::QdeleteProductTable()
+{
+    QSqlQuery query;
+    query.prepare("delete from Product ");
+    if(query.exec())
+    {
+     qDebug()<<"success";
+    }
+    else
+    {
+qDebug()<<"fail";
+    }
+}
+void dbhelper::QdeleteUserTable()
+{
+    QSqlQuery query;
+    query.prepare("delete from User where userid ");
+    if(query.exec())
+    {
+     qDebug()<<"success";
+    }
+    else
+    {
+qDebug()<<"fail";
+    }
+}
+
+Qres dbhelper::QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid)
+{
+    Qres _return;
+    QSqlQuery query;
+    query.prepare("select distinct tray from Product where batchid = ?");
+    query.addBindValue(batchid);
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            Qtray temp;
+            temp.tray=query.value(0).toString();
+            QSqlQuery squery;
+            squery.prepare("select * from product where tray=? and batchid=?");
+            squery.addBindValue(temp.tray);
+            squery.addBindValue(batchid);
+            if(squery.exec())
+            {
+                while(squery.next())
+                {
+                    Product tempproduct;
+                    tempproduct.batchid=batchid;
+                    tempproduct.flag=squery.value("flag").toInt();
+                    tempproduct.number=squery.value("number").toString();
+                    tempproduct.time=squery.value("time").toString();
+                    tempproduct.tray=squery.value("tray").toString();
+                    tempproduct.type=squery.value("type").toString();
+                    temp.productlist.append(tempproduct);
+                }
+            }
+            else
+            {
+                //database error
+                _return.error=1;
+                _return.msg="database error 737";
+                _return.success=0;
+            }
+            list.append(temp);
+        }
+        _return.error=0;
+        _return.msg="getBactchDetial successfully";
+        _return.success=1;
+    }
+    else
+    {
+        //databaseerror
+        _return.error=1;
+        _return.msg="database error 750";
+        _return.success=0;
+    }
+    return _return;
+}
+void dbhelper::deleteall()
+{
+    QdeleteBatchTable();
+    QdeleteUserTable();
+    QdeleteProductTable();
+}
+
+void dbhelper::initdb()
+{
+    Quser admin("admin","admin","admin","30","man","postman","0");
+    Quser user("user","user","user","30","man","postman","1");
+    Qregist(admin);
+    Qregist(user);
+    QaddBatch("A1","50");
+    QaddBatch("A2","60");
+    QaddBatch("A3","40");
+    QaddBatch("A4","30");
+    Product A1product1("1","A","A1","T1","now",0);
+    Product A1product2("2","A","A1","T1","now",0);
+    Product A1product3("3","A","A1","T1","now",0);
+    Product A1product4("4","A","A1","T2","now",0);
+    Product A1product5("5","A","A1","T2","now",0);
+    Product A1product6("6","A","A1","T2","now",0);
+    Product A1product7("7","A","A1","T3","now",0);
+
+    Product A2product1("1","A","A2","T1","now",0);
+    Product A2product2("2","A","A2","T1","now",0);
+    Product A2product3("3","A","A2","T1","now",0);
+    Product A2product4("4","A","A2","T2","now",0);
+    Product A2product5("5","A","A2","T2","now",0);
+    Product A2product6("6","A","A2","T2","now",0);
+    Product A2product7("7","A","A2","T3","now",0);
+
+    Product A3product1("1","A","A3","T1","now",0);
+    Product A3product2("2","A","A3","T1","now",0);
+    Product A3product3("3","A","A3","T1","now",0);
+    Product A3product4("4","A","A3","T2","now",0);
+    Product A3product5("5","A","A3","T2","now",0);
+    Product A3product6("6","A","A3","T2","now",0);
+    Product A3product7("7","A","A3","T3","now",0);
+
+    Product A4product1("1","A","A4","T1","now",0);
+    Product A4product2("2","A","A4","T1","now",0);
+    Product A4product3("3","A","A4","T1","now",0);
+    Product A4product4("4","A","A4","T2","now",0);
+    Product A4product5("5","A","A4","T2","now",0);
+    Product A4product6("6","A","A4","T2","now",0);
+    Product A4product7("7","A","A4","T3","now",0);
+    QaddDataWhileRefreshBatch(A1product1);
+    QaddDataWhileRefreshBatch(A1product2);
+    QaddDataWhileRefreshBatch(A1product3);
+    QaddDataWhileRefreshBatch(A1product4);
+    QaddDataWhileRefreshBatch(A1product5);
+    QaddDataWhileRefreshBatch(A1product6);
+    QaddDataWhileRefreshBatch(A1product7);
+
+    QaddDataWhileRefreshBatch(A2product1);
+    QaddDataWhileRefreshBatch(A2product2);
+    QaddDataWhileRefreshBatch(A2product3);
+    QaddDataWhileRefreshBatch(A2product4);
+    QaddDataWhileRefreshBatch(A2product5);
+    QaddDataWhileRefreshBatch(A2product6);
+    QaddDataWhileRefreshBatch(A2product7);
+
+    QaddDataWhileRefreshBatch(A3product1);
+    QaddDataWhileRefreshBatch(A3product2);
+    QaddDataWhileRefreshBatch(A3product3);
+    QaddDataWhileRefreshBatch(A3product4);
+    QaddDataWhileRefreshBatch(A3product5);
+    QaddDataWhileRefreshBatch(A3product6);
+    QaddDataWhileRefreshBatch(A3product7);
+
+    QaddDataWhileRefreshBatch(A4product1);
+    QaddDataWhileRefreshBatch(A4product2);
+    QaddDataWhileRefreshBatch(A4product3);
+    QaddDataWhileRefreshBatch(A4product4);
+    QaddDataWhileRefreshBatch(A4product5);
+    QaddDataWhileRefreshBatch(A4product6);
+    QaddDataWhileRefreshBatch(A4product7);
+
 
 }

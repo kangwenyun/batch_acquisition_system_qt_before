@@ -54,7 +54,8 @@ SOURCES += main.cpp \
     utils.cpp \
     product.cpp \
     test.cpp \
-    qbatch.cpp
+    qbatch.cpp \
+    qraty.cpp
 
 HEADERS  += \
     login.h \
@@ -85,7 +86,8 @@ HEADERS  += \
     utils.h \
     product.h \
     test.h \
-    qbatch.h
+    qbatch.h \
+    qraty.h
 
 FORMS    += \
     login.ui \

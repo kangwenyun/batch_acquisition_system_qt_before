@@ -1,6 +1,7 @@
 #ifndef VIEWDATA_H
 #define VIEWDATA_H
 
+#include "dbhelper.h"
 #include <QWidget>
 
 namespace Ui {
@@ -20,8 +21,15 @@ private slots:
 
     void on_data_save_clicked();
 
+    void on_data_refresh_clicked();
+
+    void on_data_delete_clicked();
+
+    void on_data_add_clicked();
+
 private:
     Ui::ViewData *ui;
+    dbhelper helper;
 
 };
 

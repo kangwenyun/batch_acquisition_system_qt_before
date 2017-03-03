@@ -46,6 +46,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="data_change">
+         <property name="text">
+          <string>修改</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="data_save">
          <property name="text">
           <string>保存</string>
@@ -53,9 +60,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="data_change">
+        <widget class="QPushButton" name="data_add">
          <property name="text">
-          <string>修改</string>
+          <string>增加</string>
          </property>
         </widget>
        </item>
