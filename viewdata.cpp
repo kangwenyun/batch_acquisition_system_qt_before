@@ -91,7 +91,7 @@ void ViewData::setWriteability(QList<QTableWidgetItem *> items , bool bl)
         //只有修改的时候可写
         for(int i=0; i<items.length(); i++)
         {
-            items[i]->setFlags((item->flags()) & (~Qt::ItemIsEditable));
+            items[i]->setFlags((items[i]->flags()) & (~Qt::ItemIsEditable));
         }
     }else{
         ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
@@ -102,9 +102,9 @@ void ViewData::on_data_change_clicked()
 {
      ui->tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
      //当前行可写
-     QList<QTableWidgetItem *> items = QTableWidget::​selectedItems();//当前选中
+     QList<QTableWidgetItem *> items = ui->tableWidget->selectedItems();//当前选中
      setWriteability(items,true);
-     Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
+//     Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
 }
 
 void ViewData::on_data_save_clicked()

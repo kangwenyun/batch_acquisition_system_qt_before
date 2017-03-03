@@ -3,6 +3,7 @@
 
 #include "dbhelper.h"
 #include <QWidget>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class ViewData;
@@ -15,6 +16,7 @@ class ViewData : public QWidget
 public:
     explicit ViewData(QWidget *parent = 0);
     ~ViewData();
+    void setWriteability(QList<QTableWidgetItem *> items , bool bl);
 
 private slots:
     void on_data_change_clicked();

@@ -87,7 +87,7 @@ HEADERS  += \
     product.h \
     test.h \
     qbatch.h \
-    qraty.h
+    qtray.h
 
 FORMS    += \
     login.ui \
