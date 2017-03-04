@@ -1,6 +1,7 @@
 #ifndef CHANGEPASSWD_H
 #define CHANGEPASSWD_H
 
+#include "dbhelper.h"
 #include <QWidget>
 #include <QString>
 
@@ -23,6 +24,7 @@ private slots:
 private:
     Ui::ChangePasswd *ui;
     QString userId;
+    dbhelper helper;
 };
 
 #endif // CHANGEPASSWD_H

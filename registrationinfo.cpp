@@ -138,6 +138,14 @@ void RegistrationInfo::on_edit_ok_button_clicked()
         newUser.job = ui->job_edit->text();
         newUser.level = ui->level_edit->text();
         Qres res = helper.Qchangeuserinformation( userId, newUser);
+        if(res.success)
+        {
+            //绿色
+            ui->info_label->setStyleSheet("QLabel{color: rgb(0, 255, 0);}");
+        }else{
+            //红色
+            ui->info_label->setStyleSheet("QLabel{color: rgb(255, 0, 0);}");
+        }
         ui->info_label->setText(res.msg);
         ui->info_label->show();
 

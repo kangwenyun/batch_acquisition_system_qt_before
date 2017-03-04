@@ -2,12 +2,14 @@
 #include "ui_viewdata.h"
 #include "dbhelper.h"
 #include "product.h"
+#include "session.h"
 #include <QList>
 #include <QString>
 #include <QFile>
 #include <QMessageBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QDebug>
 //数据的查看
 ViewData::ViewData(QWidget *parent) :
     QWidget(parent),
@@ -18,7 +20,10 @@ ViewData::ViewData(QWidget *parent) :
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //select only rows
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
+    //把选中模式设为单选，即每次只选中一行，而不能选中多行
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    Session *curper = Session::getInstance();
+    userId = curper->getUserId();
     on_data_refresh_clicked();
 
 //------------------------------------------------------------------------------------------------------------------------------------------
@@ -60,38 +65,59 @@ void ViewData::on_data_refresh_clicked()
 {
     QList<Product> proList = helper.QgetDate();
     int l = proList.length();
+    ui->tableWidget->setRowCount(l);
+    int j = 0;//列计数
     for(int i = 0; i<l ;i++)//行
     {
+        j = 0;
         Product pro = proList[i];
-        for(int j = 0; j<7 ;j++)//列
-        {
-            QTableWidgetItem *id = new QTableWidgetItem(pro.id);
-            ui->tableWidget->setItem(i,j,id);
-            QTableWidgetItem *number = new QTableWidgetItem(pro.number);
-            ui->tableWidget->setItem(i,j,number);
-            QTableWidgetItem *type = new QTableWidgetItem(pro.type);
-            ui->tableWidget->setItem(i,j,type);
-            QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
-            ui->tableWidget->setItem(i,j,batchid);
-            QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
-            ui->tableWidget->setItem(i,j,tray);
-            QTableWidgetItem *time = new QTableWidgetItem(pro.time);
-            ui->tableWidget->setItem(i,j,time);
-            QTableWidgetItem *flag = new QTableWidgetItem(pro.flag);
-            ui->tableWidget->setItem(i,j,flag);
-        }
+        QTableWidgetItem *id = new QTableWidgetItem(QObject::tr("%1").arg(pro.id));
+        ui->tableWidget->setItem(i,j++,id);
+        QTableWidgetItem *number = new QTableWidgetItem(pro.number);
+        ui->tableWidget->setItem(i,j++,number);
+        QTableWidgetItem *type = new QTableWidgetItem(pro.type);
+        ui->tableWidget->setItem(i,j++,type);
+        QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
+        ui->tableWidget->setItem(i,j++,batchid);
+        QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
+        ui->tableWidget->setItem(i,j++,tray);
+        QTableWidgetItem *time = new QTableWidgetItem(pro.time);
+        ui->tableWidget->setItem(i,j++,time);
+        QTableWidgetItem *flag = new QTableWidgetItem(QObject::tr("%1").arg(pro.flag));
+        ui->tableWidget->setItem(i,j++,flag);
     }
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
 }
 
-void ViewData::setWriteability(QList<QTableWidgetItem *> items , bool bl)
+void ViewData::setWriteability(int row , bool bl)
 {
-//    item->setFlags((item->flags()) & (~Qt::ItemIsEditable))；
-    if(true)
+    if(bl)
     {
-        //只有修改的时候可写
-        for(int i=0; i<items.length(); i++)
+        ui->tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);//所有可写
+        //非选中行均设置为不可写
+        QTableWidgetItem *item;
+        int i = 0;
+        for(; i < row; i++)
         {
-            items[i]->setFlags((items[i]->flags()) & (~Qt::ItemIsEditable));
+            for(int j=0; j<7; j++)
+            {
+                item = ui->tableWidget->item(i,j);
+                item->setFlags(Qt::NoItemFlags);
+            }
+        }
+        i++;
+        item = ui->tableWidget->item(row,0);
+        if(item != NULL)
+        {
+            item->setFlags(Qt::NoItemFlags);
+        }
+        for(; i >row && i < ui->tableWidget->rowCount(); i++)
+        {
+            for(int j=0; j<7; j++)
+            {
+                item = ui->tableWidget->item(i,j);
+                item->setFlags(Qt::NoItemFlags);
+            }
         }
     }else{
         ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
@@ -100,24 +126,66 @@ void ViewData::setWriteability(QList<QTableWidgetItem *> items , bool bl)
 
 void ViewData::on_data_change_clicked()
 {
-     ui->tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
      //当前行可写
-     QList<QTableWidgetItem *> items = ui->tableWidget->selectedItems();//当前选中
-     setWriteability(items,true);
-//     Qres QchangeDate( QString userid,Product oldproduct, Product newproduct);
+     row = ui->tableWidget->currentRow();
+     if(row != -1)//已选中某行
+     {
+         bool ok;
+         curproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
+         curproduct.type = ui->tableWidget->item(row,2)->text();
+         curproduct.batchid = ui->tableWidget->item(row,3)->text();
+         curproduct.tray = ui->tableWidget->item(row,4)->text();
+         curproduct.time = ui->tableWidget->item(row,5)->text();
+         curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
+         setWriteability(row,true);
+     }else{
+         QMessageBox::warning(this,tr("warning"),tr("select one line,please!"));
+     }
 }
 
 void ViewData::on_data_save_clicked()
 {
-     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    setWriteability(row,false);
+    Product newproduct;
+    bool ok;
+    newproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
+    newproduct.type = ui->tableWidget->item(row,2)->text();
+    newproduct.batchid = ui->tableWidget->item(row,3)->text();
+    newproduct.tray = ui->tableWidget->item(row,4)->text();
+    newproduct.time = ui->tableWidget->item(row,5)->text();
+    newproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
+    Qres qres = helper.QchangeDate(userId,curproduct,newproduct);
+    if(!qres.success)
+    {
+        QMessageBox::warning(this,tr("warning"),qres.msg);
+    }
+    on_data_refresh_clicked();
 }
 
 void ViewData::on_data_add_clicked()
 {
-
+    //获取旧的行计数，表格末尾加入一个新空行，有新的空行才能设置新行条目
+    int nOldRowCount = ui->tableWidget->rowCount();
+    ui->tableWidget->insertRow(nOldRowCount);
+    setWriteability(nOldRowCount,true);
+    Product addproduct;
+    bool ok;
+    addproduct.number = ui->tableWidget->item(nOldRowCount,1)->text().toInt(&ok,10);
+    addproduct.type = ui->tableWidget->item(nOldRowCount,2)->text();
+    addproduct.batchid = ui->tableWidget->item(nOldRowCount,3)->text();
+    addproduct.tray = ui->tableWidget->item(nOldRowCount,4)->text();
+    addproduct.time = ui->tableWidget->item(nOldRowCount,5)->text();
+    addproduct.flag = ui->tableWidget->item(nOldRowCount,6)->text().toInt(&ok,10);
+    Qres qres = helper.QaddDate(userId, addproduct);
+    if(!qres.success)
+    {
+        QMessageBox::warning(this,tr("warning"),qres.msg);
+    }
 }
 
 void ViewData::on_data_delete_clicked()
 {
-    Qres QdeleteData( QString userid,  Product deleteproduct);
+    row = ui->tableWidget->currentRow() ;//当前行号
+    ui->tableWidget->removeRow(row);
+    Qres qres = helper.QdeleteData(userId,curproduct);
 }

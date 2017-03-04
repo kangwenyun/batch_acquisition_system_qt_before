@@ -2,8 +2,9 @@
 #define VIEWDATA_H
 
 #include "dbhelper.h"
+#include "product.h"
 #include <QWidget>
-#include <QTableWidgetItem>
+#include <QString>
 
 namespace Ui {
 class ViewData;
@@ -16,7 +17,7 @@ class ViewData : public QWidget
 public:
     explicit ViewData(QWidget *parent = 0);
     ~ViewData();
-    void setWriteability(QList<QTableWidgetItem *> items , bool bl);
+    void setWriteability(int row , bool bl);
 
 private slots:
     void on_data_change_clicked();
@@ -32,7 +33,9 @@ private slots:
 private:
     Ui::ViewData *ui;
     dbhelper helper;
-
+    QString userId;
+    Product curproduct;
+    int row;//当前选中行
 };
 
 #endif // VIEWDATA_H

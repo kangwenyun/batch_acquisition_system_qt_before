@@ -29,6 +29,8 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui->oldKey_edit->setFixedHeight(26);
     ui->newKey_edit->setFixedHeight(26);
     ui->newKeyAgain_edit->setFixedHeight(26);
+    //将焦点设置到原密码输入框上
+    ui->oldKey_edit->installEventFilter(this);
 }
 
 ChangePasswd::~ChangePasswd()
@@ -106,10 +108,11 @@ void ChangePasswd::on_ok_button_clicked()
 //        }
 //        QByteArray fileContent = fileInfo.toLocal8Bit();
 //        fileOut.write(fileContent);
-        dbhelper helper;
         Qres res =  helper.Qchangepwd(userId,ui->oldKey_edit->text(),ui->newKey_edit->text());
         ui->err_label->setText(res.msg);
+        ui->err_label->show();
     }else{
         ui->err_label->setText(tr("所有项均为必填项！"));
+        ui->err_label->show();
     }
 }
