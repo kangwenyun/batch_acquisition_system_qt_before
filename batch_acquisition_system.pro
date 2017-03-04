@@ -55,7 +55,8 @@ SOURCES += main.cpp \
     product.cpp \
     test.cpp \
     qbatch.cpp \
-    qraty.cpp
+    qraty.cpp \
+    addproduct.cpp
 
 HEADERS  += \
     login.h \
@@ -87,7 +88,8 @@ HEADERS  += \
     product.h \
     test.h \
     qbatch.h \
-    qtray.h
+    qtray.h \
+    addproduct.h
 
 FORMS    += \
     login.ui \
@@ -110,5 +112,6 @@ FORMS    += \
     viewproline.ui \
     setproline.ui \
     modifyproline.ui \
-    test.ui
+    test.ui \
+    addproduct.ui
 

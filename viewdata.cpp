@@ -186,6 +186,13 @@ void ViewData::on_data_add_clicked()
 void ViewData::on_data_delete_clicked()
 {
     row = ui->tableWidget->currentRow() ;//当前行号
+    bool ok;
+    curproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
+    curproduct.type = ui->tableWidget->item(row,2)->text();
+    curproduct.batchid = ui->tableWidget->item(row,3)->text();
+    curproduct.tray = ui->tableWidget->item(row,4)->text();
+    curproduct.time = ui->tableWidget->item(row,5)->text();
+    curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
     ui->tableWidget->removeRow(row);
     Qres qres = helper.QdeleteData(userId,curproduct);
 }
