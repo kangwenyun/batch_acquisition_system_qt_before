@@ -1,6 +1,5 @@
 #include "authentication.h"
 #include "ui_authentication.h"
-#include<test.h>
 #include<submitbatch.h>
 //系统登录，身份认证
 Authentication::Authentication(QWidget *parent) :
@@ -17,6 +16,6 @@ Authentication::~Authentication()
 
 void Authentication::on_pushButton_clicked()
 {
-Test * test=new Test();
-test->show();
+//Test * test=new Test();
+//test->show();
 }

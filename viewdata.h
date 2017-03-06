@@ -35,7 +35,7 @@ private:
     QString userId;
     Product curproduct;
     int row;//当前选中行
-    saveProduct *ap;
+    saveProduct *sp;
 };
 
 #endif // VIEWDATA_H

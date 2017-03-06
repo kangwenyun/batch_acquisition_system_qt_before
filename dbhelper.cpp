@@ -1,12 +1,12 @@
 #include "dbhelper.h"
-
+#include<loger.h>
 dbhelper::dbhelper()
 {
-    flag=0;
-    if(QSqlDatabase::contains("qt_sql_default_connection"))
-        db = QSqlDatabase::database("qt_sql_default_connection");
-    else
-        db = QSqlDatabase::addDatabase("QSQLITE");
+
+    //if(QSqlDatabase::contains("qt_sql_default_connection"))
+       // db = QSqlDatabase::database("qt_sql_default_connection");
+  //  else
+    db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("Test");
     QcreateProductTable();
     QcreateUserTable();
@@ -27,6 +27,7 @@ void dbhelper::QcreateBatchTable()
                    "batchsum VARCHAR,"
                    "batchamout VARCHAR)");
     }
+
 }
 
 void dbhelper::QcreateProductTable()
@@ -45,6 +46,7 @@ void dbhelper::QcreateProductTable()
                    "time  VARCHAR,"
                    "flag  INTEGER)");
     }
+
 }
 void  dbhelper::QcreateUserTable()
 {
@@ -63,6 +65,7 @@ void  dbhelper::QcreateUserTable()
                    "job VARCHAR,"
                    "level VARCHAR)");
     }
+
 }
 Qres  dbhelper::Qlogin(QString userid,QString passwd)
 {
@@ -72,10 +75,12 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
     query.addBindValue(userid);
     if(!query.exec())
     {
+
         qDebug()<<query.lastError();
         _return.error=1;
         _return.success=0;
-        _return.msg="database error 78";
+        _return.msg="登录时发生了数据库错误";
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
     else
@@ -90,7 +95,8 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
                 qDebug()<< query.lastError();
                 _return.error=1;
                 _return.success=0;
-                _return.msg="database error 93";
+                _return.msg="登录时发生了数据库错误";
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
             else
@@ -99,14 +105,16 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
                 {
                     _return.error=0;
                     _return.success=1;
-                    _return.msg=userid+" login successfully";
+                    _return.msg="登录成功";
+                    Loger::getInstance()->setLoger(userid,_return.msg);
                     return _return;
                 }
                 else
                 {
                     _return.error=0;
                     _return.success=0;
-                    _return.msg="passwd error";   // passwd error
+                    _return.msg="登录时密码错误";   // passwd error
+               Loger::getInstance()->setLoger(userid,_return.msg);
                     return _return;
                 }
             }
@@ -115,7 +123,8 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
         {
             _return.error=0;
             _return.success=false;
-            _return.msg="userid error"; //userid error
+            _return.msg="登录时账号错误"; //userid error
+            Loger::getInstance()->setLoger(userid,_return.msg);
             return _return;
         }
     }
@@ -134,8 +143,9 @@ Qres dbhelper::Qregist(Quser u)
 
         qDebug()<<query.lastError();
         _return.error=1;
-        _return.msg="database error 137";
+        _return.msg="注册时发生数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(u.userid,_return.msg);
         return _return;
     }
     else
@@ -143,8 +153,9 @@ Qres dbhelper::Qregist(Quser u)
         if(query.next())
         {
             _return.error=0;
-            _return.msg="userid has existed";
+            _return.msg="账号已经存在";
             _return.success=0;
+            Loger::getInstance()->setLoger(u.userid,_return.msg);
             return _return;
         }
         else
@@ -159,10 +170,10 @@ Qres dbhelper::Qregist(Quser u)
             iquery.bindValue(":job",u.job);
             iquery.bindValue(":level",u.level);
             iquery.exec();
-            db.close();
             _return.error=0;
-            _return.msg="success";
+            _return.msg="注册成功";
             _return.success=1;
+            Loger::getInstance()->setLoger(u.userid,_return.msg);
             return _return;
         }
 
@@ -177,10 +188,11 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
     query.addBindValue(oldpwd);
     if(!query.exec())
     {
-        qDebug()<<"database error 180";
+
         _return.error=1;
         _return.success=false;
-        _return.msg="database error 183";
+        _return.msg="修改密码时发生数据库错误";
+        Loger::getInstance()->setLoger(userid,_return.msg);
     }
     else
     {
@@ -193,15 +205,17 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
             if(updatequery.exec())
             {
                 _return.error=0;
-                _return.msg="change password successfully";
+                _return.msg="修改密码成功";
                 _return.success=true;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
             else
             {
                 _return.error=1;
-                _return.msg="datebase error";
+                _return.msg="修改密码时发生数据库错误";
                 _return.success=false;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
         }
@@ -209,7 +223,8 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
         {
             _return.error=0;
             _return.success=false;
-            _return.msg="passwd error";
+            _return.msg="修改密码时原密码错误";
+            Loger::getInstance()->setLoger(userid,_return.msg);
             return _return;
         }
     }
@@ -230,20 +245,22 @@ Qres dbhelper::Qchangeuserinformation( QString userid,  Quser newUserinfomation)
     if(query.exec())
     {
         _return.error=0;
-        _return.msg="change userinformation successfully";
+        _return.msg="修改用户信息成功";
         _return.success=1;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
     else
     {
         _return.error=1;
-        _return.msg="database happened error";
+        _return.msg="修改用户信息时发生数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
 }
 
-QList<Product>  dbhelper::QgetDate()
+QList<Product>  dbhelper::QgetData()
 {
     QList<Product> list;
     QSqlQuery sql_query;
@@ -276,7 +293,7 @@ QList<Product>  dbhelper::QgetDate()
     }
 }
 
-Qres dbhelper::QchangeDate( QString userid,Product oldproduct, Product newproduct)
+Qres dbhelper::QchangeData( QString userid,Product oldproduct, Product newproduct)
 {
     Qres _return;
     QSqlQuery uquery;
@@ -288,13 +305,14 @@ Qres dbhelper::QchangeDate( QString userid,Product oldproduct, Product newproduc
     {
         if(uquery.value("level").toString()=="0")
         {
-            query.prepare("update product set number=? , type=?  , batchid=? , tray=? , time=? , flag=?  where number = ? and tray=? and  time =?");
+            query.prepare("update product set number=? , type=?  , batchid=? , tray=? , time=? , flag=?  where batchid =? and number = ? and tray=? and  time =?");
             query.addBindValue(newproduct.number);
             query.addBindValue(newproduct.type);
             query.addBindValue(newproduct.batchid);
             query.addBindValue(newproduct.tray);
             query.addBindValue(newproduct.time);
             query.addBindValue(newproduct.flag);
+            query.addBindValue(oldproduct.batchid);
             query.addBindValue(oldproduct.number);
             query.addBindValue(oldproduct.tray);
             query.addBindValue(oldproduct.time);
@@ -303,32 +321,36 @@ Qres dbhelper::QchangeDate( QString userid,Product oldproduct, Product newproduc
             {
                 qDebug()<<"update";
                 _return.error=0;
-                _return.msg="updatesuccess";
+                _return.msg="修改了货物信息,旧的批次号:"+oldproduct.batchid+" 旧的托盘号为:"+oldproduct.tray+" 旧的序号为:"+oldproduct.number+" 新的批次号:"+newproduct.batchid+" 新的托盘号为:"+newproduct.tray+" 新的序号为:"+newproduct.number;
                 _return.success=1;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
             else
             {
 
                 _return.error=1;
-                _return.msg="database error 314";
+                _return.msg="修改货物信息时发生数据库错误";
                 _return.success=0;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
         }
         else
         {
             _return.error=0;
-            _return.msg="user level is not enough";
+            _return.msg="修改货物信息的权限不够";
             _return.success=0;
+            Loger::getInstance()->setLoger(userid,_return.msg);
             return _return;
         }
     }
     else
     {
         _return.error=0;
-        _return.msg="userid is error";
+        _return.msg="账号错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
 }
@@ -352,53 +374,51 @@ Qres dbhelper::QdeleteData( QString userid,  Product deleteproduct)
             //
             //
             //这里需要修改
-            query.prepare("delete   from product where number=?");
+            query.prepare("delete   from product where number=? and tray=? and batchid=?");
             query.addBindValue(deleteproduct.number);
+            query.addBindValue(deleteproduct.tray);
+            query.addBindValue(deleteproduct.batchid);
             if(query.exec())
             {
-                qDebug()<<"deleted!";
                 _return.error=0;
-                _return.msg="deletesuccess";
+                _return.msg="删除货物成功,货物序号:"+deleteproduct.number+" 货物托盘号:"+deleteproduct.tray+" 货物批次号:"+deleteproduct.batchid;
                 _return.success=1;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
             else
             {
 
                 _return.error=1;
-                _return.msg="database error 369";
+                _return.msg="删除货物时发生数据库错误";
                 _return.success=0;
+                Loger::getInstance()->setLoger(userid,_return.msg);
                 return _return;
             }
         }
         else
         {
             _return.error=0;
-            _return.msg="user level is not enough";
+            _return.msg="用户权限不足,无法删除数据";
             _return.success=0;
+            Loger::getInstance()->setLoger(userid,_return.msg);
             return _return;
         }
     }
     else
     {
         _return.error=0;
-        _return.msg="userid is error";
+        _return.msg="账号错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
 }
 
-Qres dbhelper::QaddDate( QString userid, Product addproduct)
+Qres dbhelper::QaddData( QString userid, Product addproduct)
 {
     Qres _return;
     QSqlQuery query;
-    //    query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( ?, ?,?,?,?,?)");
-    //    query.addBindValue(addproduct.number);
-    //    query.addBindValue(addproduct.type);
-    //    query.addBindValue(addproduct.batchid);
-    //    query.addBindValue(addproduct.tray);
-    //    query.addBindValue(addproduct.time);
-    //    query.addBindValue(addproduct.flag);
     query.prepare("insert into product (number,type,batchid,tray,time,flag)  values ( :number,:type,:batchid,:tray,:time,:flag)");
     query.bindValue(":number",addproduct.number);
     query.bindValue(":type",addproduct.type);
@@ -411,22 +431,24 @@ Qres dbhelper::QaddDate( QString userid, Product addproduct)
     {
         qDebug()<<"success insert";
         _return.error=0;
-        _return.msg="success insert the product ";
+        _return.msg="成功上传数据,批次号:"+addproduct.batchid+" 托盘号为:"+addproduct.tray+" 序号为:"+addproduct.number;
         _return.success=1;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
     else
     {
         qDebug()<<"failed insert";
         _return.error=1;
-        _return.msg="database error 422";
+        _return.msg="上传数据时发生数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return _return;
     }
 
 }
 
-Qres dbhelper::QdeleteAllDate(QString userid)
+Qres dbhelper::QdeleteAllData(QString userid)
 {
     Qres _return;
     QSqlQuery query;
@@ -441,14 +463,16 @@ Qres dbhelper::QdeleteAllDate(QString userid)
                 QSqlQuery dquery;
                 dquery.exec("delete from product");
                 _return.error=0;
-                _return.msg="clear success";
+                _return.msg="删除所有数据成功";
                 _return.success=true;
+                Loger::getInstance()->setLoger(userid,_return.msg);
             }
             else
             {
                 _return.error=0;
                 _return.msg="权限不够";
                 _return.success=false;
+                Loger::getInstance()->setLoger(userid,_return.msg);
             }
 
         }
@@ -457,12 +481,16 @@ Qres dbhelper::QdeleteAllDate(QString userid)
             _return.error=0;
             _return.msg="账号不存在";
             _return.success=false;
+            Loger::getInstance()->setLoger(userid,_return.msg);
         }
         return _return;
     }
     else
     {
-        qDebug()<<"false";
+        _return.error=1;
+        _return.msg="删除所有数据,发生数据库错误";
+        _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
         return  _return;
     }
 }
@@ -486,29 +514,32 @@ Qres dbhelper::QgetUserrmation(Quser&  temp,QString userid)
             temp.username=query.value("username").toString();
 
             _return.error=0;
-            _return.msg="getuserinformation success";
+            _return.msg="获得个人信息成功";
             _return.success=1;
+            Loger::getInstance()->setLoger(userid,_return.msg);
 
         }
         else
         {
 
             _return.error=0;
-            _return.msg="getinfomation failed";
+            _return.msg="获得个人信息失败";
             _return.success=0;
+            Loger::getInstance()->setLoger(userid,_return.msg);
         }
     }
     else
     {
 
         _return.error=1;
-        _return.msg="datebase happened error";
+        _return.msg="获得个人信息时发生数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
     }
     return _return;
 }
 
-Qres dbhelper::QaddBatch(QString batchid,QString batchsum)
+Qres dbhelper::QaddBatch(QString userid,QString batchid,QString batchsum)
 {
     Qres _return;
     QSqlQuery squery;
@@ -519,8 +550,9 @@ Qres dbhelper::QaddBatch(QString batchid,QString batchsum)
         if(squery.next())
         {
             _return.error=0;
-            _return.msg="batchid has existed!";
+            _return.msg="批次号已经存在无法添加";
             _return.success=0;
+            Loger::getInstance()->setLoger(userid,_return.msg);
         }
         else
         {
@@ -532,29 +564,32 @@ Qres dbhelper::QaddBatch(QString batchid,QString batchsum)
             if(query.exec())
             {
                 _return.error=0;
-                _return.msg="success add batch!";
+                _return.msg="添加批次号成功,批次号为"+batchid;
                 _return.success=1;
+                Loger::getInstance()->setLoger(userid,_return.msg);
             }
             else
             {
                 _return.error=1;
-                _return.msg="datebase error2";
+                _return.msg="添加批次时发成数据库错误";
                 _return.success=0;
+                Loger::getInstance()->setLoger(userid,_return.msg);
             }
         }
     }
     else
     {
         _return.error=1;
-        _return.msg="datebase error1";
+        _return.msg="添加批次时发成数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
     }
     return _return;
 
 
 }
 
-Qres dbhelper::QaddDataWhileRefreshBatch(Product product)
+Qres dbhelper::QaddDataWhileRefreshBatch(QString userid,Product product)
 {
     Qres _return;
     Qres refresh;
@@ -568,21 +603,23 @@ Qres dbhelper::QaddDataWhileRefreshBatch(Product product)
         if(query.next())
         {
             //exist batch then insert into Product and update Batch
-            add=addDate(product);
+            add=addData(product);
             if(add.success==1)
             {
                 refresh=RefreshBatch(batchid);
                 if(refresh.success==1)
                 {
                     _return.error=0;
-                    _return.msg="QaddDataWhileRefreshBatch success";
+                    _return.msg="添加新货物并且刷新批次成功,货物信息批次号:"+product.batchid+" 序号:"+product.number+" 托盘号"+product.number;
                     _return.success=1;
+                    Loger::getInstance()->setLoger(userid,_return.msg);
                 }
                 else
                 {
                     _return.error=refresh.error;
                     _return.msg=refresh.msg;
                     _return.success=refresh.success;
+                    Loger::getInstance()->setLoger(userid,_return.msg);
                 }
             }
             else
@@ -590,28 +627,31 @@ Qres dbhelper::QaddDataWhileRefreshBatch(Product product)
                 _return.error=add.error;
                 _return.msg=add.msg;
                 _return.success=add.success;
+                Loger::getInstance()->setLoger(userid,_return.msg);
             }
         }
         else
         {
             product.flag=1;
-            addDate(product);
+            addData(product);
             _return.error=0;
-            _return.msg="not exist batchid  flag=1";
+            _return.msg="不存在该批次号,数据加入数据库中但是错误标记为1";
             _return.success=1;
+            Loger::getInstance()->setLoger(userid,_return.msg);
         }
     }
     else
     {
         //database error
         _return.error=1;
-        _return.msg="database error 610";
+        _return.msg="发生了数据库错误";
         _return.success=0;
+        Loger::getInstance()->setLoger(userid,_return.msg);
     }
     return _return;
 }
 
-Qres dbhelper::addDate(Product product)
+Qres dbhelper::addData(Product product)
 {
     Qres _return;
     QSqlQuery query;
@@ -626,7 +666,7 @@ Qres dbhelper::addDate(Product product)
     {
         qDebug()<<"success insert";
         _return.error=0;
-        _return.msg="success insert the product ";
+        _return.msg="成功加入数据";
         _return.success=1;
         return _return;
     }
@@ -634,7 +674,7 @@ Qres dbhelper::addDate(Product product)
     {
         qDebug()<<"failed insert";
         _return.error=1;
-        _return.msg="database error 611";
+        _return.msg="加入数据时发生数据库错误";
         _return.success=0;
         return _return;
     }
@@ -660,32 +700,30 @@ Qres dbhelper::RefreshBatch(QString batchid)
             {
                 //update success
                 _return.error=0;
-                _return.msg="update batch success";
+                _return.msg="刷新批次成功,批次号为:"+batchid;
                 _return.success=1;
             }
             else
             {
                 //data base error
                 _return.error=1;
-                _return.msg="database error 642";
+                _return.msg="刷新批次号时发生数据库错误";
                 _return.success=0;
             }
         }
         else
         {
             //not exist batchid
-            qDebug()<<"3";
             _return.error=0;
-            _return.msg="not exist batchid";
+            _return.msg="刷新批次号时发现不存在该批次号";
             _return.success=0;
         }
     }
     else
     {
         //database error
-        qDebug()<<"4";
         _return.error=1;
-        _return.msg="database error 658";
+        _return.msg="刷新批次号时候发生数据库错误";
         _return.success=0;
     }
     return _return;
@@ -711,6 +749,7 @@ void dbhelper::QdeleteProductTable()
     if(query.exec())
     {
      qDebug()<<"success";
+
     }
     else
     {
@@ -733,6 +772,11 @@ qDebug()<<"fail";
 
 Qres dbhelper::QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid)
 {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+db.setDatabaseName("Test");
+QcreateProductTable();
+QcreateUserTable();
+QcreateBatchTable();
     Qres _return;
     QSqlQuery query;
     query.prepare("select distinct tray from Product where batchid = ?");
@@ -765,7 +809,7 @@ Qres dbhelper::QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid)
             {
                 //database error
                 _return.error=1;
-                _return.msg="database error 737";
+                _return.msg="数据库错误";
                 _return.success=0;
             }
             list.append(temp);
@@ -778,7 +822,7 @@ Qres dbhelper::QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid)
     {
         //databaseerror
         _return.error=1;
-        _return.msg="database error 750";
+        _return.msg="数据库错误";
         _return.success=0;
     }
     return _return;
@@ -792,14 +836,15 @@ void dbhelper::deleteall()
 
 void dbhelper::initdb()
 {
+
     Quser admin("admin","admin","admin","30","man","postman","0");
     Quser user("user","user","user","30","man","postman","1");
     Qregist(admin);
     Qregist(user);
-    QaddBatch("A1","50");
-    QaddBatch("A2","60");
-    QaddBatch("A3","40");
-    QaddBatch("A4","30");
+    QaddBatch("admin","A1","50");
+    QaddBatch("admin","A2","60");
+    QaddBatch("admin","A3","40");
+    QaddBatch("admin","A4","30");
     Product A1product1("1","A","A1","T1","now",0);
     Product A1product2("2","A","A1","T1","now",0);
     Product A1product3("3","A","A1","T1","now",0);
@@ -831,37 +876,37 @@ void dbhelper::initdb()
     Product A4product5("5","A","A4","T2","now",0);
     Product A4product6("6","A","A4","T2","now",0);
     Product A4product7("7","A","A4","T3","now",0);
-    QaddDataWhileRefreshBatch(A1product1);
-    QaddDataWhileRefreshBatch(A1product2);
-    QaddDataWhileRefreshBatch(A1product3);
-    QaddDataWhileRefreshBatch(A1product4);
-    QaddDataWhileRefreshBatch(A1product5);
-    QaddDataWhileRefreshBatch(A1product6);
-    QaddDataWhileRefreshBatch(A1product7);
+    QaddDataWhileRefreshBatch("admin",A1product1);
+    QaddDataWhileRefreshBatch("admin",A1product2);
+    QaddDataWhileRefreshBatch("admin",A1product3);
+    QaddDataWhileRefreshBatch("admin",A1product4);
+    QaddDataWhileRefreshBatch("admin",A1product5);
+    QaddDataWhileRefreshBatch("admin",A1product6);
+    QaddDataWhileRefreshBatch("admin",A1product7);
 
-    QaddDataWhileRefreshBatch(A2product1);
-    QaddDataWhileRefreshBatch(A2product2);
-    QaddDataWhileRefreshBatch(A2product3);
-    QaddDataWhileRefreshBatch(A2product4);
-    QaddDataWhileRefreshBatch(A2product5);
-    QaddDataWhileRefreshBatch(A2product6);
-    QaddDataWhileRefreshBatch(A2product7);
+    QaddDataWhileRefreshBatch("admin",A2product1);
+    QaddDataWhileRefreshBatch("admin",A2product2);
+    QaddDataWhileRefreshBatch("admin",A2product3);
+    QaddDataWhileRefreshBatch("admin",A2product4);
+    QaddDataWhileRefreshBatch("admin",A2product5);
+    QaddDataWhileRefreshBatch("admin",A2product6);
+    QaddDataWhileRefreshBatch("admin",A2product7);
 
-    QaddDataWhileRefreshBatch(A3product1);
-    QaddDataWhileRefreshBatch(A3product2);
-    QaddDataWhileRefreshBatch(A3product3);
-    QaddDataWhileRefreshBatch(A3product4);
-    QaddDataWhileRefreshBatch(A3product5);
-    QaddDataWhileRefreshBatch(A3product6);
-    QaddDataWhileRefreshBatch(A3product7);
+    QaddDataWhileRefreshBatch("admin",A3product1);
+    QaddDataWhileRefreshBatch("admin",A3product2);
+    QaddDataWhileRefreshBatch("admin",A3product3);
+    QaddDataWhileRefreshBatch("admin",A3product4);
+    QaddDataWhileRefreshBatch("admin",A3product5);
+    QaddDataWhileRefreshBatch("admin",A3product6);
+    QaddDataWhileRefreshBatch("admin",A3product7);
 
-    QaddDataWhileRefreshBatch(A4product1);
-    QaddDataWhileRefreshBatch(A4product2);
-    QaddDataWhileRefreshBatch(A4product3);
-    QaddDataWhileRefreshBatch(A4product4);
-    QaddDataWhileRefreshBatch(A4product5);
-    QaddDataWhileRefreshBatch(A4product6);
-    QaddDataWhileRefreshBatch(A4product7);
+    QaddDataWhileRefreshBatch("admin",A4product1);
+    QaddDataWhileRefreshBatch("admin",A4product2);
+    QaddDataWhileRefreshBatch("admin",A4product3);
+    QaddDataWhileRefreshBatch("admin",A4product4);
+    QaddDataWhileRefreshBatch("admin",A4product5);
+    QaddDataWhileRefreshBatch("admin",A4product6);
+    QaddDataWhileRefreshBatch("admin",A4product7);
 
-
+QdeleteData("admin",A4product7);
 }

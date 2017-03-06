@@ -75,9 +75,9 @@ void saveProduct::on_buttonBox_accepted()
     Qres qres;
     if(change)
     {
-        qres = helper.QchangeDate(userId,curproduct,pro);
+        qres = helper.QchangeData(userId,curproduct,pro);
     }else {
-        qres = helper.QaddDate(userId, pro);
+        qres = helper.QaddData(userId, pro);
     }
     if(!qres.success)
     {
