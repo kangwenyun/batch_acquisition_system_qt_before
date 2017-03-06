@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>300</height>
+    <width>715</width>
+    <height>120</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,28 +18,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>702</width>
-     <height>335</height>
+     <width>717</width>
+     <height>51</height>
     </rect>
    </property>
    <row>
     <property name="text">
      <string>1</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>2</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>3</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>4</string>
     </property>
    </row>
    <column>
@@ -112,6 +97,24 @@
      <string/>
     </property>
    </item>
+  </widget>
+  <widget class="QPushButton" name="save_button">
+   <property name="geometry">
+    <rect>
+     <x>615</x>
+     <y>69</y>
+     <width>100</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>保存</string>
+   </property>
   </widget>
  </widget>
  <resources/>

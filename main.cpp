@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     dbhelper db;
 
     //db.deleteall();
-    //db.initdb();
+//    db.initdb();
     Login l;
     l.show();
     return a.exec();

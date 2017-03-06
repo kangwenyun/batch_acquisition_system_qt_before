@@ -3,6 +3,7 @@
 #include "dbhelper.h"
 #include "product.h"
 #include "session.h"
+#include "addproduct.h"
 #include <QList>
 #include <QString>
 #include <QFile>
@@ -137,50 +138,56 @@ void ViewData::on_data_change_clicked()
          curproduct.tray = ui->tableWidget->item(row,4)->text();
          curproduct.time = ui->tableWidget->item(row,5)->text();
          curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
-         setWriteability(row,true);
+//         setWriteability(row,true);
+         addProduct ap = new addProduct(0,curproduct);
+         ap.show();
+         on_data_refresh_clicked();
      }else{
          QMessageBox::warning(this,tr("warning"),tr("select one line,please!"));
      }
 }
 
-void ViewData::on_data_save_clicked()
-{
-    setWriteability(row,false);
-    Product newproduct;
-    bool ok;
-    newproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
-    newproduct.type = ui->tableWidget->item(row,2)->text();
-    newproduct.batchid = ui->tableWidget->item(row,3)->text();
-    newproduct.tray = ui->tableWidget->item(row,4)->text();
-    newproduct.time = ui->tableWidget->item(row,5)->text();
-    newproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
-    Qres qres = helper.QchangeDate(userId,curproduct,newproduct);
-    if(!qres.success)
-    {
-        QMessageBox::warning(this,tr("warning"),qres.msg);
-    }
-    on_data_refresh_clicked();
-}
+//void ViewData::on_data_save_clicked()
+//{
+//    setWriteability(row,false);
+//    Product newproduct;
+//    bool ok;
+//    newproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
+//    newproduct.type = ui->tableWidget->item(row,2)->text();
+//    newproduct.batchid = ui->tableWidget->item(row,3)->text();
+//    newproduct.tray = ui->tableWidget->item(row,4)->text();
+//    newproduct.time = ui->tableWidget->item(row,5)->text();
+//    newproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
+//    Qres qres = helper.QchangeDate(userId,curproduct,newproduct);
+//    if(!qres.success)
+//    {
+//        QMessageBox::warning(this,tr("warning"),qres.msg);
+//    }
+//    on_data_refresh_clicked();
+//}
 
 void ViewData::on_data_add_clicked()
 {
     //获取旧的行计数，表格末尾加入一个新空行，有新的空行才能设置新行条目
-    int nOldRowCount = ui->tableWidget->rowCount();
-    ui->tableWidget->insertRow(nOldRowCount);
-    setWriteability(nOldRowCount,true);
-    Product addproduct;
-    bool ok;
-    addproduct.number = ui->tableWidget->item(nOldRowCount,1)->text().toInt(&ok,10);
-    addproduct.type = ui->tableWidget->item(nOldRowCount,2)->text();
-    addproduct.batchid = ui->tableWidget->item(nOldRowCount,3)->text();
-    addproduct.tray = ui->tableWidget->item(nOldRowCount,4)->text();
-    addproduct.time = ui->tableWidget->item(nOldRowCount,5)->text();
-    addproduct.flag = ui->tableWidget->item(nOldRowCount,6)->text().toInt(&ok,10);
-    Qres qres = helper.QaddDate(userId, addproduct);
-    if(!qres.success)
-    {
-        QMessageBox::warning(this,tr("warning"),qres.msg);
-    }
+//    int nOldRowCount = ui->tableWidget->rowCount();
+//    ui->tableWidget->insertRow(nOldRowCount);
+//    setWriteability(nOldRowCount,true);
+//    Product addproduct;
+//    bool ok;
+//    addproduct.number = ui->tableWidget->item(nOldRowCount,1)->text().toInt(&ok,10);
+//    addproduct.type = ui->tableWidget->item(nOldRowCount,2)->text();
+//    addproduct.batchid = ui->tableWidget->item(nOldRowCount,3)->text();
+//    addproduct.tray = ui->tableWidget->item(nOldRowCount,4)->text();
+//    addproduct.time = ui->tableWidget->item(nOldRowCount,5)->text();
+//    addproduct.flag = ui->tableWidget->item(nOldRowCount,6)->text().toInt(&ok,10);
+//    Qres qres = helper.QaddDate(userId, addproduct);
+//    if(!qres.success)
+//    {
+//        QMessageBox::warning(this,tr("warning"),qres.msg);
+//    }
+    addProduct ap;
+    ap.show();
+    on_data_refresh_clicked();
 }
 
 void ViewData::on_data_delete_clicked()

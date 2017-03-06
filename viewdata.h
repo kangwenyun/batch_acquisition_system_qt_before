@@ -3,6 +3,7 @@
 
 #include "dbhelper.h"
 #include "product.h"
+#include "addproduct.h"
 #include <QWidget>
 #include <QString>
 
@@ -34,7 +35,7 @@ private:
     Ui::ViewData *ui;
     dbhelper helper;
     QString userId;
-    Product curproduct;
+    Product *curproduct;
     int row;//当前选中行
 };
 
