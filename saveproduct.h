@@ -1,38 +1,36 @@
-#ifndef ADDPRODUCT_H
-#define ADDPRODUCT_H
+#ifndef SAVEPRODUCT_H
+#define SAVEPRODUCT_H
 
 #include "product.h"
 #include "dbhelper.h"
 #include "session.h"
-#include <QWidget>
+#include <QAbstractButton>
 #include <QString>
+#include <QDialog>
 
 //货物修改和增加的弹框
 namespace Ui {
-class addProduct;
+class saveProduct;
 }
 
-class addProduct : public QWidget
+class saveProduct : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit addProduct(QWidget *parent = 0);
+    explicit saveProduct(QWidget *parent = 0);
+    ~saveProduct();
     void setProduct(Product curproduct);
-    ~addProduct();
-
-signals:
-    void save();
 
 private slots:
-    void on_save_button_clicked();
+    void on_buttonBox_accepted();
 
 private:
-    Ui::addProduct *ui;
+    Ui::saveProduct *ui;
     Product curproduct;
     bool change;//1表示change,0表示add
     dbhelper helper;
     QString userId;
 };
 
-#endif // ADDPRODUCT_H
+#endif // SAVEPRODUCT_H

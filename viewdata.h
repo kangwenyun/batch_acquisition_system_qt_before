@@ -3,7 +3,7 @@
 
 #include "dbhelper.h"
 #include "product.h"
-#include "addproduct.h"
+#include "saveproduct.h"
 #include <QWidget>
 #include <QString>
 
@@ -23,8 +23,6 @@ public:
 private slots:
     void on_data_change_clicked();
 
-    void on_data_save_clicked();
-
     void on_data_refresh_clicked();
 
     void on_data_delete_clicked();
@@ -35,8 +33,9 @@ private:
     Ui::ViewData *ui;
     dbhelper helper;
     QString userId;
-    Product *curproduct;
+    Product curproduct;
     int row;//当前选中行
+    saveProduct *ap;
 };
 
 #endif // VIEWDATA_H

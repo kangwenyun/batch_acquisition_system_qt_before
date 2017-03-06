@@ -75,7 +75,7 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
         qDebug()<<query.lastError();
         _return.error=1;
         _return.success=0;
-        _return.msg="database error";
+        _return.msg="database error 78";
         return _return;
     }
     else
@@ -90,7 +90,7 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
                 qDebug()<< query.lastError();
                 _return.error=1;
                 _return.success=0;
-                _return.msg="database error";
+                _return.msg="database error 93";
                 return _return;
             }
             else
@@ -134,7 +134,7 @@ Qres dbhelper::Qregist(Quser u)
 
         qDebug()<<query.lastError();
         _return.error=1;
-        _return.msg="database error";
+        _return.msg="database error 137";
         _return.success=0;
         return _return;
     }
@@ -177,10 +177,10 @@ Qres dbhelper::Qchangepwd(QString userid,QString oldpwd,QString newpwd)
     query.addBindValue(oldpwd);
     if(!query.exec())
     {
-        qDebug()<<"database error";
+        qDebug()<<"database error 180";
         _return.error=1;
         _return.success=false;
-        _return.msg="database error";
+        _return.msg="database error 183";
     }
     else
     {
@@ -311,7 +311,7 @@ Qres dbhelper::QchangeDate( QString userid,Product oldproduct, Product newproduc
             {
 
                 _return.error=1;
-                _return.msg="database error";
+                _return.msg="database error 314";
                 _return.success=0;
                 return _return;
             }
@@ -366,7 +366,7 @@ Qres dbhelper::QdeleteData( QString userid,  Product deleteproduct)
             {
 
                 _return.error=1;
-                _return.msg="database error";
+                _return.msg="database error 369";
                 _return.success=0;
                 return _return;
             }
@@ -419,7 +419,7 @@ Qres dbhelper::QaddDate( QString userid, Product addproduct)
     {
         qDebug()<<"failed insert";
         _return.error=1;
-        _return.msg="database error";
+        _return.msg="database error 422";
         _return.success=0;
         return _return;
     }

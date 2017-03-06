@@ -1,12 +1,12 @@
-#include "addproduct.h"
-#include "ui_addproduct.h"
+#include "saveproduct.h"
+#include "ui_saveproduct.h"
 #include <QTableWidgetItem>
 #include <QMessageBox>
 #include <QDebug>
 
-addProduct::addProduct(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::addProduct)
+saveProduct::saveProduct(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::saveProduct)
 {
     ui->setupUi(this);
     // 自适应列宽度,隐藏垂直表头
@@ -20,7 +20,12 @@ addProduct::addProduct(QWidget *parent) :
     item->setFlags(Qt::NoItemFlags);
 }
 
-void addProduct::setProduct(Product curproduct)
+saveProduct::~saveProduct()
+{
+    delete ui;
+}
+
+void saveProduct::setProduct(Product curproduct)
 {
     //通过curproduct.id是否为空来判断是要change还是add
     if(curproduct.number != NULL)//非空,change,把原有数据填上
@@ -47,13 +52,9 @@ void addProduct::setProduct(Product curproduct)
     }
 }
 
-addProduct::~addProduct()
+void saveProduct::on_buttonBox_accepted()
 {
-    delete ui;
-}
-
-void addProduct::on_save_button_clicked()
-{
+    qDebug()<<"12:";
     Product pro;
     bool ok;
     pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
@@ -83,9 +84,4 @@ void addProduct::on_save_button_clicked()
         QMessageBox::warning(this,tr("warning"),qres.msg);
         return;
     }
-    qDebug()<<"emit1";
-    //用 emit 发信号
-    emit save();
-    qDebug()<<"emit2";
-    this->close();
 }

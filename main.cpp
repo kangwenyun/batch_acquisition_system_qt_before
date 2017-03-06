@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     dbhelper db;
 
-    //db.deleteall();
+//    db.deleteall();
 //    db.initdb();
     Login l;
     l.show();

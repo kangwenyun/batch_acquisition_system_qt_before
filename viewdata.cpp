@@ -132,16 +132,21 @@ void ViewData::on_data_change_clicked()
      if(row != -1)//已选中某行
      {
          bool ok;
-         curproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
+         curproduct.id = ui->tableWidget->item(row,0)->text().toInt(&ok,10);
+         curproduct.number = ui->tableWidget->item(row,1)->text();
          curproduct.type = ui->tableWidget->item(row,2)->text();
          curproduct.batchid = ui->tableWidget->item(row,3)->text();
          curproduct.tray = ui->tableWidget->item(row,4)->text();
          curproduct.time = ui->tableWidget->item(row,5)->text();
          curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
 //         setWriteability(row,true);
-         addProduct ap = new addProduct(0,curproduct);
-         ap.show();
-         on_data_refresh_clicked();
+         ap=new saveProduct();
+         ap->setProduct(curproduct);
+//         ap->show();
+         if(ap->exec() == QDialog::Accepted)
+         {
+             on_data_refresh_clicked();
+         }
      }else{
          QMessageBox::warning(this,tr("warning"),tr("select one line,please!"));
      }
@@ -185,8 +190,11 @@ void ViewData::on_data_add_clicked()
 //    {
 //        QMessageBox::warning(this,tr("warning"),qres.msg);
 //    }
-    addProduct ap;
-    ap.show();
+    ap=new saveProduct();
+    Product pro;
+    pro.flag = 0;
+    ap->setProduct(pro);
+    ap->show();
     on_data_refresh_clicked();
 }
 
@@ -202,4 +210,8 @@ void ViewData::on_data_delete_clicked()
     curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
     ui->tableWidget->removeRow(row);
     Qres qres = helper.QdeleteData(userId,curproduct);
+    if(!qres.success)
+    {
+        QMessageBox::warning(this,tr("warnig"),qres.msg);
+    }
 }
