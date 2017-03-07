@@ -17,6 +17,11 @@ public:
     ~GetLog();
     void getData(QString fileTime);
 
+private slots:
+    void on_getDate_clicked();
+
+    void on_calendarWidget_clicked(const QDate &date);
+
 private:
     Ui::GetLog *ui;
 };
