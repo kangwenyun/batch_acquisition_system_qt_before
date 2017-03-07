@@ -25,6 +25,9 @@ GetLog::GetLog(QWidget *parent) :
     //设置时间组建
     ui->getDate->setText(time.toString("yyyy-MM-dd"));
     ui->calendarWidget->hide();
+    QDate d(2017,03,06);
+    ui->calendarWidget->setMinimumDate(d);
+    ui->calendarWidget->setMaximumDate(QDate::currentDate());
 }
 
 GetLog::~GetLog()
