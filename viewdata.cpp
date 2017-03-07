@@ -3,7 +3,6 @@
 #include "dbhelper.h"
 #include "product.h"
 #include "session.h"
-#include "addproduct.h"
 #include <QList>
 #include <QString>
 #include <QFile>
@@ -139,7 +138,6 @@ void ViewData::on_data_change_clicked()
          curproduct.tray = ui->tableWidget->item(row,4)->text();
          curproduct.time = ui->tableWidget->item(row,5)->text();
          curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
-//         setWriteability(row,true);
          sp=new saveProduct();
          sp->setProduct(curproduct);
          if(sp->exec() == QDialog::Accepted)

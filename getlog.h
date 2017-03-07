@@ -2,6 +2,7 @@
 #define GETLOG_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class GetLog;
@@ -14,6 +15,7 @@ class GetLog : public QWidget
 public:
     explicit GetLog(QWidget *parent = 0);
     ~GetLog();
+    void getData(QString fileTime);
 
 private:
     Ui::GetLog *ui;
