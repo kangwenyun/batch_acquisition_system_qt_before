@@ -188,10 +188,21 @@ void ViewData::on_data_delete_clicked()
     curproduct.tray = ui->tableWidget->item(row,4)->text();
     curproduct.time = ui->tableWidget->item(row,5)->text();
     curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
-    ui->tableWidget->removeRow(row);
-    Qres qres = helper.QdeleteData(userId,curproduct);
-    if(!qres.success)
+    Qres qres;
+    switch(QMessageBox::question(this,tr("询问"),tr("确定删除?"),
+                QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok))
     {
-        QMessageBox::warning(this,tr("warnig"),qres.msg);
+        case QMessageBox::Ok:
+            ui->tableWidget->removeRow(row);
+            qres = helper.QdeleteData(userId,curproduct);
+            if(!qres.success)
+            {
+                QMessageBox::warning(this,tr("warnig"),qres.msg);
+            }
+            break;
+        case QMessageBox::Cancel:
+            break;
+        default:
+            break;
     }
 }
