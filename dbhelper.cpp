@@ -432,7 +432,7 @@ Qres dbhelper::QaddData( QString userid, Product addproduct)
 
     if(query.exec())
     {
-       qDebug()<<"success insert";
+        qDebug()<<"success insert";
         _return.error=0;
         _return.msg="成功上传数据,批次号:"+addproduct.batchid+" 托盘号为:"+addproduct.tray+" 序号为:"+addproduct.number;
         _return.success=1;
@@ -496,6 +496,35 @@ Qres dbhelper::QdeleteAllData(QString userid)
         Loger::getInstance()->setLoger(userid,_return.msg);
         return  _return;
     }
+}
+
+
+QList<Product> dbhelper::QgetDatathrouthTime(QString time)
+{
+    QSqlQuery query;
+    QList<Product> list;
+    //"select * from Product where time  like  '%2017-03-09%'"
+    QString searchtime="select * from Product where time  like  '%"+time+"%'";
+    if(query.exec(searchtime))
+    {
+        while(query.next())
+        {
+            Product temp;
+            temp.number=query.value("number").toString();
+            temp.type=query.value("type").toString();
+            temp.batchid=query.value("batchid").toString();
+            temp.tray=query.value("tray").toString();
+            temp.time=query.value("time").toString();
+            temp.flag=query.value("flag").toInt();
+            list.append(temp);
+        }
+        return list;
+    }
+    else
+    {
+        return list;
+    }
+    return list;
 }
 
 Qres dbhelper::QgetUserrmation(Quser&  temp,QString userid)
@@ -663,15 +692,17 @@ Qres dbhelper::addData(Product product)
     query.bindValue(":type",product.type);
     query.bindValue(":batchid",product.batchid);
     query.bindValue(":tray",product.tray);
-     QString current;
+    QString current;
     if(product.time=="now")
     {
-    QDateTime  time=QDateTime::currentDateTime();
-     current=time.toString("yyyy-MM-dd hh:mm:ss");
-   }
+        QDateTime  time=QDateTime::currentDateTime();
+        current=time.toString("yyyy-MM-dd hh:mm:ss");
+        qDebug()<<"now time";
+    }
     else
     {
-    current=product.time;
+        current=product.time;
+        qDebug()<<"product time";
     }
     query.bindValue(":time",current);
     query.bindValue(":flag",product.flag);
@@ -966,44 +997,87 @@ Qres dbhelper::Qrefreshfile()
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug()<<"Can't open the file!"<<endl;
     }
-       FileData temp;
-       QTextStream in(&file);
-       while(!in.atEnd()) {
+    FileData temp;
+    QTextStream in(&file);
+    while(!in.atEnd()) {
         QString line = in.readLine();
         QString str(line);
         temp.data=temp.data+str;
         if(str!="")
         {
-        QList<QString> list = str.split(',');
-        Product product(list[0],list[1],list[2],list[3],list[4],list[5].toInt());
-        QexistOrInsert(product);
+            QList<QString> list = str.split(',');
+            Product product(list[0],list[1],list[2],list[3],list[4],list[5].toInt());
+            QexistOrInsert(product);
         }
     }
-       return _return;
+    return _return;
 }
 
- QList<Qbatch> dbhelper::QgetBatch()
- {
- QSqlQuery query;
- QList<Qbatch> list;
- query.prepare("select * from Batch");
- if(query.exec())
- {
-     while(query.next())
-     {
-         QString batchid=query.value("batchid").toString();
-         QString batchsum=query.value("batchsum").toString();
-         QString batchamout=query.value("batchamout").toString();
-         Qbatch batch;
-         batch.batchamout=batchamout;
-         batch.batchid=batchid;
-         batch.batchsum=batchsum;
-         list.append(batch);
-     }
-     return list;
- }
- else
- {
-   return list;
- }
- }
+QList<Qbatch> dbhelper::QgetBatch()
+{
+    QSqlQuery query;
+    QList<Qbatch> list;
+    query.prepare("select * from Batch");
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            QString batchid=query.value("batchid").toString();
+            QString batchsum=query.value("batchsum").toString();
+            QString batchamout=query.value("batchamout").toString();
+            Qbatch batch;
+            batch.batchamout=batchamout;
+            batch.batchid=batchid;
+            batch.batchsum=batchsum;
+            list.append(batch);
+        }
+        return list;
+    }
+    else
+    {
+        return list;
+    }
+}
+
+QList<Product> dbhelper::QgetDataorderby(int attr,int pattern)
+{
+//1:type 2:batchid 3:tray 4:time 5:flag      pattern: 1:increase 2: descrease
+    QList<Product> list;
+    QString Qattr;
+    QString Qpattern;
+    switch(attr)
+    {
+    case 1:Qattr="type";break;
+    case 2:Qattr="batchid";break;
+    case 3:Qattr="tray";break;
+    case 4:Qattr="time";break;
+    case 5:Qattr="flag";break;
+    }
+    if(pattern==1)
+    {
+        Qpattern="";
+    }
+    else
+    {
+       Qpattern="desc";
+    }
+
+    QSqlQuery query;
+   if (query.exec("select * from product order by "+Qattr+" "+Qpattern))
+   {
+       while(query.next())
+       {
+           Product temp;
+           temp.number=query.value("number").toString();
+           temp.type=query.value("type").toString();
+           temp.batchid=query.value("batchid").toString();
+           temp.tray=query.value("tray").toString();
+           temp.time=query.value("time").toString();
+           temp.flag=query.value("flag").toInt();
+           list.append(temp);
+       }
+   }
+return list;
+
+
+}

@@ -36,7 +36,8 @@ public:
     Qres QdeleteAllData(QString userid);
     Qres QgetUserInformation(Quser&  temp,QString userid); //返回的密码是空
     Qres QgetBatchInformation(QString userid,QString Batchid);
-
+    QList<Product> QgetDatathrouthTime(QString time);
+    QList<Product> QgetDataorderby(int attr,int pattern);//1:type 2:batchid 3:tray 4:time 5:flag      pattern: 1:increase 2: decrease
     //about Batch
     Qres QaddDataWhileRefreshBatch(QString userid ,Product product);
     Qres QaddBatch(QString userid,QString batchid,QString batchsum);
