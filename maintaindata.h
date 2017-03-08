@@ -18,7 +18,6 @@ class MaintainData : public QWidget
 public:
     explicit MaintainData(QWidget *parent = 0);
     ~MaintainData();
-    void setWriteability(int row , bool bl);
 
 private slots:
     void on_data_change_clicked();

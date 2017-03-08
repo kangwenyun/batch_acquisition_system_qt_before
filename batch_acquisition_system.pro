@@ -55,7 +55,8 @@ SOURCES += main.cpp \
     loger.cpp \
     maintaindata.cpp \
     viewdata.cpp \
-    addbatch.cpp
+    addbatch.cpp \
+    filedata.cpp
 
 HEADERS  += \
     login.h \
@@ -87,7 +88,8 @@ HEADERS  += \
     loger.h \
     maintaindata.h \
     viewdata.h \
-    addbatch.h
+    addbatch.h \
+    filedata.h
 
 FORMS    += \
     login.ui \

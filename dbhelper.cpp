@@ -3,10 +3,10 @@
 dbhelper::dbhelper()
 {
 
-    //if(QSqlDatabase::contains("qt_sql_default_connection"))
-       // db = QSqlDatabase::database("qt_sql_default_connection");
-  //  else
-    db = QSqlDatabase::addDatabase("QSQLITE");
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+        db = QSqlDatabase::database("qt_sql_default_connection");
+    else
+        db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("Test");
     QcreateProductTable();
     QcreateUserTable();
@@ -114,7 +114,7 @@ Qres  dbhelper::Qlogin(QString userid,QString passwd)
                     _return.error=0;
                     _return.success=0;
                     _return.msg="登录时密码错误";   // passwd error
-               Loger::getInstance()->setLoger(userid,_return.msg);
+                    Loger::getInstance()->setLoger(userid,_return.msg);
                     return _return;
                 }
             }
@@ -424,12 +424,15 @@ Qres dbhelper::QaddData( QString userid, Product addproduct)
     query.bindValue(":type",addproduct.type);
     query.bindValue(":batchid",addproduct.batchid);
     query.bindValue(":tray",addproduct.tray);
-    query.bindValue(":time",addproduct.time);
+    QDateTime  time=QDateTime::currentDateTime();
+    QString current=time.toString("yyyy-MM-dd hh:mm:ss");
+    query.bindValue(":time",current);
+    //query.bindValue(":time",addproduct.time);
     query.bindValue(":flag",addproduct.flag);
 
     if(query.exec())
     {
-        qDebug()<<"success insert";
+       qDebug()<<"success insert";
         _return.error=0;
         _return.msg="成功上传数据,批次号:"+addproduct.batchid+" 托盘号为:"+addproduct.tray+" 序号为:"+addproduct.number;
         _return.success=1;
@@ -660,7 +663,17 @@ Qres dbhelper::addData(Product product)
     query.bindValue(":type",product.type);
     query.bindValue(":batchid",product.batchid);
     query.bindValue(":tray",product.tray);
-    query.bindValue(":time",product.time);
+     QString current;
+    if(product.time=="now")
+    {
+    QDateTime  time=QDateTime::currentDateTime();
+     current=time.toString("yyyy-MM-dd hh:mm:ss");
+   }
+    else
+    {
+    current=product.time;
+    }
+    query.bindValue(":time",current);
     query.bindValue(":flag",product.flag);
     if(query.exec())
     {
@@ -735,11 +748,11 @@ void dbhelper::QdeleteBatchTable()
     query.prepare("delete from Batch ");
     if(query.exec())
     {
-     qDebug()<<"success";
+        qDebug()<<"success";
     }
     else
     {
-qDebug()<<"fail";
+        qDebug()<<"fail";
     }
 }
 void dbhelper::QdeleteProductTable()
@@ -748,12 +761,12 @@ void dbhelper::QdeleteProductTable()
     query.prepare("delete from Product ");
     if(query.exec())
     {
-     qDebug()<<"success";
+        qDebug()<<"success";
 
     }
     else
     {
-qDebug()<<"fail";
+        qDebug()<<"fail";
     }
 }
 void dbhelper::QdeleteUserTable()
@@ -762,21 +775,21 @@ void dbhelper::QdeleteUserTable()
     query.prepare("delete from User where userid ");
     if(query.exec())
     {
-     qDebug()<<"success";
+        qDebug()<<"success";
     }
     else
     {
-qDebug()<<"fail";
+        qDebug()<<"fail";
     }
 }
 
 Qres dbhelper::QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid)
 {
     db = QSqlDatabase::addDatabase("QSQLITE");
-db.setDatabaseName("Test");
-QcreateProductTable();
-QcreateUserTable();
-QcreateBatchTable();
+    db.setDatabaseName("Test");
+    QcreateProductTable();
+    QcreateUserTable();
+    QcreateBatchTable();
     Qres _return;
     QSqlQuery query;
     query.prepare("select distinct tray from Product where batchid = ?");
@@ -908,5 +921,89 @@ void dbhelper::initdb()
     QaddDataWhileRefreshBatch("admin",A4product6);
     QaddDataWhileRefreshBatch("admin",A4product7);
 
-QdeleteData("admin",A4product7);
+    QdeleteData("admin",A4product7);
 }
+
+Qres dbhelper::QexistOrInsert(Product product)
+{
+    QSqlQuery query;
+    Qres _return;
+    query.prepare("select * from Product where number= ? and batchid=? and tray=?");
+    query.addBindValue(product.number);
+    query.addBindValue(product.batchid);
+    query.addBindValue(product.tray);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            //no operation
+            _return.error=0;
+            _return.msg="exist so no insert";
+            _return.success=1;
+        }
+        else
+        {
+            //insert
+            _return = addData(product);
+            qDebug()<<"add product:batchid:"+product.batchid+" number:"+product.number+" tray:"+product.tray;
+        }
+    }
+    else
+    {
+        //database error
+        _return.error=1;
+        _return.msg="database error";
+        _return.success=0;
+    }
+    return _return;
+}
+
+Qres dbhelper::Qrefreshfile()
+{
+    Qres _return;
+    QFile file("Lo1.txt");
+
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug()<<"Can't open the file!"<<endl;
+    }
+       FileData temp;
+       QTextStream in(&file);
+       while(!in.atEnd()) {
+        QString line = in.readLine();
+        QString str(line);
+        temp.data=temp.data+str;
+        if(str!="")
+        {
+        QList<QString> list = str.split(',');
+        Product product(list[0],list[1],list[2],list[3],list[4],list[5].toInt());
+        QexistOrInsert(product);
+        }
+    }
+       return _return;
+}
+
+ QList<Qbatch> dbhelper::QgetBatch()
+ {
+ QSqlQuery query;
+ QList<Qbatch> list;
+ query.prepare("select * from Batch");
+ if(query.exec())
+ {
+     while(query.next())
+     {
+         QString batchid=query.value("batchid").toString();
+         QString batchsum=query.value("batchsum").toString();
+         QString batchamout=query.value("batchamout").toString();
+         Qbatch batch;
+         batch.batchamout=batchamout;
+         batch.batchid=batchid;
+         batch.batchsum=batchsum;
+         list.append(batch);
+     }
+     return list;
+ }
+ else
+ {
+   return list;
+ }
+ }

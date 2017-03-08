@@ -7,7 +7,8 @@
 #include<quser.h>
 #include<product.h>
 #include<QList>
-
+#include<filedata.h>
+#include<qbatch.h>
 class dbhelper
 {
 public:
@@ -39,8 +40,12 @@ public:
     //about Batch
     Qres QaddDataWhileRefreshBatch(QString userid ,Product product);
     Qres QaddBatch(QString userid,QString batchid,QString batchsum);
-
     Qres QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid);
+
+    //about refreshdata
+    Qres QexistOrInsert(Product product);
+    Qres Qrefreshfile();
+    QList<Qbatch> QgetBatch();
 private:
     int flag;
     QSqlDatabase db ;

@@ -89,41 +89,6 @@ void MaintainData::on_data_refresh_clicked()
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
 }
 
-void MaintainData::setWriteability(int row , bool bl)
-{
-    if(bl)
-    {
-        ui->tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);//所有可写
-        //非选中行均设置为不可写
-        QTableWidgetItem *item;
-        int i = 0;
-        for(; i < row; i++)
-        {
-            for(int j=0; j<7; j++)
-            {
-                item = ui->tableWidget->item(i,j);
-                item->setFlags(Qt::NoItemFlags);
-            }
-        }
-        i++;
-        item = ui->tableWidget->item(row,0);
-        if(item != NULL)
-        {
-            item->setFlags(Qt::NoItemFlags);
-        }
-        for(; i >row && i < ui->tableWidget->rowCount(); i++)
-        {
-            for(int j=0; j<7; j++)
-            {
-                item = ui->tableWidget->item(i,j);
-                item->setFlags(Qt::NoItemFlags);
-            }
-        }
-    }else{
-        ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//只读
-    }
-}
-
 void MaintainData::on_data_change_clicked()
 {
      //当前行可写
