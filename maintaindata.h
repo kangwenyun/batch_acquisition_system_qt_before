@@ -32,10 +32,10 @@ private slots:
 private:
     Ui::MaintainData *ui;
     dbhelper helper;
-    QString userId;
-    Product curproduct;
+    QString userId;//当前用户id
+    Product curproduct;//当前选中货物的具体信息
     int row;//当前选中行
-    saveProduct *sp;
+    saveProduct *sp;//修改增加货物时的弹框
 };
 
 #endif // MAINTAINDATA_H

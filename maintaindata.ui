@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>货物数据维护</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -87,21 +87,6 @@
      </row>
      <column>
       <property name="text">
-       <string>id</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>序号</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>类型</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
        <string>批次号</string>
       </property>
      </column>
@@ -112,12 +97,27 @@
      </column>
      <column>
       <property name="text">
+       <string>托盘货物总数</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>货物号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>货物类型</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>时间</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>标记</string>
+       <string>备注</string>
       </property>
      </column>
      <item row="0" column="0">
@@ -126,16 +126,6 @@
       </property>
      </item>
      <item row="0" column="1">
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item row="0" column="2">
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item row="0" column="3">
       <property name="text">
        <string/>
       </property>

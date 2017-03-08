@@ -71,16 +71,16 @@ void MaintainData::on_data_refresh_clicked()
     {
         j = 0;
         Product pro = proList[i];
-        QTableWidgetItem *id = new QTableWidgetItem(QObject::tr("%1").arg(pro.id));
-        ui->tableWidget->setItem(i,j++,id);
-        QTableWidgetItem *number = new QTableWidgetItem(pro.number);
-        ui->tableWidget->setItem(i,j++,number);
-        QTableWidgetItem *type = new QTableWidgetItem(pro.type);
-        ui->tableWidget->setItem(i,j++,type);
+        //批次号,托盘号,托盘货物总数,货物号,货物类型,录入时间,备注
         QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
         ui->tableWidget->setItem(i,j++,batchid);
         QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
         ui->tableWidget->setItem(i,j++,tray);
+        //托盘货物总数
+        QTableWidgetItem *number = new QTableWidgetItem(pro.number);
+        ui->tableWidget->setItem(i,j++,number);
+        QTableWidgetItem *type = new QTableWidgetItem(pro.type);
+        ui->tableWidget->setItem(i,j++,type);
         QTableWidgetItem *time = new QTableWidgetItem(pro.time);
         ui->tableWidget->setItem(i,j++,time);
         QTableWidgetItem *flag = new QTableWidgetItem(QObject::tr("%1").arg(pro.flag));
@@ -130,12 +130,13 @@ void MaintainData::on_data_change_clicked()
      row = ui->tableWidget->currentRow();
      if(row != -1)//已选中某行
      {
+         //批次号,托盘号,托盘货物总数,货物号,货物类型,录入时间,备注
          bool ok;
-         curproduct.id = ui->tableWidget->item(row,0)->text().toInt(&ok,10);
-         curproduct.number = ui->tableWidget->item(row,1)->text();
-         curproduct.type = ui->tableWidget->item(row,2)->text();
-         curproduct.batchid = ui->tableWidget->item(row,3)->text();
-         curproduct.tray = ui->tableWidget->item(row,4)->text();
+         curproduct.batchid = ui->tableWidget->item(row,0)->text();
+         curproduct.tray = ui->tableWidget->item(row,1)->text();
+
+         curproduct.number = ui->tableWidget->item(row,3)->text();
+         curproduct.type = ui->tableWidget->item(row,4)->text();
          curproduct.time = ui->tableWidget->item(row,5)->text();
          curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
          sp=new saveProduct();
@@ -180,12 +181,14 @@ void MaintainData::on_data_add_clicked()
 
 void MaintainData::on_data_delete_clicked()
 {
+    //批次号,托盘号,托盘货物总数,货物号,货物类型,录入时间,备注
     row = ui->tableWidget->currentRow() ;//当前行号
     bool ok;
-    curproduct.number = ui->tableWidget->item(row,1)->text().toInt(&ok,10);
-    curproduct.type = ui->tableWidget->item(row,2)->text();
-    curproduct.batchid = ui->tableWidget->item(row,3)->text();
-    curproduct.tray = ui->tableWidget->item(row,4)->text();
+    curproduct.batchid = ui->tableWidget->item(row,0)->text();
+    curproduct.tray = ui->tableWidget->item(row,1)->text();
+
+    curproduct.number = ui->tableWidget->item(row,3)->text();
+    curproduct.type = ui->tableWidget->item(row,4)->text();
     curproduct.time = ui->tableWidget->item(row,5)->text();
     curproduct.flag = ui->tableWidget->item(row,6)->text().toInt(&ok,10);
     Qres qres;

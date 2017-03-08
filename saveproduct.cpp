@@ -15,9 +15,6 @@ saveProduct::saveProduct(QWidget *parent) :
     ui->tableWidget->setRowCount(1);
     Session *curper = Session::getInstance();
     userId = curper->getUserId();
-    //id是数据库内置的,用户不可写
-    QTableWidgetItem *item = ui->tableWidget->item(0,0);
-    item->setFlags(Qt::NoItemFlags);
 }
 
 saveProduct::~saveProduct()
@@ -32,17 +29,16 @@ void saveProduct::setProduct(Product curproduct)
     {
         change = true;
         this->curproduct = curproduct;
-        QTableWidgetItem *id = new QTableWidgetItem(QObject::tr("%1").arg(curproduct.id));
-        ui->tableWidget->setItem(0,0,id);
-        id->setFlags(Qt::NoItemFlags);
-        QTableWidgetItem *number = new QTableWidgetItem(curproduct.number);
-        ui->tableWidget->setItem(0,1,number);
-        QTableWidgetItem *type = new QTableWidgetItem(curproduct.type);
-        ui->tableWidget->setItem(0,2,type);
+        //批次号,托盘号,托盘货物总数,货物号,货物类型,录入时间,备注
         QTableWidgetItem *batchid = new QTableWidgetItem(curproduct.batchid);
-        ui->tableWidget->setItem(0,3,batchid);
+        ui->tableWidget->setItem(0,0,batchid);
         QTableWidgetItem *tray = new QTableWidgetItem(curproduct.tray);
-        ui->tableWidget->setItem(0,4,tray);
+        ui->tableWidget->setItem(0,1,tray);
+        //托盘货物总数
+        QTableWidgetItem *number = new QTableWidgetItem(curproduct.number);
+        ui->tableWidget->setItem(0,3,number);
+        QTableWidgetItem *type = new QTableWidgetItem(curproduct.type);
+        ui->tableWidget->setItem(0,4,type);
         QTableWidgetItem *time = new QTableWidgetItem(curproduct.time);
         ui->tableWidget->setItem(0,5,time);
         QTableWidgetItem *flag = new QTableWidgetItem(QObject::tr("%1").arg(curproduct.flag));
@@ -54,7 +50,6 @@ void saveProduct::setProduct(Product curproduct)
 
 void saveProduct::on_buttonBox_accepted()
 {
-    qDebug()<<"12:";
     Product pro;
     bool ok;
     pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
@@ -67,11 +62,13 @@ void saveProduct::on_buttonBox_accepted()
             return;
         }
     }
-    pro.number = ui->tableWidget->item(0,1)->text();
-    pro.type = ui->tableWidget->item(0,2)->text();
-    pro.batchid = ui->tableWidget->item(0,3)->text();
-    pro.tray = ui->tableWidget->item(0,4)->text();
+    pro.batchid = ui->tableWidget->item(0,0)->text();
+    pro.tray = ui->tableWidget->item(0,1)->text();
+
+    pro.number = ui->tableWidget->item(0,3)->text();
+    pro.type = ui->tableWidget->item(0,4)->text();
     pro.time = ui->tableWidget->item(0,5)->text();
+    pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
     Qres qres;
     if(change)
     {

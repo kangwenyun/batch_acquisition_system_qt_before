@@ -1,5 +1,8 @@
 #include "viewbatch.h"
 #include "ui_viewbatch.h"
+#include "qres.h"
+#include "addbatch.h"
+#include "dbhelper.h"
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QString>
@@ -87,5 +90,14 @@ void ViewBatch::on_batchInfo_doubleClicked(const QModelIndex &index)
        columItemList<<key;
        child = new QTreeWidgetItem(columItemList);
        A->addChild(child);
+    }
+}
+
+void ViewBatch::on_add_batch_clicked()
+{
+    addBatch adb;
+    if(adb.exec() == QDialog::Accepted)
+    {
+//        on_data_refresh_clicked();
     }
 }

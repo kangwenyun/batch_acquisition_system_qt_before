@@ -18,6 +18,8 @@ public:
 private slots:
     void on_batchInfo_doubleClicked(const QModelIndex &index);
 
+    void on_add_batch_clicked();
+
 private:
     Ui::ViewBatch *ui;
     QTableWidget* batchInfo;

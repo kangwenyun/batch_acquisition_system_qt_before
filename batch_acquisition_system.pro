@@ -38,8 +38,6 @@ SOURCES += main.cpp \
     correctlog.cpp \
     viewbatch.cpp \
     submitbatch.cpp \
-    uploaddata.cpp \
-    refreshdata.cpp \
     setpermissions.cpp \
     viewproline.cpp \
     setproline.cpp \
@@ -56,7 +54,8 @@ SOURCES += main.cpp \
     saveproduct.cpp \
     loger.cpp \
     maintaindata.cpp \
-    viewdata.cpp
+    viewdata.cpp \
+    addbatch.cpp
 
 HEADERS  += \
     login.h \
@@ -71,8 +70,6 @@ HEADERS  += \
     correctlog.h \
     viewbatch.h \
     submitbatch.h \
-    uploaddata.h \
-    refreshdata.h \
     setpermissions.h \
     viewproline.h \
     setproline.h \
@@ -89,7 +86,8 @@ HEADERS  += \
     saveproduct.h \
     loger.h \
     maintaindata.h \
-    viewdata.h
+    viewdata.h \
+    addbatch.h
 
 FORMS    += \
     login.ui \
@@ -104,13 +102,12 @@ FORMS    += \
     correctlog.ui \
     viewbatch.ui \
     submitbatch.ui \
-    uploaddata.ui \
-    refreshdata.ui \
     setpermissions.ui \
     viewproline.ui \
     setproline.ui \
     modifyproline.ui \
     saveproduct.ui \
     maintaindata.ui \
-    viewdata.ui
+    viewdata.ui \
+    addbatch.ui
 

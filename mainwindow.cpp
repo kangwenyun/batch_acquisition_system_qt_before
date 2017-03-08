@@ -57,8 +57,8 @@ void MainWindow::createActions()
     connect(changePasswd,SIGNAL(triggered()),this,SLOT(changePasswd_clicked()));
 
     //工作日志获得
-    getLog = new QAction(tr("日志获得"),this);
-    getLog->setStatusTip(tr("日志获得"));
+    getLog = new QAction(tr("日志查看"),this);
+    getLog->setStatusTip(tr("日志查看"));
     connect(getLog,SIGNAL(triggered()),this,SLOT(getLog_clicked()));
 
     //工作详情查看
@@ -67,8 +67,8 @@ void MainWindow::createActions()
     connect(detailLog,SIGNAL(triggered()),this,SLOT(detailLog_clicked()));
 
     //特权用户可更改相应错误
-    correctLog = new QAction(tr("批次错误更改"),this);
-    correctLog->setStatusTip(tr("批次错误更改"));
+    correctLog = new QAction(tr("日志错误更改"),this);
+    correctLog->setStatusTip(tr("日志错误更改"));
     connect(correctLog,SIGNAL(triggered()),this,SLOT(correctLog_clicked()));
 
     //所有批次的信息的查看
@@ -80,26 +80,6 @@ void MainWindow::createActions()
     submitBatch = new QAction(tr("请求提交"),this);
     submitBatch->setStatusTip(tr("请求提交"));
     connect(submitBatch,SIGNAL(triggered()),this,SLOT(submitBatch_clicked()));
-
-    //数据的查看
-    viewData = new QAction(tr("数据查看"),this);
-    viewData->setStatusTip(tr("数据查看"));
-    connect(viewData,SIGNAL(triggered()),this,SLOT(viewData_clicked()));
-
-    //数据的维护
-    maintainData = new QAction(tr("数据维护"),this);
-    maintainData->setStatusTip(tr("数据维护"));
-    connect(maintainData,SIGNAL(triggered()),this,SLOT(maintainData_clicked()));
-
-    //数据的上传
-    uploadData = new QAction(tr("数据上传"),this);
-    uploadData->setStatusTip(tr("数据上传"));
-    connect(uploadData,SIGNAL(triggered()),this,SLOT(uploadData_clicked()));
-
-    //数据实时刷新
-    refreshData = new QAction(tr("数据实时刷新"),this);
-    refreshData->setStatusTip(tr("数据实时刷新"));
-    connect(refreshData,SIGNAL(triggered()),this,SLOT(refreshData_clicked()));
 
     //对不同的用户设置不同的权限
     setPermissions = new QAction(tr("权限设置"),this);
@@ -120,6 +100,16 @@ void MainWindow::createActions()
     modifyProLine = new QAction(tr("生产线信息修改"),this);
     modifyProLine->setStatusTip(tr("生产线信息修改"));
     connect(modifyProLine,SIGNAL(triggered()),this,SLOT(modifyProLine_clicked()));
+
+    //数据的查看
+    viewData = new QAction(tr("货物数据查看"),this);
+    viewData->setStatusTip(tr("货物数据查看"));
+    connect(viewData,SIGNAL(triggered()),this,SLOT(viewData_clicked()));
+
+    //数据的维护
+    maintainData = new QAction(tr("货物数据维护"),this);
+    maintainData->setStatusTip(tr("货物数据维护"));
+    connect(maintainData,SIGNAL(triggered()),this,SLOT(maintainData_clicked()));
 }
 
 void MainWindow::createMenus()
@@ -145,20 +135,19 @@ void MainWindow::createMenus()
     //权限管理
     authority = ui->authority;
     QList<QAction*> auth;
-    auth <<  setPermissions ;
+    auth << setPermissions ;
     authority->addActions(auth);
 
     //生产线信息管理
     proLine_info = ui->proLine_info;
     QList<QAction*> pli;
-     pli << viewProLine << setProLine << modifyProLine ;
+    pli << viewProLine << setProLine << modifyProLine ;
     proLine_info->addActions(pli);
 
-    //数据管理
+    //货物数据管理
     data = ui->data;
     QList<QAction*> dt;
-
-    dt<<viewData << maintainData << uploadData ;
+    dt<<viewData << maintainData ;
     data->addActions(dt);
 }
 
@@ -183,7 +172,7 @@ void MainWindow::changePasswd_clicked()
     setCentralWidget(cp);
 }
 
-//工作日志获得
+//工作日志查看
 void MainWindow::getLog_clicked()
 {
     GetLog *gl = new GetLog;
@@ -218,34 +207,6 @@ void MainWindow::submitBatch_clicked()
     setCentralWidget(sb);
 }
 
-//数据的查看
-void MainWindow::viewData_clicked()
-{
-    ViewData *vd = new ViewData;
-    setCentralWidget(vd);
-}
-
-//数据的维护
-void MainWindow::maintainData_clicked()
-{
-    MaintainData *md = new MaintainData;
-    setCentralWidget(md);
-}
-
-//数据的上传
-void MainWindow::uploadData_clicked()
-{
-    UploadData *ud = new UploadData;
-    setCentralWidget(ud);
-}
-
-//数据实时刷新
-void MainWindow::refreshData_clicked()
-{
-    RefreshData *rd = new RefreshData;
-    setCentralWidget(rd);
-}
-
 //对不同的用户设置不同的权限
 void MainWindow::setPermissions_clicked()
 {
@@ -272,4 +233,18 @@ void MainWindow::modifyProLine_clicked()
 {
     ModifyProLine *mpl = new ModifyProLine;
     setCentralWidget(mpl);
+}
+
+//货物数据的查看
+void MainWindow::viewData_clicked()
+{
+    ViewData *vd = new ViewData;
+    setCentralWidget(vd);
+}
+
+//货物数据的维护
+void MainWindow::maintainData_clicked()
+{
+    MaintainData *md = new MaintainData;
+    setCentralWidget(md);
 }
