@@ -28,8 +28,6 @@ public slots:
     void submitBatch_clicked();
     void viewData_clicked();
     void maintainData_clicked();
-    void uploadData_clicked();
-    void refreshData_clicked();
     void setPermissions_clicked();
     void viewProLine_clicked();
     void setProLine_clicked();

@@ -29,20 +29,17 @@ void saveProduct::setProduct(Product curproduct)
     {
         change = true;
         this->curproduct = curproduct;
-        //批次号,托盘号,托盘货物总数,货物号,货物类型,录入时间,备注
+        //批次号,托盘号,货物号,货物类型,备注
         QTableWidgetItem *batchid = new QTableWidgetItem(curproduct.batchid);
         ui->tableWidget->setItem(0,0,batchid);
         QTableWidgetItem *tray = new QTableWidgetItem(curproduct.tray);
         ui->tableWidget->setItem(0,1,tray);
-        //托盘货物总数
         QTableWidgetItem *number = new QTableWidgetItem(curproduct.number);
-        ui->tableWidget->setItem(0,3,number);
+        ui->tableWidget->setItem(0,2,number);
         QTableWidgetItem *type = new QTableWidgetItem(curproduct.type);
-        ui->tableWidget->setItem(0,4,type);
-        QTableWidgetItem *time = new QTableWidgetItem(curproduct.time);
-        ui->tableWidget->setItem(0,5,time);
+        ui->tableWidget->setItem(0,3,type);
         QTableWidgetItem *flag = new QTableWidgetItem(QObject::tr("%1").arg(curproduct.flag));
-        ui->tableWidget->setItem(0,6,flag);
+        ui->tableWidget->setItem(0,4,flag);
     }else{
         change = false;
     }
@@ -54,7 +51,7 @@ void saveProduct::on_buttonBox_accepted()
     bool ok;
     pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
     //判断是否有未填项
-    for(int i = 1; i < 7; i++)
+    for(int i = 0; i < 5; i++)
     {
         if(ui->tableWidget->item(0,i)->text() == NULL)
         {
@@ -64,11 +61,10 @@ void saveProduct::on_buttonBox_accepted()
     }
     pro.batchid = ui->tableWidget->item(0,0)->text();
     pro.tray = ui->tableWidget->item(0,1)->text();
-
-    pro.number = ui->tableWidget->item(0,3)->text();
-    pro.type = ui->tableWidget->item(0,4)->text();
-    pro.time = ui->tableWidget->item(0,5)->text();
-    pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
+    pro.number = ui->tableWidget->item(0,2)->text();
+    pro.type = ui->tableWidget->item(0,3)->text();
+    pro.flag = ui->tableWidget->item(0,4)->text().toInt(&ok,10);
+    pro.time = "now";
     Qres qres;
     if(change)
     {

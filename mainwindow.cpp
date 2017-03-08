@@ -11,8 +11,6 @@
 #include "submitbatch.h"
 #include "maintaindata.h"
 #include "viewdata.h"
-#include "uploaddata.h"
-#include "refreshdata.h"
 #include "setpermissions.h"
 #include "viewproline.h"
 #include "setproline.h"

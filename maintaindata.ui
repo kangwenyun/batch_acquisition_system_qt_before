@@ -97,11 +97,6 @@
      </column>
      <column>
       <property name="text">
-       <string>托盘货物总数</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
        <string>货物号</string>
       </property>
      </column>
@@ -112,7 +107,7 @@
      </column>
      <column>
       <property name="text">
-       <string>时间</string>
+       <string>录入时间</string>
       </property>
      </column>
      <column>
@@ -130,17 +125,17 @@
        <string/>
       </property>
      </item>
+     <item row="0" column="3">
+      <property name="text">
+       <string/>
+      </property>
+     </item>
      <item row="0" column="4">
       <property name="text">
        <string/>
       </property>
      </item>
      <item row="0" column="5">
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item row="0" column="6">
       <property name="text">
        <string/>
       </property>

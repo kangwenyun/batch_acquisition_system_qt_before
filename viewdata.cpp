@@ -38,16 +38,15 @@ void ViewData::on_data_refresh_clicked()
     {
         j = 0;
         Product pro = proList[i];
-        QTableWidgetItem *id = new QTableWidgetItem(QObject::tr("%1").arg(pro.id));
-        ui->tableWidget->setItem(i,j++,id);
-        QTableWidgetItem *number = new QTableWidgetItem(pro.number);
-        ui->tableWidget->setItem(i,j++,number);
-        QTableWidgetItem *type = new QTableWidgetItem(pro.type);
-        ui->tableWidget->setItem(i,j++,type);
+        //批次号,托盘号,货物号,货物类型,录入时间,备注
         QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
         ui->tableWidget->setItem(i,j++,batchid);
         QTableWidgetItem *tray = new QTableWidgetItem(pro.tray);
         ui->tableWidget->setItem(i,j++,tray);
+        QTableWidgetItem *number = new QTableWidgetItem(pro.number);
+        ui->tableWidget->setItem(i,j++,number);
+        QTableWidgetItem *type = new QTableWidgetItem(pro.type);
+        ui->tableWidget->setItem(i,j++,type);
         QTableWidgetItem *time = new QTableWidgetItem(pro.time);
         ui->tableWidget->setItem(i,j++,time);
         QTableWidgetItem *flag = new QTableWidgetItem(QObject::tr("%1").arg(pro.flag));
