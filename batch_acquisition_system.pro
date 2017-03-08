@@ -50,13 +50,13 @@ SOURCES += main.cpp \
     utils.cpp \
     product.cpp \
     qbatch.cpp \
-    qraty.cpp \
     saveproduct.cpp \
     loger.cpp \
     maintaindata.cpp \
     viewdata.cpp \
     addbatch.cpp \
-    filedata.cpp
+    filedata.cpp \
+    qtray.cpp
 
 HEADERS  += \
     login.h \
