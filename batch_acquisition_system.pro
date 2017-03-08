@@ -38,8 +38,6 @@ SOURCES += main.cpp \
     correctlog.cpp \
     viewbatch.cpp \
     submitbatch.cpp \
-    viewdata.cpp \
-    maintaindata.cpp \
     uploaddata.cpp \
     refreshdata.cpp \
     setpermissions.cpp \
@@ -56,7 +54,9 @@ SOURCES += main.cpp \
     qbatch.cpp \
     qraty.cpp \
     saveproduct.cpp \
-    loger.cpp
+    loger.cpp \
+    maintaindata.cpp \
+    viewdata.cpp
 
 HEADERS  += \
     login.h \
@@ -71,8 +71,6 @@ HEADERS  += \
     correctlog.h \
     viewbatch.h \
     submitbatch.h \
-    viewdata.h \
-    maintaindata.h \
     uploaddata.h \
     refreshdata.h \
     setpermissions.h \
@@ -89,7 +87,9 @@ HEADERS  += \
     qbatch.h \
     qtray.h \
     saveproduct.h \
-    loger.h
+    loger.h \
+    maintaindata.h \
+    viewdata.h
 
 FORMS    += \
     login.ui \
@@ -104,13 +104,13 @@ FORMS    += \
     correctlog.ui \
     viewbatch.ui \
     submitbatch.ui \
-    viewdata.ui \
-    maintaindata.ui \
     uploaddata.ui \
     refreshdata.ui \
     setpermissions.ui \
     viewproline.ui \
     setproline.ui \
     modifyproline.ui \
-    saveproduct.ui
+    saveproduct.ui \
+    maintaindata.ui \
+    viewdata.ui
 
