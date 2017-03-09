@@ -34,10 +34,7 @@ SOURCES += main.cpp \
     authentication.cpp \
     registrationinfo.cpp \
     getlog.cpp \
-    detaillog.cpp \
-    correctlog.cpp \
     viewbatch.cpp \
-    submitbatch.cpp \
     setpermissions.cpp \
     viewproline.cpp \
     setproline.cpp \
@@ -67,10 +64,7 @@ HEADERS  += \
     authentication.h \
     registrationinfo.h \
     getlog.h \
-    detaillog.h \
-    correctlog.h \
     viewbatch.h \
-    submitbatch.h \
     setpermissions.h \
     viewproline.h \
     setproline.h \
@@ -100,10 +94,7 @@ FORMS    += \
     authentication.ui \
     registrationinfo.ui \
     getlog.ui \
-    detaillog.ui \
-    correctlog.ui \
     viewbatch.ui \
-    submitbatch.ui \
     setpermissions.ui \
     viewproline.ui \
     setproline.ui \

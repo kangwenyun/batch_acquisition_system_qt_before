@@ -22,10 +22,7 @@ public slots:
     void registrationInfo_clicked();
     void changePasswd_clicked();
     void getLog_clicked();
-    void detailLog_clicked();
-    void correctLog_clicked();
     void viewBatch_clicked();
-    void submitBatch_clicked();
     void viewData_clicked();
     void maintainData_clicked();
     void setPermissions_clicked();

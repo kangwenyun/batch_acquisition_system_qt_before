@@ -42,11 +42,11 @@ public:
     Qres QaddDataWhileRefreshBatch(QString userid ,Product product);
     Qres QaddBatch(QString userid,QString batchid,QString batchsum);
     Qres QgetBatchDetialThroughBatchid(QList<Qtray>& list,QString batchid);
-
+    QList<Qbatch> QgetBatch();
     //about refreshdata
     Qres QexistOrInsert(Product product);
     Qres Qrefreshfile();
-    QList<Qbatch> QgetBatch();
+
 private:
     int flag;
     QSqlDatabase db ;

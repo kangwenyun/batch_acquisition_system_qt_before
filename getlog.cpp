@@ -18,16 +18,17 @@ GetLog::GetLog(QWidget *parent) :
     ui->tableWidget->setColumnWidth(0,170);
     ui->tableWidget->setColumnWidth(1,70);
     ui->tableWidget->setRowCount(0);
+//    // 自适应列宽度
+//    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     //加载数据
     QDateTime time = QDateTime::currentDateTime();
     QString fileTime = time.toString("yyyy-MM-dd")+".txt";
     getData(fileTime);
     //设置时间组建
-    ui->getDate->setText(time.toString("yyyy-MM-dd"));
-    ui->calendarWidget->hide();
-    QDate d(2017,03,06);
-    ui->calendarWidget->setMinimumDate(d);
-    ui->calendarWidget->setMaximumDate(QDate::currentDate());
+    QDate d(2017,3,8);
+    ui->dateEdit->setMinimumDate(d);
+    ui->dateEdit->setMaximumDate(QDate::currentDate());
+    ui->dateEdit->setDate(QDate::currentDate());
 }
 
 GetLog::~GetLog()
@@ -59,8 +60,10 @@ void GetLog::getData(QString fileTime)
         ui->tableWidget->insertRow(nOldRowCount);
         //添加数据
         QTableWidgetItem *item_0 = new QTableWidgetItem(list.at(0));
+        item_0->setTextAlignment(Qt::AlignCenter);
         ui->tableWidget->setItem(nOldRowCount,0,item_0);
         QTableWidgetItem *item_1 = new QTableWidgetItem(list.at(1));
+        item_1->setTextAlignment(Qt::AlignCenter);
         ui->tableWidget->setItem(nOldRowCount,1,item_1);
         QTableWidgetItem *item_2 = new QTableWidgetItem(list.at(2));
         ui->tableWidget->setItem(nOldRowCount,2,item_2);
@@ -68,21 +71,9 @@ void GetLog::getData(QString fileTime)
     fileIn.close();
 }
 
-void GetLog::on_getDate_clicked()
+void GetLog::on_dateEdit_dateChanged(const QDate &date)
 {
-    bool hide = ui->calendarWidget->isHidden();
-    if(hide)
-    {
-        ui->calendarWidget->show();
-    }else{
-        ui->calendarWidget->hide();
-    }
-}
 
-void GetLog::on_calendarWidget_clicked(const QDate &date)
-{
-    ui->getDate->setText(date.toString("yyyy-MM-dd"));
     QString fileDate = date.toString("yyyy-MM-dd")+".txt";
     getData(fileDate);
-    ui->calendarWidget->hide();
 }

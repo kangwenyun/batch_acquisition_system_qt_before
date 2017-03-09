@@ -47,7 +47,6 @@ void saveProduct::setProduct(Product curproduct)
 
 void saveProduct::on_buttonBox_accepted()
 {
-    qDebug()<<"34:";
     Product pro;
     bool ok;
     pro.flag = ui->tableWidget->item(0,4)->text().toInt(&ok,10);
@@ -64,14 +63,12 @@ void saveProduct::on_buttonBox_accepted()
     pro.number = ui->tableWidget->item(0,2)->text();
     pro.type = ui->tableWidget->item(0,3)->text();
     pro.flag = ui->tableWidget->item(0,4)->text().toInt(&ok,10);
-    pro.time = "now";
-    qDebug()<<"12:";
     Qres qres;
     if(change)
     {
         qres = helper.QchangeData(userId,curproduct,pro);
     }else {
-        qres = helper.QaddData(userId, pro);
+        qres = helper.QaddDataWhileRefreshBatch(userId, pro);
     }
     if(!qres.success)
     {

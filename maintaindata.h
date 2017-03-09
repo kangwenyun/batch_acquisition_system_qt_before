@@ -30,6 +30,12 @@ private slots:
 
     void on_data_deleteAll_clicked();
 
+    void onHeaderClicked(int);
+
+    void load(QList<Product> list);
+
+    void on_dateEdit_userDateChanged(const QDate &date);
+
 private:
     Ui::MaintainData *ui;
     dbhelper helper;
@@ -37,6 +43,7 @@ private:
     Product curproduct;//当前选中货物的具体信息
     int row;//当前选中行
     saveProduct *sp;//修改增加货物时的弹框
+    int pattern;//排序,1:increase 2: decrease
 };
 
 #endif // MAINTAINDATA_H

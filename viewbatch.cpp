@@ -24,6 +24,8 @@ ViewBatch::ViewBatch(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->treeWidget->setColumnCount(1);
+    // 自适应列宽度
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     on_refresh_batch_clicked();
 }
 
@@ -43,10 +45,13 @@ void ViewBatch::on_refresh_batch_clicked()
     {
         batch = batchList[i];
         QTableWidgetItem *batchid = new QTableWidgetItem(batch.batchid);
+        batchid->setTextAlignment(Qt::AlignCenter);
         ui->tableWidget->setItem(i,0,batchid);
         QTableWidgetItem *batchsum = new QTableWidgetItem(batch.batchsum);
+        batchsum->setTextAlignment(Qt::AlignCenter);
         ui->tableWidget->setItem(i,1,batchsum);
         QTableWidgetItem *batchamout = new QTableWidgetItem(batch.batchamout);
+        batchamout->setTextAlignment(Qt::AlignCenter);
         ui->tableWidget->setItem(i,2,batchamout);
     }
 }

@@ -1,6 +1,6 @@
 #ifndef VIEWDATA_H
 #define VIEWDATA_H
-
+#include "filedata.h"
 #include "dbhelper.h"
 #include <QWidget>
 #include <QString>
@@ -19,11 +19,13 @@ public:
 
 private slots:
     void on_data_refresh_clicked();
+    void refresh();
 
 private:
     Ui::ViewData *ui;
     QString userId;
     dbhelper helper;
+    FileData all;
 };
 
 #endif // VIEWDATA_H

@@ -7,11 +7,11 @@ dbhelper::dbhelper()
         db = QSqlDatabase::database("qt_sql_default_connection");
     else
         db = QSqlDatabase::addDatabase("QSQLITE");
+   // qDebug()<<QDir::
     db.setDatabaseName("Test");
     QcreateProductTable();
     QcreateUserTable();
     QcreateBatchTable();
-
 }
 
 void dbhelper::QcreateBatchTable()
@@ -65,7 +65,6 @@ void  dbhelper::QcreateUserTable()
                    "job VARCHAR,"
                    "level VARCHAR)");
     }
-
 }
 Qres  dbhelper::Qlogin(QString userid,QString passwd)
 {
@@ -275,10 +274,8 @@ QList<Product>  dbhelper::QgetData()
         while(sql_query.next())
         {
             Product temp;
-
             temp.id = sql_query.value("id").toInt();
             temp.number=sql_query.value("number").toString();
-            qDebug()<<temp.number;
             temp.type=sql_query.value("type").toString();
             temp.batchid=sql_query.value("batchid").toString();
             temp.tray=sql_query.value("tray").toString();
@@ -757,7 +754,7 @@ Qres dbhelper::RefreshBatch(QString batchid)
         }
         else
         {
-            //not exist batchid
+            //not t batchid
             _return.error=0;
             _return.msg="刷新批次号时发现不存在该批次号";
             _return.success=0;
@@ -1041,15 +1038,15 @@ QList<Qbatch> dbhelper::QgetBatch()
 
 QList<Product> dbhelper::QgetDataorderby(int attr,int pattern)
 {
-//1:type 2:batchid 3:tray 4:time 5:flag      pattern: 1:increase 2: descrease
     QList<Product> list;
     QString Qattr;
     QString Qpattern;
     switch(attr)
     {
-    case 1:Qattr="type";break;
-    case 2:Qattr="batchid";break;
-    case 3:Qattr="tray";break;
+    case 0:Qattr="batchid";break;
+    case 1:Qattr="tray";break;
+    case 2:Qattr="number";break;
+    case 3:Qattr="type";break;
     case 4:Qattr="time";break;
     case 5:Qattr="flag";break;
     }

@@ -5,10 +5,7 @@
 #include "registrationinfo.h"
 #include "changepasswd.h"
 #include "getlog.h"
-#include "detaillog.h"
-#include "correctlog.h"
 #include "viewbatch.h"
-#include "submitbatch.h"
 #include "maintaindata.h"
 #include "viewdata.h"
 #include "setpermissions.h"
@@ -59,25 +56,10 @@ void MainWindow::createActions()
     getLog->setStatusTip(tr("日志查看"));
     connect(getLog,SIGNAL(triggered()),this,SLOT(getLog_clicked()));
 
-    //工作详情查看
-    detailLog = new QAction(tr("详情查看"),this);
-    detailLog->setStatusTip(tr("详情查看"));
-    connect(detailLog,SIGNAL(triggered()),this,SLOT(detailLog_clicked()));
-
-    //特权用户可更改相应错误
-    correctLog = new QAction(tr("日志错误更改"),this);
-    correctLog->setStatusTip(tr("日志错误更改"));
-    connect(correctLog,SIGNAL(triggered()),this,SLOT(correctLog_clicked()));
-
     //所有批次的信息的查看
     viewBatch = new QAction(tr("批次信息查看"),this);
     viewBatch->setStatusTip(tr("批次信息查看"));
     connect(viewBatch,SIGNAL(triggered()),this,SLOT(viewBatch_clicked()));
-
-    //来自WMS的批次请求的提交
-    submitBatch = new QAction(tr("请求提交"),this);
-    submitBatch->setStatusTip(tr("请求提交"));
-    connect(submitBatch,SIGNAL(triggered()),this,SLOT(submitBatch_clicked()));
 
     //对不同的用户设置不同的权限
     setPermissions = new QAction(tr("权限设置"),this);
@@ -121,13 +103,13 @@ void MainWindow::createMenus()
     //日志管理
     log = ui->log;
     QList<QAction*> lg;
-    lg << getLog << detailLog << correctLog ;
+    lg << getLog ;
     log->addActions(lg);
 
     //批次信息管理
     batch_info = ui->batch_info;
     QList<QAction*> bi;
-    bi << viewBatch << submitBatch ;
+    bi << viewBatch ;
     batch_info->addActions(bi);
 
     //权限管理
@@ -177,32 +159,11 @@ void MainWindow::getLog_clicked()
     setCentralWidget(gl);
 }
 
-//工作详情查看
-void MainWindow::detailLog_clicked()
-{
-    DetailLog *dl = new DetailLog;
-    setCentralWidget(dl);
-}
-
-//特权用户可更改相应错误
-void MainWindow::correctLog_clicked()
-{
-    CorrectLog *cl = new CorrectLog;
-    setCentralWidget(cl);
-}
-
 //所有批次的信息的查看
 void MainWindow::viewBatch_clicked()
 {
     ViewBatch *vb = new ViewBatch;
     setCentralWidget(vb);
-}
-
-//来自WMS的批次请求的提交
-void MainWindow::submitBatch_clicked()
-{
-    SubmitBatch *sb = new SubmitBatch;
-    setCentralWidget(sb);
 }
 
 //对不同的用户设置不同的权限
