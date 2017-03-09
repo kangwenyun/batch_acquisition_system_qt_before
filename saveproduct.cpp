@@ -47,16 +47,16 @@ void saveProduct::setProduct(Product curproduct)
 
 void saveProduct::on_buttonBox_accepted()
 {
+    qDebug()<<"34:";
     Product pro;
     bool ok;
-    pro.flag = ui->tableWidget->item(0,6)->text().toInt(&ok,10);
+    pro.flag = ui->tableWidget->item(0,4)->text().toInt(&ok,10);
     //判断是否有未填项
     for(int i = 0; i < 5; i++)
     {
         if(ui->tableWidget->item(0,i)->text() == NULL)
         {
             QMessageBox::warning(this,tr("warning"),tr("All items are required!"));
-            return;
         }
     }
     pro.batchid = ui->tableWidget->item(0,0)->text();
@@ -65,6 +65,7 @@ void saveProduct::on_buttonBox_accepted()
     pro.type = ui->tableWidget->item(0,3)->text();
     pro.flag = ui->tableWidget->item(0,4)->text().toInt(&ok,10);
     pro.time = "now";
+    qDebug()<<"12:";
     Qres qres;
     if(change)
     {

@@ -71,6 +71,7 @@ void MaintainData::on_data_refresh_clicked()
     {
         j = 0;
         Product pro = proList[i];
+        qDebug()<<"pro.time:" << pro.time;
         //批次号,托盘号,货物号,货物类型,录入时间,备注
         QTableWidgetItem *batchid = new QTableWidgetItem(pro.batchid);
         ui->tableWidget->setItem(i,j++,batchid);
