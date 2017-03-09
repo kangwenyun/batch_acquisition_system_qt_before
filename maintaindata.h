@@ -28,6 +28,8 @@ private slots:
 
     void on_data_add_clicked();
 
+    void on_data_deleteAll_clicked();
+
 private:
     Ui::MaintainData *ui;
     dbhelper helper;

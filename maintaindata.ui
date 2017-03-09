@@ -59,6 +59,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="data_deleteAll">
+         <property name="text">
+          <string>删除所有</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
