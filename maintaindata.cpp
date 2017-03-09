@@ -154,7 +154,7 @@ void MaintainData::on_data_delete_clicked()
     curproduct.time = ui->tableWidget->item(row,4)->text();
     curproduct.flag = ui->tableWidget->item(row,5)->text().toInt(&ok,10);
     Qres qres;
-    switch(QMessageBox::question(this,tr("询问"),tr("确定删除?"),
+    switch(QMessageBox::question(this,tr("询问"),tr("确定删除该行数据?"),
                 QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok))
     {
         case QMessageBox::Ok:
@@ -163,6 +163,7 @@ void MaintainData::on_data_delete_clicked()
             if(!qres.success)
             {
                 QMessageBox::warning(this,tr("warnig"),qres.msg);
+                return;
             }
             break;
         case QMessageBox::Cancel:
@@ -170,4 +171,27 @@ void MaintainData::on_data_delete_clicked()
         default:
             break;
     }
+}
+
+void MaintainData::on_data_deleteAll_clicked()
+{
+    Qres qres;
+    switch(QMessageBox::question(this,tr("询问"),tr("确定删除所有数据?"),
+                QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok))
+    {
+        case QMessageBox::Ok:
+            ui->tableWidget->removeRow(row);
+            qres = helper.QdeleteAllData(userId);
+            if(!qres.success)
+            {
+                QMessageBox::warning(this,tr("warnig"),qres.msg);
+                return;
+            }
+            break;
+        case QMessageBox::Cancel:
+            break;
+        default:
+            break;
+    }
+    ui->tableWidget->clear();
 }
