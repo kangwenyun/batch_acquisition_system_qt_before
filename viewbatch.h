@@ -18,13 +18,11 @@ public:
     ~ViewBatch();
 
 private slots:
-    void on_batchInfo_doubleClicked(const QModelIndex &index);
-
     void on_add_batch_clicked();
 
-    void on_batchInfo_clicked(const QModelIndex &index);
-
     void on_refresh_batch_clicked();
+
+    void on_tableWidget_clicked(const QModelIndex &index);
 
 private:
     Ui::ViewBatch *ui;
