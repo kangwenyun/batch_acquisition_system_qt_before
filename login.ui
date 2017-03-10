@@ -36,8 +36,8 @@
     <rect>
      <x>83</x>
      <y>170</y>
-     <width>226</width>
-     <height>26</height>
+     <width>231</width>
+     <height>27</height>
     </rect>
    </property>
    <property name="font">
@@ -52,8 +52,8 @@
   <widget class="QPushButton" name="registered">
    <property name="geometry">
     <rect>
-     <x>221</x>
-     <y>200</y>
+     <x>225</x>
+     <y>195</y>
      <width>29</width>
      <height>23</height>
     </rect>
@@ -77,8 +77,8 @@ background-color: rgba(255, 255, 255, 0);</string>
   <widget class="QPushButton" name="get_passwd">
    <property name="geometry">
     <rect>
-     <x>252</x>
-     <y>200</y>
+     <x>256</x>
+     <y>195</y>
      <width>64</width>
      <height>23</height>
     </rect>
@@ -99,9 +99,9 @@ background-color: rgba(255, 255, 255, 0);</string>
   <widget class="QLabel" name="err_label">
    <property name="geometry">
     <rect>
-     <x>142</x>
-     <y>145</y>
-     <width>171</width>
+     <x>85</x>
+     <y>143</y>
+     <width>221</width>
      <height>16</height>
     </rect>
    </property>
@@ -120,8 +120,8 @@ background-color: rgba(255, 255, 255, 0);</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>204</y>
+     <x>254</x>
+     <y>199</y>
      <width>1</width>
      <height>16</height>
     </rect>
@@ -134,62 +134,45 @@ color: rgb(207, 207, 207);</string>
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>61</y>
+     <x>83</x>
+     <y>70</y>
      <width>231</width>
-     <height>91</height>
+     <height>81</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="account_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string> 账号：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="userId">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QLineEdit" name="userId">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>登录账号</string>
+      </property>
+     </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="passwd_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string> 密码：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="passwd"/>
-      </item>
-     </layout>
+     <widget class="QLineEdit" name="passwd">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>登录密码</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

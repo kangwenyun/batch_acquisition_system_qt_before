@@ -31,6 +31,10 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui->newKeyAgain_edit->setFixedHeight(26);
     //将焦点设置到原密码输入框上
     ui->oldKey_edit->installEventFilter(this);
+    ui->userId_edit->setAlignment(Qt::AlignCenter);
+    ui->oldKey_edit->setAlignment(Qt::AlignCenter);
+    ui->newKey_edit->setAlignment(Qt::AlignCenter);
+    ui->newKeyAgain_edit->setAlignment(Qt::AlignCenter);
 }
 
 ChangePasswd::~ChangePasswd()

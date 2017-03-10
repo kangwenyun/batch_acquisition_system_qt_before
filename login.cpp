@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "dbhelper.h"
 #include "qres.h"
+#include "qpnglineedit.h"
 #include <QCryptographicHash>
 #include <QFile>
 #include <QList>
@@ -17,11 +18,13 @@ Login::Login(QWidget *parent) :
     ui(new Ui::Login)
 {
     ui->setupUi(this);
+    new QPngLineEdit("", ui->userId,"userid.png");
+    new QPngLineEdit("", ui->passwd,"key.png");
     //设置密码框的显示模式
     ui->passwd->setEchoMode(QLineEdit::Password);
     ui->err_label->hide();
-    ui->userId->setFixedHeight(26);
-    ui->passwd->setFixedHeight(26);
+    ui->userId->setFixedHeight(30);
+    ui->passwd->setFixedHeight(30);
     //将焦点设置到用户名输入框上
     ui->userId->installEventFilter(this);
 }

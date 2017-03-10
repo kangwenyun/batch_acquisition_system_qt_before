@@ -53,7 +53,8 @@ SOURCES += main.cpp \
     viewdata.cpp \
     addbatch.cpp \
     filedata.cpp \
-    qtray.cpp
+    qtray.cpp \
+    qpnglineedit.cpp
 
 HEADERS  += \
     login.h \
@@ -83,7 +84,8 @@ HEADERS  += \
     maintaindata.h \
     viewdata.h \
     addbatch.h \
-    filedata.h
+    filedata.h \
+    qpnglineedit.h
 
 FORMS    += \
     login.ui \
@@ -103,4 +105,7 @@ FORMS    += \
     maintaindata.ui \
     viewdata.ui \
     addbatch.ui
+
+RESOURCES += \
+    icons.qrc
 

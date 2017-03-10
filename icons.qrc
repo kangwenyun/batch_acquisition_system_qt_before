@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/key.png</file>
+        <file>images/newKey.jpg</file>
+        <file>images/oldKey.jpg</file>
+        <file>images/userid.png</file>
+    </qresource>
+</RCC>

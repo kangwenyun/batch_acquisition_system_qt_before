@@ -1,6 +1,5 @@
 #include "authentication.h"
 #include "ui_authentication.h"
-#include<submitbatch.h>
 //系统登录，身份认证
 Authentication::Authentication(QWidget *parent) :
     QWidget(parent),

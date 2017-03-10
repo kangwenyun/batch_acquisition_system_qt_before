@@ -21,6 +21,12 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     //获取并设置当前用户信息
     Session* curper = Session::getInstance();
     userId = curper->getUserId();
+    ui->userid_edit->setAlignment(Qt::AlignCenter);
+    ui->username_edit->setAlignment(Qt::AlignCenter);
+    ui->sex_edit->setAlignment(Qt::AlignCenter);
+    ui->age_edit->setAlignment(Qt::AlignCenter);
+    ui->job_edit->setAlignment(Qt::AlignCenter);
+    ui->level_edit->setAlignment(Qt::AlignCenter);
     //根据userid去查询相关数据并显示到界面上
     Qres qum = helper.QgetUserrmation(newUser,userId);
     if(!qum.success)
