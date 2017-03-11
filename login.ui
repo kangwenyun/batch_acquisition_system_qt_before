@@ -99,9 +99,9 @@ background-color: rgba(255, 255, 255, 0);</string>
   <widget class="QLabel" name="err_label">
    <property name="geometry">
     <rect>
-     <x>85</x>
+     <x>115</x>
      <y>143</y>
-     <width>221</width>
+     <width>171</width>
      <height>16</height>
     </rect>
    </property>
@@ -134,7 +134,7 @@ color: rgb(207, 207, 207);</string>
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>83</x>

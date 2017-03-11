@@ -11,7 +11,7 @@ class QPngLineEdit : public QPushButton
     Q_OBJECT
 
 public:
-    explicit QPngLineEdit(const QString &text, QLineEdit *edit, const QString &strImg);
+    explicit QPngLineEdit(const QString &text, QLineEdit *edit, const QString &strImg,int flag);//1图标居左,0图标居右
 };
 
 

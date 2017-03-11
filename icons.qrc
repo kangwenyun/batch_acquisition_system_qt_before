@@ -4,5 +4,11 @@
         <file>images/newKey.jpg</file>
         <file>images/oldKey.jpg</file>
         <file>images/userid.png</file>
+        <file>images/age.jpg</file>
+        <file>images/job.jpg</file>
+        <file>images/level.jpg</file>
+        <file>images/man.jpg</file>
+        <file>images/name.jpg</file>
+        <file>images/woman.jpg</file>
     </qresource>
 </RCC>

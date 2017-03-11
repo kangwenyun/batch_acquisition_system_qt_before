@@ -4,6 +4,7 @@
 #include "dbhelper.h"
 #include "qres.h"
 #include "quser.h"
+#include "qpnglineedit.h"
 #include <QString>
 #include <QFile>
 #include <QMessageBox>
@@ -18,6 +19,11 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     ui(new Ui::RegistrationInfo)
 {
     ui->setupUi(this);
+    new QPngLineEdit("", ui->userid_edit,"userid.png",0);
+    new QPngLineEdit("", ui->username_edit,"name.jpg",0);
+    new QPngLineEdit("", ui->age_edit,"age.jpg",0);
+    new QPngLineEdit("", ui->job_edit,"job.jpg",0);
+    new QPngLineEdit("", ui->level_edit,"level.jpg",0);
     //获取并设置当前用户信息
     Session* curper = Session::getInstance();
     userId = curper->getUserId();
@@ -38,23 +44,25 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
         ui->username_edit->setText(newUser.username);
         if(newUser.sex == "0")
         {
-             ui->sex_edit->setText("♂");
-         }else{
-             ui->sex_edit->setText("♀");
-         }
-         ui->age_edit->setText(newUser.age);
-         ui->job_edit->setText(newUser.job);
-         ui->level_edit->setText(newUser.level);
+            new QPngLineEdit("", ui->sex_edit,"man.jpg",0);
+            ui->sex_edit->setText("♂");
+        }else{
+            new QPngLineEdit("", ui->sex_edit,"woman.jpg",0);
+            ui->sex_edit->setText("♀");
+        }
+        ui->age_edit->setText(newUser.age);
+        ui->job_edit->setText(newUser.job);
+        ui->level_edit->setText(newUser.level);
     }
     ui->info_label->hide();
     //将edit都设为只读,不可写
     setWriteability(false);
-    ui->userid_edit->setFixedHeight(26);
-    ui->username_edit->setFixedHeight(26);
-    ui->sex_edit->setFixedHeight(26);
-    ui->age_edit->setFixedHeight(26);
-    ui->job_edit->setFixedHeight(26);
-    ui->level_edit->setFixedHeight(26);
+    ui->userid_edit->setFixedHeight(32);
+    ui->username_edit->setFixedHeight(32);
+    ui->sex_edit->setFixedHeight(32);
+    ui->age_edit->setFixedHeight(32);
+    ui->job_edit->setFixedHeight(32);
+    ui->level_edit->setFixedHeight(32);
 }
 
 RegistrationInfo::~RegistrationInfo()
@@ -125,42 +133,6 @@ void RegistrationInfo::on_edit_ok_button_clicked()
         }
         ui->info_label->setText(res.msg);
         ui->info_label->show();
-
-//        QString txtName = "../batch_acquisition_system/reg.txt";
-//        QFile fileIn(txtName);
-//        if(!fileIn.open(QIODevice::ReadOnly)){
-//            QMessageBox::warning(this,tr("打开文件"),tr("打开文件失败"),fileIn.errorString());
-//            return;
-//        }
-//        QString fileInfo;
-//        while(!fileIn.atEnd()){
-//            QByteArray iLine = fileIn.readLine();
-//            iLine = iLine.trimmed();
-//            //需要将读出的一整行数据一同进行转码，而不能在分成list之后对某一项进行转码，会失败
-//            QString infoLine = QString::fromLocal8Bit(iLine);
-//            QList<QString> list = infoLine.split(',');
-//            if(list[0] == userId){
-//                //找到用户数据
-//                //替换文件内容当前行
-//                infoLine.clear();
-//                infoLine = infoLine + ui->userid_edit->text() + ',';
-//                infoLine = infoLine + ui->username_edit->text() + ',';
-//                infoLine = infoLine + list[2] + ',';
-//                infoLine = infoLine + ui->sex_edit->text() + ',';
-//                infoLine = infoLine + ui->age_edit->text() + ',';
-//                infoLine = infoLine + ui->job_edit->text() + '\n';
-//            }
-//            fileInfo += infoLine;
-//        }
-//        //删除源文件，写入新的同名文件
-//        fileIn.remove();
-//        QFile fileOut(txtName);
-//        if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)){
-//            QMessageBox::warning(this,tr("打开文件"),tr("打开文件失败"),fileOut.errorString());
-//            return;
-//        }
-//        QByteArray fileContent = fileInfo.toLocal8Bit();
-//        fileOut.write(fileContent);
         //改变按钮
         ui->edit_ok_button->setText("编辑");
     }

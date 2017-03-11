@@ -3,7 +3,7 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 
-QPngLineEdit::QPngLineEdit(const QString &text, QLineEdit *edit, const QString &strImg)
+QPngLineEdit::QPngLineEdit(const QString &text, QLineEdit *edit, const QString &strImg, int flag)
 : QPushButton(text, edit)
 {
     QSize size = QSize(25, 25);
@@ -15,10 +15,15 @@ QPngLineEdit::QPngLineEdit(const QString &text, QLineEdit *edit, const QString &
     setCursor(QCursor(Qt::PointingHandCursor));
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
-    buttonLayout->setContentsMargins(1, 1, 1, 1);
-    buttonLayout->addStretch();
+    if(!flag){
+        buttonLayout->setContentsMargins(0,0,-5,0);
+        buttonLayout->addStretch();
+    }
     buttonLayout->addWidget(this);
-    buttonLayout->setDirection(QBoxLayout::RightToLeft);
+    if(flag){
+        buttonLayout->setContentsMargins(5,0,0,0);
+        buttonLayout->addStretch();
+    }
     edit->setLayout(buttonLayout);
 
     // 设置输入框中文件输入区，不让输入的文字在被隐藏在按钮下

@@ -18,8 +18,8 @@ Login::Login(QWidget *parent) :
     ui(new Ui::Login)
 {
     ui->setupUi(this);
-    new QPngLineEdit("", ui->userId,"userid.png");
-    new QPngLineEdit("", ui->passwd,"key.png");
+    new QPngLineEdit("", ui->userId,"userid.png",1);
+    new QPngLineEdit("", ui->passwd,"key.png",1);
     //设置密码框的显示模式
     ui->passwd->setEchoMode(QLineEdit::Password);
     ui->err_label->hide();

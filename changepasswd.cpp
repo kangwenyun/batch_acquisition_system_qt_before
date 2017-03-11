@@ -14,10 +14,10 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui(new Ui::ChangePasswd)
 {
     ui->setupUi(this);
-    new QPngLineEdit("", ui->userId_edit,"userid.png");
-    new QPngLineEdit("", ui->oldKey_edit,"oldKey.jpg");
-    new QPngLineEdit("", ui->newKey_edit,"newKey.jpg");
-    new QPngLineEdit("", ui->newKeyAgain_edit,"newKey.jpg");
+    new QPngLineEdit("", ui->userId_edit,"userid.png",1);
+    new QPngLineEdit("", ui->oldKey_edit,"oldKey.jpg",1);
+    new QPngLineEdit("", ui->newKey_edit,"newKey.jpg",1);
+    new QPngLineEdit("", ui->newKeyAgain_edit,"newKey.jpg",1);
     //获取当前数据并将数据信息显示到界面中
     Session *curper = Session::getInstance();
     userId = curper->getUserId();
@@ -56,73 +56,23 @@ void ChangePasswd::on_ok_button_clicked()
             && !ui->newKey_edit->text().isEmpty()
             && !ui->newKeyAgain_edit->text().isEmpty())
     {
-//        检查原密码是否正确
-//        //读取本地文件验证密码
-//        //获取地址
-//        QString txtName = "../batch_acquisition_system/reg.txt";
-//        //定义文件对象
-//        QFile file(txtName);
-//        if(!file.open(QIODevice::ReadOnly))
-//        {
-//            QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),file.errorString());
-//            return;
-//        }
-//        bool ok = Utils::verifyPasswd(file,userId,ui->oldKey_edit->text());
-//        //验证成功即可登录
-//        if(!ok){
-//            //提示错误
-//            ui->err_label->setText(tr("原密码错误！"));
-//            ui->err_label->show();
-//            return;
-//        }
-//        //检查“新密码”与“确认新密码”是否相等
-//        if(ui->newKey_edit->text() != ui->newKeyAgain_edit->text())
-//        {
-//            //提示错误
-//            ui->err_label->setText(tr("请确认新密码！"));
-//            ui->err_label->show();
-//            return;
-//        }
-//        file.close();
-//        //根据userid去文件查询相关数据删除并写入新信息
-//        QFile fileIn(txtName);
-//        if(!fileIn.open(QIODevice::ReadOnly)){
-//            QMessageBox::warning(this,tr("打开文件"),tr("打开文件失败"),fileIn.errorString());
-//            return;
-//        }
-//        QString fileInfo;
-//        while(!fileIn.atEnd()){
-//            QByteArray iLine = fileIn.readLine();
-//            iLine = iLine.trimmed();
-//            //需要将读出的一整行数据一同进行转码，而不能在分成list之后对某一项进行转码，会失败
-//            QString infoLine = QString::fromLocal8Bit(iLine);
-//            QList<QString> list = infoLine.split(',');
-//            if(list[0] == userId){
-//                //找到用户数据
-//                //替换文件内容当前行
-//                infoLine.clear();
-//                infoLine = infoLine + list[0] + ',';
-//                infoLine = infoLine + list[1] + ',';
-//                infoLine = infoLine + ui->newKey_edit->text() + ',';
-//                infoLine = infoLine + list[3] + ',';
-//                infoLine = infoLine + list[4] + ',';
-//                infoLine = infoLine + list[5] + '\n';
-//            }
-//            fileInfo += infoLine;
-//        }
-//        //删除源文件，写入新的同名文件
-//        fileIn.remove();
-//        QFile fileOut(txtName);
-//        if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)){
-//            QMessageBox::warning(this,tr("打开文件"),tr("打开文件失败"),fileOut.errorString());
-//            return;
-//        }
-//        QByteArray fileContent = fileInfo.toLocal8Bit();
-//        fileOut.write(fileContent);
-        Qres res =  helper.Qchangepwd(userId,ui->oldKey_edit->text(),ui->newKey_edit->text());
-        ui->err_label->setText(res.msg);
-        ui->err_label->show();
+        //验证"新密码"和"新密码确认"是否一样
+        if( ui->newKey_edit->text() == ui->newKeyAgain_edit->text()){
+            Qres res =  helper.Qchangepwd(userId,ui->oldKey_edit->text(),ui->newKey_edit->text());
+            if(!res.success){
+                ui->err_label->setStyleSheet("QLabel{color: rgb(255, 0, 0);}");
+            }else{
+                ui->err_label->setStyleSheet("QLabel{color: rgb(0, 255, 0);}");
+            }
+            ui->err_label->setText(res.msg);
+            ui->err_label->show();
+        }else{
+            ui->err_label->setStyleSheet("QLabel{color: rgb(255, 0, 0);}");
+            ui->err_label->setText(tr("请确认新密码！"));
+            ui->err_label->show();
+        }
     }else{
+        ui->err_label->setStyleSheet("QLabel{color: rgb(255, 0, 0);}");
         ui->err_label->setText(tr("所有项均为必填项！"));
         ui->err_label->show();
     }

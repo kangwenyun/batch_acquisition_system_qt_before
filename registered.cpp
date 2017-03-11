@@ -3,6 +3,7 @@
 #include "quser.h"
 #include "dbhelper.h"
 #include "qres.h"
+#include "qpnglineedit.h"
 #include <QDebug>
 #include <QString>
 #include <QFile>
@@ -15,6 +16,13 @@ Registered::Registered(QWidget *parent) :
     ui(new Ui::Registered)
 {
     ui->setupUi(this);
+    new QPngLineEdit("", ui->userid,"userid.png",0);
+    new QPngLineEdit("", ui->username,"name.jpg",0);
+    new QPngLineEdit("", ui->passwd,"key.png",0);
+    new QPngLineEdit("", ui->passwd_again,"key.png",0);
+    new QPngLineEdit("", ui->age,"age.jpg",0);
+    new QPngLineEdit("", ui->job,"job.jpg",0);
+    new QPngLineEdit("", ui->level,"level.jpg",0);
     //添加性别虚拟分组
     genderGroup=new QButtonGroup(this);
     genderGroup->addButton(ui->sex_man,0);
@@ -24,24 +32,24 @@ Registered::Registered(QWidget *parent) :
     ui->passwd->setEchoMode(QLineEdit::Password);
     ui->passwd_again->setEchoMode(QLineEdit::Password);
     ui->err_label->hide();
+
+    ui->userid->setFixedHeight(32);
+    ui->username->setFixedHeight(32);
+    ui->passwd->setFixedHeight(32);
+    ui->passwd_again->setFixedHeight(32);
+    ui->age->setFixedHeight(32);
+    ui->job->setFixedHeight(32);
+    ui->level->setFixedHeight(32);
 }
 
 void Registered::on_ok_button_clicked(){
     //获取界面信息
-//    QString str;
     //必须项不能为空
     Qres res;
     if(!ui->userid->text().isEmpty() && !ui->passwd->text().isEmpty()
             && !ui->passwd_again->text().isEmpty() && !ui->level->text().isEmpty()){
         //“密码”和“确认密码”需保持一致
         if(ui->passwd->text() == ui->passwd_again->text()){
-//            str = str + ui->userid->text() + ',';
-//            str = str + ui->username->text() + ',';
-//            str = str + ui->passwd->text() + ',';
-//            str = str + QString("%1").arg(genderGroup->checkedId()) + ',';
-//            str = str + ui->age->text() + ',';
-//            str = str + ui->job->text() + ',';
-//            str = str + ui->level->text();
             Quser user;
             user.userid = ui->userid->text();
             user.username = ui->username->text();
@@ -65,22 +73,6 @@ void Registered::on_ok_button_clicked(){
         ui->err_label->show();
         return;
     }
-
-//    //先存放到本地文件
-//    //存放地址
-//    QString saveName = "../batch_acquisition_system/reg.txt";
-//    //定义文件对象
-//    QFile fileOut(saveName);
-//    if(!fileOut.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-//    {
-//        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileOut.errorString());
-//        return;
-//    }
-//    //写数据
-//    //构造字节数组写入
-//    QByteArray regInfo = str.toLocal8Bit() + '\n';
-//    fileOut.write(regInfo);
-
     if(res.success)
     {
         //注册界面隐藏，登录界面显示
