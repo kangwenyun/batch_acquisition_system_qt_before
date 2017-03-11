@@ -21,12 +21,12 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
     //获取并设置当前用户信息
     Session* curper = Session::getInstance();
     userId = curper->getUserId();
-    ui->userid_edit->setAlignment(Qt::AlignCenter);
-    ui->username_edit->setAlignment(Qt::AlignCenter);
-    ui->sex_edit->setAlignment(Qt::AlignCenter);
-    ui->age_edit->setAlignment(Qt::AlignCenter);
-    ui->job_edit->setAlignment(Qt::AlignCenter);
-    ui->level_edit->setAlignment(Qt::AlignCenter);
+//    ui->userid_edit->setAlignment(Qt::AlignCenter);
+//    ui->username_edit->setAlignment(Qt::AlignCenter);
+//    ui->sex_edit->setAlignment(Qt::AlignCenter);
+//    ui->age_edit->setAlignment(Qt::AlignCenter);
+//    ui->job_edit->setAlignment(Qt::AlignCenter);
+//    ui->level_edit->setAlignment(Qt::AlignCenter);
     //根据userid去查询相关数据并显示到界面上
     Qres qum = helper.QgetUserrmation(newUser,userId);
     if(!qum.success)
@@ -38,43 +38,14 @@ RegistrationInfo::RegistrationInfo(QWidget *parent) :
         ui->username_edit->setText(newUser.username);
         if(newUser.sex == "0")
         {
-             ui->sex_edit->setText("男");
+             ui->sex_edit->setText("♂");
          }else{
-             ui->sex_edit->setText("女");
+             ui->sex_edit->setText("♀");
          }
          ui->age_edit->setText(newUser.age);
          ui->job_edit->setText(newUser.job);
          ui->level_edit->setText(newUser.level);
     }
-
-//    QString txtName = "../batch_acquisition_system/reg.txt";
-//    QFile fileIn(txtName);
-//    if(!fileIn.open(QIODevice::ReadOnly)){
-//        QMessageBox::warning(this,tr("打开文件"),tr("打开文件失败"),fileIn.errorString());
-//        return;
-//    }
-//    while(!fileIn.atEnd()){
-//        QByteArray iLine = fileIn.readLine();
-//        iLine = iLine.trimmed();
-//        //需要将读出的一整行数据一同进行转码，而不能在分成list之后对某一项进行转码，会失败？
-//        QString infoLine = QString::fromLocal8Bit(iLine);
-//        QList<QString> list = infoLine.split(',');
-//        if(list[0] == userId){
-//            //找到用户数据
-//            ui->userid_edit->setText(list[0]);
-//            ui->username_edit->setText(list[1]);
-//            if(list[3] == "0")
-//            {
-//                ui->sex_edit->setText("男");
-//            }else{
-//                ui->sex_edit->setText("女");
-//            }
-//            ui->age_edit->setText(list[4]);
-//            ui->job_edit->setText(list[5]);
-//            break;
-//        }
-//    }
-//    fileIn.close();
     ui->info_label->hide();
     //将edit都设为只读,不可写
     setWriteability(false);

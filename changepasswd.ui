@@ -29,7 +29,7 @@
   <widget class="QLabel" name="err_label">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>74</x>
      <y>220</y>
      <width>160</width>
      <height>12</height>
@@ -50,10 +50,10 @@
   <widget class="QPushButton" name="ok_button">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>74</x>
      <y>270</y>
      <width>271</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="font">
@@ -65,107 +65,60 @@
     <string>确定</string>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>80</y>
-     <width>277</width>
-     <height>138</height>
+     <x>75</x>
+     <y>81</y>
+     <width>271</width>
+     <height>136</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="userId_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>账号：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="oldKey_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>原密码：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="newKey_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>新密码：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="newKeyAgain_label">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>新密码确认：</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QLineEdit" name="userId_edit">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLineEdit" name="userId_edit">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="oldKey_edit">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="newKey_edit">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="newKeyAgain_edit">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QLineEdit" name="oldKey_edit">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>请输入原密码</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="newKey_edit">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>请输入新密码</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="newKeyAgain_edit">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="placeholderText">
+       <string>请再输入一遍新密码</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

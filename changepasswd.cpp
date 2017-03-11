@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "qres.h"
 #include "dbhelper.h"
+#include "qpnglineedit.h"
 #include <QString>
 #include <QFile>
 
@@ -13,6 +14,10 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui(new Ui::ChangePasswd)
 {
     ui->setupUi(this);
+    new QPngLineEdit("", ui->userId_edit,"userid.png");
+    new QPngLineEdit("", ui->oldKey_edit,"oldKey.jpg");
+    new QPngLineEdit("", ui->newKey_edit,"newKey.jpg");
+    new QPngLineEdit("", ui->newKeyAgain_edit,"newKey.jpg");
     //获取当前数据并将数据信息显示到界面中
     Session *curper = Session::getInstance();
     userId = curper->getUserId();
@@ -26,9 +31,11 @@ ChangePasswd::ChangePasswd(QWidget *parent) :
     ui->newKeyAgain_edit->setEchoMode(QLineEdit::Password);
     //错误提示信息隐藏
     ui->err_label->hide();
-    ui->oldKey_edit->setFixedHeight(26);
-    ui->newKey_edit->setFixedHeight(26);
-    ui->newKeyAgain_edit->setFixedHeight(26);
+    //设置输入框大小
+    ui->userId_edit->setFixedHeight(30);
+    ui->oldKey_edit->setFixedHeight(30);
+    ui->newKey_edit->setFixedHeight(30);
+    ui->newKeyAgain_edit->setFixedHeight(30);
     //将焦点设置到原密码输入框上
     ui->oldKey_edit->installEventFilter(this);
     ui->userId_edit->setAlignment(Qt::AlignCenter);

@@ -57,18 +57,6 @@ void Login::on_login_clicked()
     //请求服务端验证
     dbhelper helper;
     Qres res = helper.Qlogin(userId,ui->passwd->text());
-
-//    //读取本地文件验证密码
-//    //获取地址
-//    QString txtName = "../batch_acquisition_system/reg.txt";
-//    //定义文件对象
-//    QFile fileIn(txtName);
-//    if(!fileIn.open(QIODevice::ReadOnly))
-//    {
-//        QMessageBox::warning(this,tr("打开文件"),tr("打开失败"),fileIn.errorString());
-//        return;
-//    }
-//    bool success = Utils::verifyPasswd(fileIn,userId,ui->passwd->text());
     //验证成功即可登录
     if(res.success){
         Session* curper = Session::getInstance();
@@ -91,13 +79,10 @@ void Login::on_get_passwd_clicked(){
 
 void Login::on_registered_clicked()
 {
-    dbhelper db;
-
     //实例化注册界面
     registered = new Registered;
     //跳转到注册页
     registered->show();
-
     //关闭登录界面
     this->close();
 }

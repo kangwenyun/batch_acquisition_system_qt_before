@@ -178,7 +178,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="level_edit"/>
+       <widget class="QLineEdit" name="level_edit">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
