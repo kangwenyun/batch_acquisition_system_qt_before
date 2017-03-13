@@ -7,7 +7,7 @@ dbhelper::dbhelper()
         db = QSqlDatabase::database("qt_sql_default_connection");
     else
         db = QSqlDatabase::addDatabase("QSQLITE");
-   // qDebug()<<QDir::
+    // qDebug()<<QDir::
     db.setDatabaseName("Test");
     QcreateProductTable();
     QcreateUserTable();
@@ -1056,25 +1056,132 @@ QList<Product> dbhelper::QgetDataorderby(int attr,int pattern)
     }
     else
     {
-       Qpattern="desc";
+        Qpattern="desc";
     }
 
     QSqlQuery query;
-   if (query.exec("select * from product order by "+Qattr+" "+Qpattern))
-   {
-       while(query.next())
-       {
-           Product temp;
-           temp.number=query.value("number").toString();
-           temp.type=query.value("type").toString();
-           temp.batchid=query.value("batchid").toString();
-           temp.tray=query.value("tray").toString();
-           temp.time=query.value("time").toString();
-           temp.flag=query.value("flag").toInt();
-           list.append(temp);
-       }
-   }
-return list;
-
-
+    if (query.exec("select * from product order by "+Qattr+" "+Qpattern))
+    {
+        while(query.next())
+        {
+            Product temp;
+            temp.number=query.value("number").toString();
+            temp.type=query.value("type").toString();
+            temp.batchid=query.value("batchid").toString();
+            temp.tray=query.value("tray").toString();
+            temp.time=query.value("time").toString();
+            temp.flag=query.value("flag").toInt();
+            list.append(temp);
+        }
+    }
+    return list;
 }
+
+  Qres dbhelper::QgetPerson(QList<UserInfo>& list,QString userid)
+{
+    QSqlQuery query;
+   Qres _return;
+    query.prepare("select * from user where userid = ?");
+    query.addBindValue(userid);
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            if(query.value("level").toString()=="0")
+            {
+              //permission
+                QSqlQuery personquery;
+                if(personquery.exec("select * from user"))
+                {
+                    while (personquery.next())
+                    {
+                        UserInfo temp;
+                       temp.userid=personquery.value("userid").toString();
+                       temp.username=personquery.value("username").toString();
+                       temp.level=personquery.value("level").toString();
+                       list.append(temp);
+                    }
+                    _return.error=0;
+                    _return.msg="get person success";
+                    _return.success=1;
+                }
+                else
+                {
+               //no user
+                    _return.error=0;
+                    _return.msg="no this user";
+                    _return.success=0;
+                }
+
+            }
+        }
+        else
+        {
+            //not exist
+            _return.error=0;
+            _return.msg="not exist";
+            _return.success=1;
+        }
+    }
+    else
+    {
+        //db error
+        _return.error=0;
+        _return.msg="db error";
+        _return.success=1;
+    }
+    return _return;
+}
+
+ Qres dbhelper::QsetPermission(QString masteruserid,QString workeruserid,QString setlevel)
+ {
+     QSqlQuery query;
+    Qres _return;
+     query.prepare("select * from user where userid = ?");
+     query.addBindValue(masteruserid);
+     if(query.exec())
+     {
+         if(query.next())
+         {
+             if(query.value("level").toString()=="0")
+             {
+               //permission
+                 QSqlQuery updatequery;
+                 updatequery.prepare("update User set level = ? where userid = ?");
+                 updatequery.addBindValue(setlevel);
+                 updatequery.addBindValue(workeruserid);
+                 if(updatequery.exec())
+                 {
+                 _return.error=0;
+                 _return.msg="update"+workeruserid+"  level to "+setlevel+" success";
+                 _return.success=1;
+                   Loger::getInstance()->setLoger(masteruserid,_return.msg);
+                 }
+                 else
+                 {
+                     _return.error=1;
+                     _return.msg="update level happens data base error";
+                     _return.success=0;
+                       Loger::getInstance()->setLoger(masteruserid,_return.msg);
+                 }
+             }
+         }
+         else
+         {
+             //not exist
+             _return.error=0;
+             _return.msg="not exist the user";
+             _return.success=0;
+             Loger::getInstance()->setLoger(masteruserid,_return.msg);
+         }
+     }
+     else
+     {
+         //db error
+         _return.error=1;
+         _return.msg="update level happens data base error";
+         _return.success=0;
+           Loger::getInstance()->setLoger(masteruserid,_return.msg);
+     }
+     return _return;
+ }

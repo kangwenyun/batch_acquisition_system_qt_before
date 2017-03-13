@@ -71,7 +71,8 @@ ViewData::~ViewData()
 
 void ViewData::on_data_refresh_clicked()
 {
-    QList<Product> proList = helper.QgetData();
+    QDateTime time= QDateTime::currentDateTime();
+    QList<Product> proList = helper.QgetDatathrouthTime(time.toString("yyyy-MM-dd"));
     int l = proList.length();
     ui->tableWidget->setRowCount(l);
     int j = 0;//列计数

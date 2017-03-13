@@ -9,6 +9,7 @@
 #include<QList>
 #include<filedata.h>
 #include<qbatch.h>
+#include<userinfo.h>
 class dbhelper
 {
 public:
@@ -46,7 +47,9 @@ public:
     //about refreshdata
     Qres QexistOrInsert(Product product);
     Qres Qrefreshfile();
-
+    //permission
+  Qres QgetPerson(QList<UserInfo>& list,QString userid);
+  Qres QsetPermission(QString masteruserid,QString workeruserid,QString setlevel);
 private:
     int flag;
     QSqlDatabase db ;
