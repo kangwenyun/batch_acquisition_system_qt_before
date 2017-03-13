@@ -9,9 +9,8 @@ saveProduct::saveProduct(QWidget *parent) :
     ui(new Ui::saveProduct)
 {
     ui->setupUi(this);
-    // 自适应列宽度,隐藏垂直表头
+    // 自适应列宽度
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableWidget->verticalHeader()->setVisible(false);
     ui->tableWidget->setRowCount(1);
     Session *curper = Session::getInstance();
     userId = curper->getUserId();

@@ -48,8 +48,8 @@ public:
     Qres QexistOrInsert(Product product);
     Qres Qrefreshfile();
     //permission
-  Qres QgetPerson(QList<UserInfo>& list,QString userid);
-  Qres QsetPermission(QString masteruserid,QString workeruserid,QString setlevel);
+    Qres QgetPerson(QList<UserInfo>& list,QString userid);
+    Qres QsetPermission(QString masteruserid,QString workeruserid,QString setlevel);
 private:
     int flag;
     QSqlDatabase db ;
