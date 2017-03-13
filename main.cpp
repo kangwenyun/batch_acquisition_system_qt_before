@@ -2,7 +2,6 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <dbhelper.h>
-#include<test.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -10,7 +9,7 @@ int main(int argc, char *argv[])
 
 //    db.deleteall();
     //db.initdb();
-    test l;
+    Login l;
     l.show();
     return a.exec();
 }
