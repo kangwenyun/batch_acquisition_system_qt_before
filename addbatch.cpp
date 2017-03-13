@@ -17,6 +17,7 @@ addBatch::addBatch(QWidget *parent) :
     Session *curper = Session::getInstance();
     userId = curper->getUserId();
     //将焦点聚集到item[0,0]上
+  //  ui->tableWidget->item(0,0)->setSelected(true);
 }
 
 addBatch::~addBatch()

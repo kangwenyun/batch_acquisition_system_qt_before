@@ -56,7 +56,8 @@ SOURCES += main.cpp \
     qtray.cpp \
     qpnglineedit.cpp \
     userinfo.cpp \
-    changepermision.cpp
+    changepermision.cpp \
+    test.cpp
 
 HEADERS  += \
     login.h \
@@ -89,7 +90,8 @@ HEADERS  += \
     filedata.h \
     qpnglineedit.h \
     userinfo.h \
-    changepermision.h
+    changepermision.h \
+    test.h
 
 FORMS    += \
     login.ui \
@@ -109,7 +111,8 @@ FORMS    += \
     maintaindata.ui \
     viewdata.ui \
     addbatch.ui \
-    changepermision.ui
+    changepermision.ui \
+    test.ui
 
 RESOURCES += \
     icons.qrc
