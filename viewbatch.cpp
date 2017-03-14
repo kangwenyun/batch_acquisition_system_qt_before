@@ -17,6 +17,9 @@
 #include <QList>
 #include <QStringList>
 #include <QModelIndex>
+#include <QPoint>
+#include <QMouseEvent>
+#include <QEvent>
 //所有批次的信息的查看
 ViewBatch::ViewBatch(QWidget *parent) :
     QWidget(parent),
@@ -27,6 +30,13 @@ ViewBatch::ViewBatch(QWidget *parent) :
     // 自适应列宽度
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     on_refresh_batch_clicked();
+    //将焦点聚集到item[0,0]上
+    QPoint pos(130,20);
+    QMouseEvent event0(QEvent::MouseButtonPress, pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::sendEvent(ui->tableWidget, &event0);
+    QMouseEvent event1(QEvent::MouseButtonRelease, pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::sendEvent(ui->tableWidget, &event1);
+    this->setMouseTracking(true);
 }
 
 ViewBatch::~ViewBatch()
@@ -109,4 +119,24 @@ void ViewBatch::on_tableWidget_clicked(const QModelIndex &index)
                              + " ; 备注:" + QObject::tr("%1").arg(pro.flag));
         }
     }
+}
+
+void ViewBatch::mousePressEvent(QMouseEvent *e)
+{
+    int m_i_clickX = e->x();
+    int m_i_clickY = e->y();
+    qDebug()<<"12:"<<m_i_clickX<<m_i_clickY;
+//    int mouse_x = QCursor::pos().x();//鼠标点击处横坐标
+//    int mouse_y = QCursor::pos().y();//鼠标点击处纵坐标
+//    qDebug()<<"mouse:"<<mouse_x <<mouse_y;
+//    QWidget *action = QApplication::widgetAt(mouse_x, mouse_y);//获取鼠标点击处的控件
+//    QPoint GlobalPoint(action->mapToGlobal(QPoint(0, 0)));//获取该控件在窗体中的坐标
+//    qDebug()<<"GlobalPoint:"<<GlobalPoint.x() <<GlobalPoint.y();
+}
+
+void ViewBatch::mouseReleaseEvent(QMouseEvent *e)
+{
+    int m_i_clickX = e->x();
+    int m_i_clickY = e->y();
+    qDebug()<<"release"<<m_i_clickX<<m_i_clickY;
 }

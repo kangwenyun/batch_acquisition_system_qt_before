@@ -39,7 +39,7 @@ GetLog::~GetLog()
 void GetLog::getData(QString fileTime)
 {
     QFile fileIn("Log/"+fileTime);
-    if( !fileIn.open(QIODevice::ReadOnly) )
+    if( !fileIn.open(QIODevice::ReadWrite) )
     {
         QMessageBox::warning(this, tr("打开文件"),tr("打开文件失败：") + fileIn.errorString());
         return;

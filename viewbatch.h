@@ -24,6 +24,9 @@ private slots:
 
     void on_tableWidget_clicked(const QModelIndex &index);
 
+//    void mousePressEvent(QMouseEvent *e);
+
+//    void mouseReleaseEvent(QMouseEvent *e);
 private:
     Ui::ViewBatch *ui;
     dbhelper helper;
