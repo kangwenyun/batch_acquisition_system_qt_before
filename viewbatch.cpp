@@ -38,6 +38,17 @@ void ViewBatch::on_refresh_batch_clicked()
 {
     batchList = helper.QgetBatch();
     int l = batchList.length();
+    if( l == 0)
+    {
+        ui->tableWidget->setRowCount(1);
+        ui->tableWidget->setSpan(0,0,1,3);
+        ui->tableWidget->verticalHeader()->setVisible(false);
+        QTableWidgetItem *item = new QTableWidgetItem("还没有任何批次哦~~~");
+        item->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(0,0,item);
+        ui->tableWidget->setShowGrid(false);//隐藏表格线
+        return;
+    }
     ui->tableWidget->setRowCount(l);
     //设置表格条目
     Qbatch batch;

@@ -4,6 +4,8 @@
 #include "session.h"
 #include <QString>
 #include <QMessageBox>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 addBatch::addBatch(QWidget *parent) :
     QDialog(parent),
@@ -17,7 +19,9 @@ addBatch::addBatch(QWidget *parent) :
     Session *curper = Session::getInstance();
     userId = curper->getUserId();
     //将焦点聚集到item[0,0]上
-  //  ui->tableWidget->item(0,0)->setSelected(true);
+//    ui->tableWidget->itemDoubleClicked(ui->tableWidget->item(0,0));
+//    ui->tableWidget->installEventFilter(ui->tableWidget->item(0,0));
+    ui->tableWidget->itemEntered(ui->tableWidget->item(0,0));
 }
 
 addBatch::~addBatch()

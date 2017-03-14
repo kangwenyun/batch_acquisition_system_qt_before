@@ -74,6 +74,17 @@ void ViewData::on_data_refresh_clicked()
     QDateTime time= QDateTime::currentDateTime();
     QList<Product> proList = helper.QgetDatathrouthTime(time.toString("yyyy-MM-dd"));
     int l = proList.length();
+    if( l == 0)
+    {
+        ui->tableWidget->setRowCount(1);
+        ui->tableWidget->setSpan(0,0,1,6);
+        ui->tableWidget->verticalHeader()->setVisible(false);
+        QTableWidgetItem *item = new QTableWidgetItem("今天还没有录入任何货物哦~~~");
+        item->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(0,0,item);
+        ui->tableWidget->setShowGrid(false);//隐藏表格线
+        return;
+    }
     ui->tableWidget->setRowCount(l);
     int j = 0;//列计数
     for(int i = 0; i<l ;i++)//行
