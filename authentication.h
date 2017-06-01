@@ -15,6 +15,9 @@ public:
     explicit Authentication(QWidget *parent = 0);
     ~Authentication();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::Authentication *ui;
 };

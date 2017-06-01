@@ -222,6 +222,7 @@ QList<Product>  dbhelper::getDate()
         while(sql_query.next())
         {
             Product temp;
+
             temp.id = sql_query.value("id").toInt();
             temp.number=sql_query.value("number").toString();
             qDebug()<<temp.number;
